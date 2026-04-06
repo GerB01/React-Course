@@ -37,20 +37,95 @@ h4{font-size:1.05rem;font-weight:600;margin:1.4em 0 0.4em;color:#E8EAF6}
 p{margin:0.9em 0;color:var(--text)}
 ul,ol{padding-left:1.3em}
 li{margin:0.4em 0}
-/* Password */
-body, html { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; overflow: hidden; }
-        
-        #gate { background: var(--surface); padding: 3rem 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; width: 100%; max-width: 400px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
-        .react-logo { width: 60px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--indigo-soft)); animation: rotate 20s linear infinite; }
-        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
-        
-        input { width: 100%; background: var(--bg-2); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: var(--text); margin: 1.5rem 0; text-align: center; outline: none; font-size: 1rem; }
-        input:focus { border-color: var(--indigo); box-shadow: 0 0 0 4px var(--indigo-soft); }
-        button { width: 100%; background: var(--indigo); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem; }
-        button:hover { filter: brightness(1.1); }
 
-        /* Actual Content starts hidden */
-        #protected-content { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 40px; }
+/* Scroll Bar */
+::-webkit-scrollbar {
+    width: 8px;              /* Width of the vertical scrollbar */
+    height: 8px;             /* Height of the horizontal scrollbar */
+    background-color: var(--bg); /* Match your deep background */
+}
+
+/* 2. The draggable handle (the "thumb") */
+::-webkit-scrollbar-thumb {
+    background-color: var(--surface-2); /* A subtle step up from the background */
+    border-radius: 100px;               /* Fully rounded ends for a modern look */
+    border: 2px solid var(--bg);        /* Creates a "floating" gap effect */
+}
+
+/* 3. Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background-color: var(--indigo);    /* Transitions to your brand color */
+}
+
+/* 4. The track itself */
+::-webkit-scrollbar-track {
+    background-color: var(--bg);
+}
+
+/* For Firefox (Limited styling but keeps it dark) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--surface-2) var(--bg);
+}
+
+/* Password */
+body, html { 
+            height: 100%; margin: 0; padding: 0;
+            background: var(--bg); color: var(--text); 
+            font-family: 'Inter', sans-serif; overflow: hidden; 
+        }
+
+        /* 1. THE SHIELD (Login Screen) */
+        #login-overlay {
+            position: fixed; inset: 0;
+            background: var(--bg);
+            display: flex; justify-content: center; align-items: center;
+            z-index: 9999;
+            transition: opacity 0.6s ease, visibility 0.6s ease;
+        }
+
+        .login-card {
+            background: var(--surface); padding: 3rem 2rem; border-radius: 16px;
+            border: 1px solid var(--border); text-align: center; width: 90%; max-width: 400px;
+        }
+
+        .react-logo { width: 64px; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px var(--indigo-soft)); }
+        
+        input {
+            width: 100%; background: var(--bg-2); border: 1px solid var(--border);
+            padding: 14px; border-radius: 8px; color: var(--text);
+            margin: 1.5rem 0; text-align: center; outline: none;
+        }
+
+        button {
+            width: 100%; background: var(--indigo); color: white;
+            border: none; padding: 14px; border-radius: 8px;
+            font-weight: 600; cursor: pointer;
+        }
+
+        /* 2. THE INTRO MESSAGE (Temporary) */
+        #intro-message {
+            position: fixed; inset: 0;
+            background: var(--bg);
+            display: none; /* Shown via JS */
+            flex-direction: column; justify-content: center; align-items: center;
+            z-index: 9998;
+            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.5s ease;
+        }
+
+        /* 3. FINAL WEBSITE CONTENT */
+        #main-content {
+            opacity: 0; visibility: hidden;
+            height: 100vh; overflow-y: auto; padding: 2rem;
+        }
+
+        /* States */
+        body.unlocked #login-overlay { opacity: 0; visibility: hidden; }
+        body.ready #main-content { opacity: 1; visibility: visible; transition: opacity 1s ease; }
+        body.ready { overflow: auto; }
+        
+        .fade-out { transform: translateY(-100%); opacity: 0; }
+
 /* Layout */
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
 .sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg-2);border-right:1px solid var(--border);padding:28px 22px}
@@ -64,7 +139,7 @@ body, html { height: 100%; margin: 0; background: var(--bg); color: var(--text);
 .main{max-width:900px;padding:60px 70px 120px;margin:0 auto}
 
 /* Hero */
-.hero{padding:80px 70px 60px;background:radial-gradient(ellipse at top right,#7B68EE22,transparent 60%),radial-gradient(ellipse at bottom left,#2DD4BF1a,transparent 60%);border-bottom:1px solid var(--border);max-width:none;margin:0}
+.hero{padding:80px 70px 60px;background:radial-gradient(ellipse at top right,#e368ee69,transparent 60%),radial-gradient(ellipse at bottom left,#2DD4BF1a,transparent 60%);border-bottom:1px solid var(--border);max-width:none;margin:0}
 .hero-tag{display:inline-block;font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--indigo);padding:6px 14px;border:1px solid var(--indigo);border-radius:999px;margin-bottom:20px}
 .hero h1{font-size:3.4rem;background:linear-gradient(135deg,#fff 20%,#a5b4fc 50%,#7B68EE);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:0.3em}
 .hero-sub{font-size:1.3rem;color:var(--text-dim);max-width:720px;line-height:1.5;font-weight:300}
@@ -172,42 +247,54 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
 </head>
 <body>
 <!-- Password -->
- <div id="gate">
-        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="react-logo" alt="React">
-        <h2 style="margin:0;">Private Preview</h2>
-        <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 8px;">Authorized Access Only</p>
-        <input type="password" id="pass" placeholder="Enter Access Key" autofocus>
-        <button onclick="unlock()">Unlock Project</button>
-    </div>
-
-    <div id="protected-content">
-        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
-            <h1 style="color: var(--indigo); font-size: 3rem;">Welcome to ALIV</h1>
-            <p style="color: var(--text-dim); font-size: 1.2rem;">Your secure preview is now active.</p>
-            <hr style="border: 0; border-top: 1px solid var(--border); margin: 40px 0;">
-            <p>This is where your design goes!</p>
+<div id="login-overlay">
+        <div class="login-card">
+            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="react-logo" alt="React">
+            <h2 style="margin:0;">Protected Page</h2>
+            <input type="password" id="passInput" placeholder="Enter Access Key" autofocus>
+            <button onclick="checkKey()">Unlock Project</button>
         </div>
     </div>
+
+    <div id="intro-message">
+        <h1 style="color: var(--indigo); font-size: 3.5rem; letter-spacing: -2px; margin: 0;">Germán Secures</h1>
+        <p style="color: var(--text-dim); font-size: 1.25rem;">This content is now decrypted and visible.</p>
+    </div>
+
+   
     <script>
-        function unlock() {
-            const key = document.getElementById('pass').value;
-            // SET YOUR PASSWORD HERE
-            if (key === "aliv2026") {
-                document.getElementById('gate').style.display = 'none';
-                document.getElementById('protected-content').style.display = 'block';
-                document.body.style.overflow = 'auto';
+        function checkKey() {
+            const input = document.getElementById('passInput').value;
+            const secret = "tono2026"; 
+
+            if (input === secret) {
+                // 1. Hide login
+                document.body.classList.add('unlocked');
+                
+                // 2. Show intro message
+                const intro = document.getElementById('intro-message');
+                intro.style.display = 'flex';
+
+                // 3. Wait 3 seconds, then transition to main content
+                setTimeout(() => {
+                    intro.classList.add('fade-out'); // Slide it up
+                    document.body.classList.add('ready'); // Reveal main site
+                    
+                    // Optional: Remove intro from DOM after animation finishes
+                    setTimeout(() => { intro.remove(); }, 800);
+                }, 1500); 
+
             } else {
-                alert("Invalid Key");
-                document.getElementById('pass').value = '';
+                alert("Incorrect Access Key");
+                document.getElementById('passInput').value = '';
             }
         }
 
-        // Allow Enter key
-        document.getElementById('pass').addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') unlock();
+        document.getElementById('passInput').addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') checkKey();
         });
     </script>
-    
+
 <div class="layout">
 
 <aside class="sidebar">
