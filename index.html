@@ -68,6 +68,28 @@ li{margin:0.4em 0}
     scrollbar-color: var(--surface-2) var(--bg);
 }
 
+/* ScrollBar Main */
+
+/* --- The Fixed Horizontal Scrollbar Styling --- */
+.main::-webkit-scrollbar {
+    height: 10px;             /* Height of the horizontal bar */
+}
+
+.main::-webkit-scrollbar-track {
+    background: var(--bg-2);  /* Slightly lighter than main bg */
+    border-top: 1px solid var(--border-soft); /* Adds a "line" separator */
+}
+
+.main::-webkit-scrollbar-thumb {
+    background-color: var(--indigo); /* Your brand color */
+    border-radius: 0;                /* Squared for a "progress bar" look */
+    border: 2px solid var(--bg-2);   /* Creates a gap from the edges */
+}
+
+.main::-webkit-scrollbar-thumb:hover {
+    background-color: var(--teal);   /* Change color on hover for feedback */
+}
+
 /* Password */
 body, html { 
             height: 100%; margin: 0; padding: 0;
@@ -345,6 +367,9 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
 </section>
 
 <div class="main">
+  <div class="progress-container" id="progCont" style="display: none;">
+    <div class="progress-bar" id="progBar"></div>
+</div>
 
 <!-- INTRODUCTION -->
 <section id="intro">
