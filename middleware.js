@@ -7,11 +7,15 @@ export default function middleware(req) {
 
   if (authHeader) {
     const authValue = authHeader.split(' ')[1];
+    // Decodes the browser's authentication string
     const [user, pwd] = atob(authValue).split(':');
 
-    // SET YOUR CREDENTIALS HERE
+    // Credentials: admin / aliv2026
     if (user === 'admin' && pwd === 'aliv2026') {
-      return new Response(null, { status: 200, headers: { 'x-middleware-next': '1' } });
+      return new Response(null, {
+        status: 200,
+        headers: { 'x-middleware-next': '1' },
+      });
     }
   }
 
