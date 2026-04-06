@@ -265,9 +265,29 @@ tr:hover td{background:var(--bg-2)}
 
 hr{border:none;border-top:1px solid var(--border);margin:2.4em 0}
 blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2em;color:var(--text-dim);font-style:italic}
+
+/* Scroll Progress Indicator */
+#scroll-track {
+  position: fixed;
+  top: 0;
+  left: 280px;
+  right: 0;
+  height: 3px;
+  z-index: 10000;
+}
+#scroll-indicator {
+  width: 0%;
+  height: 100%;
+  background: linear-gradient(90deg,var(--indigo),var(--sky));
+  transition: width 0.1s linear;
+}
+@media (max-width: 900px) {
+  #scroll-track { left: 0; }
+}
 </style>
 </head>
 <body>
+<div id="scroll-track"><div id="scroll-indicator"></div></div>
 <!-- Password -->
 <div id="login-overlay">
         <div class="login-card">
@@ -1615,6 +1635,21 @@ function onScroll(){
 }
 window.addEventListener('scroll', onScroll);
 onScroll();
+
+// Scroll progress indicator
+var scrollIndicator = document.getElementById('scroll-indicator');
+function updateScrollProgress() {
+  var scrollTop = window.scrollY || document.documentElement.scrollTop || document.body.scrollTop || 0;
+  var scrollHeight = Math.max(
+    document.body.scrollHeight,
+    document.documentElement.scrollHeight
+  ) - window.innerHeight;
+  var progress = scrollHeight > 0 ? (scrollTop / scrollHeight) * 100 : 0;
+  scrollIndicator.style.width = progress + '%';
+}
+window.addEventListener('scroll', updateScrollProgress);
+document.addEventListener('scroll', updateScrollProgress, true);
+updateScrollProgress();
 </script>
 </body>
 </html>
