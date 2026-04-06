@@ -1,8 +1,5 @@
-import { next } from '@vercel/edge';
-
 export const config = {
-  // This ensures the password applies to the entire site
-  matcher: '/:path*', 
+  matcher: '/:path*',
 };
 
 export default function middleware(req) {
@@ -10,17 +7,15 @@ export default function middleware(req) {
 
   if (authHeader) {
     const authValue = authHeader.split(' ')[1];
-    // This decodes the "User:Pass" string from the browser
     const [user, pwd] = atob(authValue).split(':');
 
-    // SET YOUR CHOSEN CREDENTIALS HERE
+    // SET YOUR CREDENTIALS HERE
     if (user === 'admin' && pwd === 'aliv2026') {
-      return next();
+      return new Response(null, { status: 200, headers: { 'x-middleware-next': '1' } });
     }
   }
 
-  // If not authenticated, trigger the browser's native login popup
-  return new Response('Protected Area', {
+  return new Response('Authentication Required', {
     status: 401,
     headers: {
       'WWW-Authenticate': 'Basic realm="Secure Area"',
