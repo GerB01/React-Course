@@ -1,0 +1,1459 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>React Foundations for React Three Fiber — Book 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="image"  href="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg">
+
+<style>
+:root{
+  --bg:#0D0F17; --bg-2:#11131C; --surface:#161824; --surface-2:#1E2130;
+  --border:#2A2D3E; --border-soft:#23263A;
+  --text:#E8EAF6; --text-dim:#A5AABE; --text-mute:#6E7389;
+  --indigo:#7B68EE; --indigo-soft:#7B68EE22;
+  --teal:#2DD4BF; --teal-soft:#2DD4BF1f;
+  --amber:#F59E0B; --amber-soft:#F59E0B1f;
+  --coral:#F87171; --coral-soft:#F871711f;
+  --sky:#60A5FA; --sky-soft:#60A5FA1f;
+  --emerald:#34D399; --emerald-soft:#34D3991f;
+  --code-bg:#0A0C14;
+  --shadow: 0 20px 60px -20px rgba(0,0,0,0.6);
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;background:var(--bg);color:var(--text);font-family:'Inter',system-ui,sans-serif;font-size:17px;line-height:1.75;-webkit-font-smoothing:antialiased;scroll-behavior:smooth}
+a{color:var(--indigo);text-decoration:none}
+a:hover{text-decoration:underline}
+code{font-family:'JetBrains Mono',ui-monospace,monospace;font-size:0.88em;background:var(--code-bg);padding:2px 6px;border-radius:4px;border:1px solid var(--border-soft);color:#D7D9EB}
+pre{font-family:'JetBrains Mono',monospace;background:var(--code-bg);border:1px solid var(--border-soft);border-radius:10px;padding:18px 20px;overflow-x:auto;font-size:0.85rem;line-height:1.7;margin:1.2em 0}
+pre code{background:none;border:none;padding:0;color:#DCDFF0}
+.kw{color:#C792EA}.str{color:#C3E88D}.num{color:#F78C6C}.com{color:#697098;font-style:italic}.fn{color:#82AAFF}.typ{color:#FFCB6B}.tag{color:#F07178}
+h1,h2,h3,h4{font-family:'Inter',sans-serif;color:#fff;line-height:1.25;letter-spacing:-0.02em}
+h1{font-size:2.6rem;font-weight:800;margin:0 0 0.3em}
+h2{font-size:1.9rem;font-weight:700;margin:2.2em 0 0.6em;padding-bottom:0.4em;border-bottom:1px solid var(--border)}
+h3{font-size:1.3rem;font-weight:600;margin:1.8em 0 0.5em;color:#F2F3FA}
+h4{font-size:1.05rem;font-weight:600;margin:1.4em 0 0.4em;color:#E8EAF6}
+p{margin:0.9em 0;color:var(--text)}
+ul,ol{padding-left:1.3em}
+li{margin:0.4em 0}
+
+/* Layout */
+.layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
+.sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg-2);border-right:1px solid var(--border);padding:28px 22px}
+.sidebar-brand{font-weight:800;font-size:1rem;color:#fff;margin-bottom:4px;letter-spacing:-0.02em}
+.sidebar-sub{font-size:0.78rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:24px}
+.nav-list{list-style:none;padding:0;margin:0}
+.nav-list li{margin:0}
+.nav-list a{display:block;padding:7px 10px;border-radius:6px;font-size:0.88rem;color:var(--text-dim);border-left:2px solid transparent}
+.nav-list a:hover{background:var(--surface);color:#fff;text-decoration:none}
+.nav-list a.section{color:var(--text-mute);font-size:0.74rem;text-transform:uppercase;letter-spacing:0.08em;padding-top:16px;padding-bottom:4px;pointer-events:none}
+.main{max-width:900px;padding:60px 70px 120px;margin:0 auto}
+
+/* Hero */
+.hero{padding:80px 70px 60px;background:radial-gradient(ellipse at top right,#7B68EE22,transparent 60%),radial-gradient(ellipse at bottom left,#2DD4BF1a,transparent 60%);border-bottom:1px solid var(--border);max-width:none;margin:0}
+.hero-tag{display:inline-block;font-size:0.75rem;font-weight:600;letter-spacing:0.15em;text-transform:uppercase;color:var(--indigo);padding:6px 14px;border:1px solid var(--indigo);border-radius:999px;margin-bottom:20px}
+.hero h1{font-size:3.4rem;background:linear-gradient(135deg,#fff 20%,#a5b4fc 50%,#7B68EE);-webkit-background-clip:text;background-clip:text;color:transparent;margin-bottom:0.3em}
+.hero-sub{font-size:1.3rem;color:var(--text-dim);max-width:720px;line-height:1.5;font-weight:300}
+.hero-meta{display:flex;gap:30px;margin-top:40px;flex-wrap:wrap}
+.hero-meta div{font-size:0.85rem;color:var(--text-mute)}
+.hero-meta strong{display:block;color:#fff;font-size:1.05rem;margin-bottom:2px;font-weight:600}
+
+/* Callouts */
+.callout{border-left:4px solid;border-radius:10px;padding:18px 22px;margin:1.6em 0;background:var(--surface);box-shadow:var(--shadow)}
+.callout-label{font-size:0.7rem;font-weight:700;letter-spacing:0.15em;text-transform:uppercase;margin-bottom:8px;display:flex;align-items:center;gap:8px}
+.callout-label .icon{font-size:0.95rem}
+.callout p:first-of-type{margin-top:0}.callout p:last-of-type{margin-bottom:0}
+.c-key{border-color:var(--indigo);background:linear-gradient(90deg,var(--indigo-soft),transparent 60%)}
+.c-key .callout-label{color:var(--indigo)}
+.c-why{border-color:var(--teal);background:linear-gradient(90deg,var(--teal-soft),transparent 60%)}
+.c-why .callout-label{color:var(--teal)}
+.c-model{border-color:var(--amber);background:linear-gradient(90deg,var(--amber-soft),transparent 60%)}
+.c-model .callout-label{color:var(--amber)}
+.c-mistake{border-color:var(--coral);background:linear-gradient(90deg,var(--coral-soft),transparent 60%)}
+.c-mistake .callout-label{color:var(--coral)}
+.c-ts{border-color:var(--sky);background:linear-gradient(90deg,var(--sky-soft),transparent 60%)}
+.c-ts .callout-label{color:var(--sky)}
+.c-r3f{border-color:transparent;background:linear-gradient(135deg,#7B68EE22,#2DD4BF22);border:1px solid #7B68EE66;position:relative}
+.c-r3f .callout-label{background:linear-gradient(90deg,#a5b4fc,#5eead4);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c-r3f::before{content:"⬡";position:absolute;top:16px;right:20px;font-size:1.4rem;opacity:0.3;background:linear-gradient(135deg,#7B68EE,#2DD4BF);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c-exercise{border-color:var(--emerald);background:linear-gradient(90deg,var(--emerald-soft),transparent 60%)}
+.c-exercise .callout-label{color:var(--emerald)}
+.c-task{border:2px solid var(--indigo);background:linear-gradient(135deg,#7B68EE18,#11131C);padding:26px 28px;border-radius:14px;margin:2.4em 0;position:relative;overflow:hidden}
+.c-task::after{content:"★";position:absolute;top:20px;right:26px;font-size:1.8rem;color:var(--indigo);opacity:0.35}
+.c-task .callout-label{color:var(--indigo);font-size:0.78rem}
+.c-task h4{margin-top:0;color:#fff}
+
+/* Reveal toggle */
+.reveal{margin-top:10px}
+.reveal-btn{background:var(--surface-2);color:var(--text);border:1px solid var(--border);padding:6px 14px;border-radius:6px;font-size:0.8rem;font-family:inherit;cursor:pointer;margin-right:8px}
+.reveal-btn:hover{background:var(--indigo);border-color:var(--indigo);color:#fff}
+.reveal-content{display:none;margin-top:12px;padding:14px 16px;border-left:2px solid var(--emerald);background:#0f1119;border-radius:6px}
+.reveal-content.show{display:block}
+.reveal-content.hint{border-left-color:var(--amber)}
+
+/* Collapsible */
+.collapse{border:1px solid var(--border);border-radius:10px;margin:1.2em 0;background:var(--surface)}
+.collapse-head{padding:14px 20px;cursor:pointer;font-weight:600;display:flex;justify-content:space-between;align-items:center;user-select:none}
+.collapse-head:hover{background:var(--surface-2)}
+.collapse-head .chev{transition:transform 0.2s;color:var(--indigo)}
+.collapse.open .chev{transform:rotate(90deg)}
+.collapse-body{display:none;padding:0 20px 18px;border-top:1px solid var(--border-soft)}
+.collapse.open .collapse-body{display:block}
+
+/* Diagrams */
+.diagram{background:#0a0c14;border:1px solid var(--border-soft);border-radius:12px;padding:24px;margin:1.6em 0;text-align:center}
+.diagram svg{max-width:100%;height:auto}
+.diagram-caption{font-size:0.8rem;color:var(--text-mute);margin-top:10px;font-style:italic}
+
+/* Chapter header */
+.chapter-num{font-size:0.78rem;font-weight:700;letter-spacing:0.2em;text-transform:uppercase;color:var(--indigo);margin-bottom:6px}
+.chapter-title{font-size:2.4rem;margin-top:0.1em;margin-bottom:0.3em;border:none;padding:0}
+.chapter-sub{font-size:1.15rem;color:var(--text-dim);font-weight:300;margin-bottom:2.5em;padding-bottom:1.5em;border-bottom:1px solid var(--border)}
+section.chapter{padding-top:60px;margin-top:-20px}
+
+/* Glossary */
+.glossary-grid{display:grid;gap:14px}
+.glos-term{background:var(--surface);border:1px solid var(--border);border-radius:8px;padding:14px 18px}
+.glos-term strong{color:var(--indigo);display:block;margin-bottom:4px;font-size:0.95rem}
+.glos-term span{font-size:0.9rem;color:var(--text-dim)}
+
+/* TOC */
+.toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:14px;margin:1.5em 0}
+.toc-card{background:var(--surface);border:1px solid var(--border);border-radius:10px;padding:16px 20px;transition:all 0.15s}
+.toc-card:hover{border-color:var(--indigo);transform:translateY(-2px)}
+.toc-card a{color:#fff;font-weight:600;font-size:0.98rem;display:block;margin-bottom:4px}
+.toc-card span{font-size:0.82rem;color:var(--text-mute)}
+
+/* Chapter nav footer */
+.chap-nav{display:flex;justify-content:space-between;margin-top:60px;padding-top:30px;border-top:1px solid var(--border);gap:16px}
+.chap-nav a{flex:1;padding:18px 22px;background:var(--surface);border:1px solid var(--border);border-radius:10px;color:var(--text);max-width:48%}
+.chap-nav a:hover{border-color:var(--indigo);text-decoration:none;background:var(--surface-2)}
+.chap-nav a span{display:block;font-size:0.72rem;color:var(--text-mute);text-transform:uppercase;letter-spacing:0.1em;margin-bottom:4px}
+.chap-nav a strong{color:#fff;font-size:0.95rem}
+.chap-nav .next{text-align:right}
+
+@media (max-width:900px){
+  .layout{grid-template-columns:1fr}
+  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}
+  .main{padding:40px 24px 80px}
+  .hero{padding:60px 28px 40px}
+  .hero h1{font-size:2.2rem}
+  h1{font-size:1.9rem}
+  h2{font-size:1.4rem}
+  .toc-grid{grid-template-columns:1fr}
+}
+
+/* Focus */
+:focus-visible{outline:2px solid var(--indigo);outline-offset:3px;border-radius:4px}
+
+/* Tables */
+table{width:100%;border-collapse:collapse;margin:1.2em 0;font-size:0.92rem}
+th,td{padding:10px 14px;text-align:left;border-bottom:1px solid var(--border-soft)}
+th{color:var(--indigo);font-weight:600;font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;background:var(--surface)}
+tr:hover td{background:var(--bg-2)}
+
+hr{border:none;border-top:1px solid var(--border);margin:2.4em 0}
+blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2em;color:var(--text-dim);font-style:italic}
+</style>
+</head>
+<body>
+
+<div class="layout">
+
+<aside class="sidebar">
+  <div class="sidebar-brand">React Foundations</div>
+  <div class="sidebar-sub">Book 1 · For R3F</div>
+  <ul class="nav-list">
+    <li><a href="#hero">Cover</a></li>
+    <li><a href="#intro">Introduction</a></li>
+    <li><a href="#how-to-use">How to Use This Book</a></li>
+    <li><a href="#roadmap">Learning Roadmap</a></li>
+    <li><a href="#toc">Table of Contents</a></li>
+    <li><a class="section">Chapters</a></li>
+    <li><a href="#ch1">1. What React Is</a></li>
+    <li><a href="#ch2">2. Declarative Thinking</a></li>
+    <li><a href="#ch3">3. Components & JSX</a></li>
+    <li><a href="#ch4">4. Props</a></li>
+    <li><a href="#ch5">5. State</a></li>
+    <li><a href="#ch6">6. Events</a></li>
+    <li><a href="#ch7">7. Re-rendering</a></li>
+    <li><a href="#ch8">8. Conditional Rendering</a></li>
+    <li><a href="#ch9">9. Lists & Keys</a></li>
+    <li><a href="#ch10">10. Composition</a></li>
+    <li><a href="#ch11">11. useRef</a></li>
+    <li><a href="#ch12">12. useEffect</a></li>
+    <li><a href="#ch13">13. useMemo</a></li>
+    <li><a href="#ch14">14. TypeScript for React</a></li>
+    <li><a href="#ch15">15. Bridge to R3F</a></li>
+    <li><a class="section">Reference</a></li>
+    <li><a href="#debugging">Debugging Mindset</a></li>
+    <li><a href="#glossary">Glossary</a></li>
+    <li><a href="#bridge">Bridge to Book 2</a></li>
+  </ul>
+</aside>
+
+<main>
+
+<!-- HERO -->
+<section class="hero" id="hero">
+  <div class="hero-tag">Book 1 of 2 · Focused Foundations</div>
+  <h1>React Foundations for React Three Fiber</h1>
+  <p class="hero-sub">A compact, focused manual for the JavaScript developer who wants to understand React well enough to build interactive 3D worlds with React Three Fiber — and not a syllable more than needed to get there.</p>
+  <div class="hero-meta">
+    <div><strong>15 Chapters</strong>Short, self-contained lessons</div>
+    <div><strong>50+ Exercises</strong>Hands-on practice</div>
+    <div><strong>Gentle TypeScript</strong>Introduced progressively</div>
+    <div><strong>R3F-Oriented</strong>Every concept bridges to 3D</div>
+  </div>
+</section>
+
+<div class="main">
+
+<!-- INTRODUCTION -->
+<section id="intro">
+<h2>Introduction</h2>
+<p>This book exists because the usual way of learning React takes too long, covers too much, and leaves you holding a toolbox of features without a clear sense of which ones actually matter for the thing you came here to build. If your goal is React Three Fiber — the library that lets you describe interactive 3D scenes with React components — you do not need every corner of the React ecosystem. You need the mindset, the core hooks, and a handful of mental models that survive the jump from flat web UI into three-dimensional space.</p>
+<p>That is what this book delivers. It teaches React as a thinking tool rather than a catalogue of APIs. Every chapter is short on purpose. Every exercise is small on purpose. And every concept ends with a short note explaining how it will resurface in Book 2, when you begin building the interactive real estate portfolio that is the larger arc of your journey.</p>
+<p>You will not find Redux, React Router, server components, class components, forms, or the many other topics that dominate generic React courses. They are real, they are useful, and they are deliberately absent. If you need them later, you will learn them later. For now, the goal is to get you from "I know JavaScript" to "I can read an R3F component and recognize every idea in it" in the shortest honest path possible.</p>
+
+<div class="callout c-why">
+  <div class="callout-label"><span class="icon">✦</span> Why It Matters</div>
+  <p>Focused learning beats comprehensive learning when you have a specific destination. This book is shaped like a flight path, not like a library. Every page pushes you toward Book 2.</p>
+</div>
+</section>
+
+<!-- HOW TO USE -->
+<section id="how-to-use">
+<h2>How to Use This Book</h2>
+<p>Read linearly. The chapters are ordered so that each one rests on the previous, and skipping ahead creates holes that hurt later. Each chapter takes about thirty to forty-five minutes to read, with an additional thirty to sixty minutes of practice in exercises and the chapter task.</p>
+<p>Do the exercises. They are not optional. Reading about React without writing it is like reading about swimming from the pool deck. When an exercise has a hint, try the problem first, then reveal the hint only if you are stuck, then reveal the answer only after you have genuinely attempted the problem.</p>
+<p>Pay attention to the callout boxes. Each one has a specific role:</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>The single most important insight of a section. If you only remember one thing, remember this.</p></div>
+<div class="callout c-why"><div class="callout-label"><span class="icon">✦</span> Why It Matters</div><p>Motivation. Why should you care? What would break without this?</p></div>
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>An analogy or visual frame that gives the idea a shape in your head.</p></div>
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>A pitfall that beginners walk into. Spot it early, save yourself hours.</p></div>
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Friendly TypeScript guidance, introduced gently.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>A glimpse of how this idea will reappear in React Three Fiber in Book 2.</p></div>
+<div class="callout c-exercise"><div class="callout-label"><span class="icon">✏</span> Exercise</div><p>A small hands-on practice problem, usually 10 to 20 minutes long.</p></div>
+<div class="callout c-task">
+  <div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+  <h4>A larger milestone</h4>
+  <p>Each chapter ends with a cumulative task. Together they build a growing project you will carry into Book 2.</p>
+</div>
+</section>
+
+<!-- ROADMAP -->
+<section id="roadmap">
+<h2>Learning Roadmap</h2>
+<p>Before diving in, it helps to see the shape of the journey. This book moves through four movements.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 800 260" xmlns="http://www.w3.org/2000/svg">
+  <defs>
+    <linearGradient id="g1" x1="0" x2="1"><stop offset="0" stop-color="#7B68EE"/><stop offset="1" stop-color="#2DD4BF"/></linearGradient>
+  </defs>
+  <rect x="20" y="60" width="170" height="140" rx="12" fill="#161824" stroke="#7B68EE" stroke-width="2"/>
+  <text x="105" y="95" fill="#7B68EE" font-family="Inter" font-size="12" font-weight="700" text-anchor="middle">MOVEMENT 1</text>
+  <text x="105" y="125" fill="#fff" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">Mindset</text>
+  <text x="105" y="150" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Ch 1–2</text>
+  <text x="105" y="172" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Why React exists,</text>
+  <text x="105" y="186" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">declarative thinking</text>
+
+  <rect x="210" y="60" width="170" height="140" rx="12" fill="#161824" stroke="#2DD4BF" stroke-width="2"/>
+  <text x="295" y="95" fill="#2DD4BF" font-family="Inter" font-size="12" font-weight="700" text-anchor="middle">MOVEMENT 2</text>
+  <text x="295" y="125" fill="#fff" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">Building Blocks</text>
+  <text x="295" y="150" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Ch 3–6</text>
+  <text x="295" y="172" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Components, props,</text>
+  <text x="295" y="186" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">state, events</text>
+
+  <rect x="400" y="60" width="170" height="140" rx="12" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="485" y="95" fill="#F59E0B" font-family="Inter" font-size="12" font-weight="700" text-anchor="middle">MOVEMENT 3</text>
+  <text x="485" y="125" fill="#fff" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">Patterns & Hooks</text>
+  <text x="485" y="150" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Ch 7–13</text>
+  <text x="485" y="172" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Re-renders, lists,</text>
+  <text x="485" y="186" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">useRef, useEffect</text>
+
+  <rect x="590" y="60" width="190" height="140" rx="12" fill="#161824" stroke="url(#g1)" stroke-width="2"/>
+  <text x="685" y="95" fill="#a5b4fc" font-family="Inter" font-size="12" font-weight="700" text-anchor="middle">MOVEMENT 4</text>
+  <text x="685" y="125" fill="#fff" font-family="Inter" font-size="14" font-weight="600" text-anchor="middle">The Bridge</text>
+  <text x="685" y="150" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Ch 14–15</text>
+  <text x="685" y="172" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">TypeScript synthesis,</text>
+  <text x="685" y="186" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">handoff to R3F</text>
+
+  <path d="M190 130 L210 130" stroke="#A5AABE" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <path d="M380 130 L400 130" stroke="#A5AABE" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <path d="M570 130 L590 130" stroke="#A5AABE" stroke-width="2" fill="none" marker-end="url(#arr)"/>
+  <defs><marker id="arr" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A5AABE"/></marker></defs>
+</svg>
+<div class="diagram-caption">The four movements of Book 1. Each rests on the one before it.</div>
+</div>
+</section>
+
+<!-- TABLE OF CONTENTS -->
+<section id="toc">
+<h2>Detailed Table of Contents</h2>
+<div class="toc-grid">
+  <div class="toc-card"><a href="#ch1">Chapter 1 — What React Is and Why It Exists</a><span>The problem React solves and the declarative idea.</span></div>
+  <div class="toc-card"><a href="#ch2">Chapter 2 — Thinking Declaratively</a><span>The single most important mindset shift in the book.</span></div>
+  <div class="toc-card"><a href="#ch3">Chapter 3 — Your First Component and JSX</a><span>The atomic unit of every React app.</span></div>
+  <div class="toc-card"><a href="#ch4">Chapter 4 — Props</a><span>How components receive their instructions. First TypeScript.</span></div>
+  <div class="toc-card"><a href="#ch5">Chapter 5 — State</a><span>When components need to remember something.</span></div>
+  <div class="toc-card"><a href="#ch6">Chapter 6 — Events</a><span>Responding to the user.</span></div>
+  <div class="toc-card"><a href="#ch7">Chapter 7 — Understanding Re-rendering</a><span>What actually happens when React updates the screen.</span></div>
+  <div class="toc-card"><a href="#ch8">Chapter 8 — Conditional Rendering</a><span>Showing and hiding as part of your description.</span></div>
+  <div class="toc-card"><a href="#ch9">Chapter 9 — Lists and Keys</a><span>Rendering collections safely.</span></div>
+  <div class="toc-card"><a href="#ch10">Chapter 10 — Composition</a><span>Building complex things from small pieces.</span></div>
+  <div class="toc-card"><a href="#ch11">Chapter 11 — useRef</a><span>The imperative escape hatch. Critical for R3F.</span></div>
+  <div class="toc-card"><a href="#ch12">Chapter 12 — useEffect</a><span>Living with the world outside React.</span></div>
+  <div class="toc-card"><a href="#ch13">Chapter 13 — useMemo</a><span>Making expensive work cheaper.</span></div>
+  <div class="toc-card"><a href="#ch14">Chapter 14 — TypeScript for React</a><span>A friendly reference for everything you've been learning.</span></div>
+  <div class="toc-card"><a href="#ch15">Chapter 15 — The Bridge to React Three Fiber</a><span>Synthesis and handoff to Book 2.</span></div>
+</div>
+</section>
+
+<!-- ================ CHAPTER 1 ================ -->
+<section class="chapter" id="ch1">
+<div class="chapter-num">Chapter 1</div>
+<h1 class="chapter-title">What React Is — and Why It Exists</h1>
+<p class="chapter-sub">Every tool solves a problem. Understanding React starts with understanding that problem.</p>
+
+<h3>1.1 The Problem React Solves</h3>
+<p>Imagine you are building a web page that shows the price of a house. Somewhere in your JavaScript, you hold a variable: <code>let price = 450000</code>. Somewhere in your HTML, there is a span that displays that price. Now imagine the price changes. You have a problem, and the problem is keeping these two things in sync.</p>
+<p>Before React, developers solved this by finding the span in the DOM and updating it by hand: <code>document.querySelector('.price').textContent = price</code>. This works for one value. It collapses under its own weight once you have twenty values, nested components, and a dozen places in your code that can update them. You end up with a nest of "when X changes, remember to also update Y, Z, and W" bugs. Whole careers have been lost to this nest.</p>
+<p>React's entire reason for existing is to make the nest go away. Instead of you manually updating the DOM whenever data changes, you describe what the UI should look like for a given piece of data, and React takes care of the updates.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>React is not a framework for styling or routing or anything else. React is a machine for keeping the screen in sync with your data, automatically, so you never have to manually find and update DOM elements again.</p></div>
+
+<h3>1.2 The Declarative Idea in One Sentence</h3>
+<p>Describe what the UI should look like for a given state, and let React figure out how to get there.</p>
+<p>This sentence is going to feel thin until you have written a few React components. But it is the whole idea. Hold on to it.</p>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>Think of React as a smart foreman. You hand the foreman a blueprint that says "for a price of $450,000, the page should look like this." The foreman walks the site, figures out exactly what needs to change to match the blueprint, and makes only those changes. You never touch a hammer.</p></div>
+
+<h3>1.3 React as a Runtime</h3>
+<p>React is a JavaScript library that runs in the browser. When your React code runs, React builds an in-memory representation of what the screen should look like. When your data changes, React builds a new representation, compares it to the old one, and applies only the differences to the real DOM. This process is called <em>reconciliation</em>, and it is what makes React feel almost magical when you first use it.</p>
+
+<h3>1.4 The Virtual DOM, Without the Hype</h3>
+<p>You have probably heard the phrase "Virtual DOM" said with reverence. It just means: React keeps a lightweight JavaScript object that mirrors the structure of the real DOM. It is not magic, it is not secret, it is just an optimization so React can figure out what to change without touching the slow real DOM until it has to.</p>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>React Three Fiber uses this exact same reconciler, but instead of syncing your description to the HTML DOM, it syncs it to a Three.js scene graph — a tree of 3D objects. The idea is identical: you describe the 3D scene, and R3F makes the world match your description. Every concept in this chapter transfers directly.</p></div>
+
+<h3>1.5 Chapter Recap</h3>
+<p>React exists because keeping UI in sync with data is hard, and React makes it easy by letting you describe the UI rather than manipulate it. The declarative idea — describe what, not how — is the foundation of everything else in this book.</p>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>In your own words, what problem does React solve that plain JavaScript struggles with?</li>
+  <li>What does "declarative" mean to you right now? Write a rough definition — we will return to it in Chapter 2.</li>
+  <li>If React Three Fiber uses the same reconciler as React, what do you think the "scene graph" might be analogous to?</li>
+</ol>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Explain React to a Friend</h4>
+<p>Write a paragraph of three to five sentences explaining React to a developer friend who still uses jQuery. Do not mention syntax, components, or JSX. Focus only on the problem React solves and why the declarative approach is better than manual DOM manipulation. The goal is to convince them that React is worth learning — not by listing features, but by naming the pain it removes.</p>
+</div>
+
+<div class="chap-nav"><a href="#intro"><span>Previous</span><strong>Introduction</strong></a><a class="next" href="#ch2"><span>Next</span><strong>Chapter 2 — Thinking Declaratively</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 2 ================ -->
+<section class="chapter" id="ch2">
+<div class="chapter-num">Chapter 2</div>
+<h1 class="chapter-title">Thinking Declaratively</h1>
+<p class="chapter-sub">This is the chapter that makes or breaks everything that follows. Read it slowly.</p>
+
+<h3>2.1 Imperative: Step by Step</h3>
+<p>Imperative code tells the computer how to do something, one step at a time. If I asked you to make a sandwich imperatively, I would say: open the bread bag, remove two slices, place them on the counter, open the jar, take a knife, dip it, spread it, and so on. Every step is explicit.</p>
+<p>Plain DOM code is imperative. Here is how you would toggle a class on a button when it is clicked:</p>
+
+<pre><code><span class="kw">const</span> btn = document.<span class="fn">querySelector</span>(<span class="str">'.btn'</span>);
+btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, () => {
+  btn.classList.<span class="fn">toggle</span>(<span class="str">'active'</span>);
+});</code></pre>
+
+<p>You find the button, you attach a listener, you toggle the class. Every action is your responsibility. If you have ten buttons, you do this ten times.</p>
+
+<h3>2.2 Declarative: Describe the Destination</h3>
+<p>Declarative code tells the computer what you want the result to look like and lets the computer figure out how to get there. If I asked you to make a sandwich declaratively, I would say: I want a peanut butter and jelly sandwich. Done.</p>
+<p>Here is the same button in React:</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">Button</span>() {
+  <span class="kw">const</span> [active, setActive] = <span class="fn">useState</span>(<span class="kw">false</span>);
+  <span class="kw">return</span> (
+    &lt;<span class="tag">button</span>
+      <span class="typ">className</span>={active ? <span class="str">'btn active'</span> : <span class="str">'btn'</span>}
+      <span class="typ">onClick</span>={() => <span class="fn">setActive</span>(!active)}
+    &gt;Click me&lt;/<span class="tag">button</span>&gt;
+  );
+}</code></pre>
+
+<p>You are not finding the button. You are not toggling a class. You are describing the button's appearance as a function of its state. React does the rest.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Imperative code says <em>how</em>. Declarative code says <em>what</em>. React components are <em>what</em>.</p></div>
+
+<h3>2.3 Declarations Change with Data</h3>
+<p>A common confusion: "if I just describe the UI once, how does it change?" The answer is that your description is a function of your data. When the data changes, React re-runs the description and updates the DOM to match. The description itself is static; its output changes because its inputs change.</p>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>Imperative code is like walking a friend through a city by giving them turn-by-turn directions. Declarative code is like handing them a map and saying "meet me at this café." The café does not move; the map does not change; but your friend can arrive from anywhere.</p></div>
+
+<h3>2.4 Why This Is Harder at First, Easier Later</h3>
+<p>Declarative thinking feels strange at first because you lose the sense of control. You are not pulling levers; you are describing a destination. But once the mindset clicks, something beautiful happens: your code stops fighting itself. You no longer chase "where does this class get added?" bugs. The description is the truth, and the truth is always up to date.</p>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Three.js in its raw form is extremely imperative. You create a scene, create a mesh, set its position, add it to the scene, remember to remove it later, manage disposal, and so on. React Three Fiber takes all of that and makes it declarative. You describe your 3D scene with JSX, and R3F handles the rest. Everything you learn about declarative thinking here transfers directly and saves you massive amounts of boilerplate in 3D.</p></div>
+
+<h3>2.5 Chapter Recap</h3>
+<p>Imperative code tells the computer how to work; declarative code describes the result. React is declarative. Your UI is a description that changes as your data changes. In three dimensions with R3F, the same idea applies to 3D scenes.</p>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>Give one example of imperative code you have written before you opened this book. Could it be written declaratively? What would that look like?</li>
+  <li>Why do you think declarative thinking is harder at first?</li>
+  <li>If your React component is "just a description," what makes it change over time?</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 2A</div>
+<p><strong>Translate this imperative pseudocode into declarative pseudocode:</strong></p>
+<pre><code><span class="com">// Imperative</span>
+<span class="kw">if</span> (user.isLoggedIn) {
+  showLogoutButton();
+  hideLoginButton();
+} <span class="kw">else</span> {
+  showLoginButton();
+  hideLogoutButton();
+}</code></pre>
+<div class="reveal">
+  <button class="reveal-btn" onclick="toggleReveal(this)">Show Hint</button>
+  <button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+  <div class="reveal-content hint"><p>Instead of telling the screen what to show and hide, describe what the UI should look like based on the value of <code>user.isLoggedIn</code>.</p></div>
+  <div class="reveal-content"><pre><code><span class="com">// Declarative</span>
+<span class="kw">return</span> user.isLoggedIn
+  ? &lt;<span class="tag">LogoutButton</span> /&gt;
+  : &lt;<span class="tag">LoginButton</span> /&gt;;</code></pre><p>No "show" or "hide" — just a description of which button exists for this state.</p></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Two Worlds, One Problem</h4>
+<p>Pick any simple interaction: a button that changes color on click, a counter that increments, or a panel that opens on hover. Write it twice — once in imperative pseudocode describing every DOM operation step by step, and once in declarative pseudocode as a description of the UI as a function of state. Read the two side by side. Note which one feels shorter, which one feels clearer, and which one you could imagine scaling to ten similar components without losing your mind.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch1"><span>Previous</span><strong>Ch 1 — What React Is</strong></a><a class="next" href="#ch3"><span>Next</span><strong>Ch 3 — Components & JSX</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 3 ================ -->
+<section class="chapter" id="ch3">
+<div class="chapter-num">Chapter 3</div>
+<h1 class="chapter-title">Your First Component and JSX</h1>
+<p class="chapter-sub">Components are the atoms of every React app. Nothing else makes sense without them.</p>
+
+<h3>3.1 What Is a Component?</h3>
+<p>A React component is a function that returns a description of some UI. That is the entire definition. When React runs your component, it gets back a description — a tree of elements — and it knows how to turn that tree into real DOM nodes on the screen.</p>
+<p>Components are reusable. If you define a <code>PropertyCard</code> component once, you can use it a hundred times in your app, each with different data. Components compose: a component can use other components inside itself, and those can use other components, and before long you have a tree — a component tree — that describes your whole application.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">Welcome</span>() {
+  <span class="kw">return</span> &lt;<span class="tag">h1</span>&gt;Hello, React!&lt;/<span class="tag">h1</span>&gt;;
+}</code></pre>
+
+<p>That is a real, complete, valid React component. It is a function. It returns a description of an h1 element. That is all.</p>
+
+<h3>3.2 JSX: HTML in Your JavaScript</h3>
+<p>That strange-looking tag in the return statement is JSX. JSX is a syntax extension that lets you write what looks like HTML inside JavaScript. Under the hood, a tool called a bundler (like Vite) transforms JSX into regular JavaScript function calls. You do not need to think about the transformation — just know that JSX is a convenient way to describe a tree of elements.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>JSX is not HTML. It looks like HTML so it feels familiar, but it is JavaScript. Every JSX tag becomes a function call that creates a description of an element.</p></div>
+
+<h3>3.3 The Rules of JSX</h3>
+<p>JSX has a few rules that will trip you up once if you do not see them now:</p>
+<ol>
+  <li>A component must return a single root element. If you want to return siblings, wrap them in a fragment: <code>&lt;&gt;...&lt;/&gt;</code>.</li>
+  <li>HTML's <code>class</code> attribute becomes <code>className</code> in JSX, because <code>class</code> is a reserved word in JavaScript.</li>
+  <li>All tags must be closed. Void elements like <code>img</code> and <code>br</code> become <code>&lt;img /&gt;</code> and <code>&lt;br /&gt;</code>.</li>
+  <li>JavaScript expressions inside JSX go in curly braces: <code>&lt;h1&gt;{title}&lt;/h1&gt;</code>.</li>
+  <li>Component names must start with a capital letter. Lowercase names are treated as HTML tags.</li>
+</ol>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Writing <code>function propertyCard()</code> with a lowercase name. React will silently treat your component as an HTML tag and not render it. Always capitalize component function names.</p></div>
+
+<h3>3.4 Nesting Components: The Tree Begins</h3>
+<p>Once you have components, you can use them inside other components just like HTML tags:</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">PropertyCard</span>() {
+  <span class="kw">return</span> &lt;<span class="tag">div</span>&gt;A property&lt;/<span class="tag">div</span>&gt;;
+}
+
+<span class="kw">function</span> <span class="fn">App</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">h1</span>&gt;My Portfolio&lt;/<span class="tag">h1</span>&gt;
+      &lt;<span class="tag">PropertyCard</span> /&gt;
+      &lt;<span class="tag">PropertyCard</span> /&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+
+<p>The component tree here is: App contains a div, a heading, and two PropertyCards. Learning to see your UI as a tree is one of the most important skills in React.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 500 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="210" y="20" width="80" height="40" rx="6" fill="#7B68EE" stroke="#a5b4fc" stroke-width="2"/>
+  <text x="250" y="45" fill="#fff" font-family="Inter" font-size="13" font-weight="600" text-anchor="middle">App</text>
+  <line x1="250" y1="60" x2="100" y2="110" stroke="#4a4d63" stroke-width="2"/>
+  <line x1="250" y1="60" x2="250" y2="110" stroke="#4a4d63" stroke-width="2"/>
+  <line x1="250" y1="60" x2="400" y2="110" stroke="#4a4d63" stroke-width="2"/>
+  <rect x="60" y="110" width="80" height="40" rx="6" fill="#161824" stroke="#2DD4BF" stroke-width="2"/>
+  <text x="100" y="135" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">h1</text>
+  <rect x="210" y="110" width="80" height="40" rx="6" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="250" y="135" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">PropertyCard</text>
+  <rect x="360" y="110" width="80" height="40" rx="6" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="400" y="135" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">PropertyCard</text>
+  <text x="250" y="230" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">The component tree for App</text>
+</svg>
+<div class="diagram-caption">Every React app is a tree of components. You are the architect of that tree.</div>
+</div>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>Components are LEGO bricks. Small, self-contained, reusable. You snap them together to build bigger things. The component tree is what you end up with when you are done building.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, your 3D scene is also a component tree. The root is the Canvas component. Inside it, you nest meshes, groups, lights, and cameras — all of them components. The tree you see in this chapter is the same idea you will see in a 3D scene in Book 2. The only difference is the names of the tags.</p></div>
+
+<h3>3.5 Chapter Recap</h3>
+<p>A React component is a function that returns a JSX description of some UI. JSX looks like HTML but is really JavaScript. Components can nest inside each other to form a tree. The component tree is the structural backbone of every React app — and every R3F scene.</p>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>In plain words, what is a component?</li>
+  <li>Why must component names start with a capital letter?</li>
+  <li>Draw the component tree for a page you have seen recently. Does it feel like a tree?</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 3A — Guided</div>
+<p>Write a component called <code>PropertyCard</code> that renders a div containing an h2 with the text "Modern Loft" and a paragraph with the text "Downtown · 2 bed".</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">function</span> <span class="fn">PropertyCard</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">h2</span>&gt;Modern Loft&lt;/<span class="tag">h2</span>&gt;
+      &lt;<span class="tag">p</span>&gt;Downtown · 2 bed&lt;/<span class="tag">p</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 3B — Practice</div>
+<p>Identify and fix the three mistakes in this JSX:</p>
+<pre><code><span class="kw">function</span> <span class="fn">broken</span>() {
+  <span class="kw">return</span>
+    &lt;<span class="tag">h1</span> class=<span class="str">"title"</span>&gt;Hi&lt;/<span class="tag">h1</span>&gt;
+    &lt;<span class="tag">p</span>&gt;Paragraph
+}</code></pre>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><p>Three problems: lowercase component name, <code>class</code> instead of <code>className</code>, missing wrapping element, and the <code>p</code> tag is not closed. Fixed:</p>
+<pre><code><span class="kw">function</span> <span class="fn">Fixed</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="kw">div</span>&gt;
+      &lt;<span class="tag">h1</span> <span class="typ">className</span>=<span class="str">"title"</span>&gt;Hi&lt;/<span class="tag">h1</span>&gt;
+      &lt;<span class="tag">p</span>&gt;Paragraph&lt;/<span class="tag">p</span>&gt;
+    &lt;/<span class="kw">div</span>&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Break It into a Tree</h4>
+<p>Sketch on paper or in a digital notebook a simple property listing page you might build. Imagine: a header with a logo, a grid of property cards, and a footer. Do not write code. Instead, identify each component you would create, name it, and draw the tree hierarchy. For each component, write one line: what does it display? This is a design exercise, not a coding one. Good React developers think in trees before they type.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch2"><span>Previous</span><strong>Ch 2 — Declarative Thinking</strong></a><a class="next" href="#ch4"><span>Next</span><strong>Ch 4 — Props</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 4 ================ -->
+<section class="chapter" id="ch4">
+<div class="chapter-num">Chapter 4</div>
+<h1 class="chapter-title">Props — Giving Components Their Instructions</h1>
+<p class="chapter-sub">Components are functions. Props are their arguments.</p>
+
+<h3>4.1 The Problem Props Solve</h3>
+<p>In the last chapter you wrote a PropertyCard that rendered "Modern Loft." If you needed five different cards with five different titles, you would have to write five different components. That is obviously silly. Props are the solution: they let a single component behave differently based on the data passed into it.</p>
+
+<h3>4.2 Passing Props from the Caller</h3>
+
+<pre><code>&lt;<span class="tag">PropertyCard</span> <span class="typ">title</span>=<span class="str">"Modern Loft"</span> <span class="typ">price</span>={<span class="num">450000</span>} /&gt;
+&lt;<span class="tag">PropertyCard</span> <span class="typ">title</span>=<span class="str">"Coastal Villa"</span> <span class="typ">price</span>={<span class="num">1200000</span>} /&gt;</code></pre>
+
+<p>Each instance gets different data. To the caller, props look just like HTML attributes.</p>
+
+<h3>4.3 Receiving Props Inside the Component</h3>
+<p>Inside the component function, props arrive as the first argument — an object with one property per prop.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">PropertyCard</span>({ title, price }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">h2</span>&gt;{title}&lt;/<span class="tag">h2</span>&gt;
+      &lt;<span class="tag">p</span>&gt;${price.<span class="fn">toLocaleString</span>()}&lt;/<span class="tag">p</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+
+<p>The curly braces after the function name are destructuring — a JavaScript feature that pulls the <code>title</code> and <code>price</code> fields out of the props object. You could also write <code>function PropertyCard(props)</code> and then use <code>props.title</code> and <code>props.price</code>, but destructuring is cleaner and is what you will see in all modern React code.</p>
+
+<h3>4.4 Props Are Read-Only</h3>
+<p>You must not modify a prop inside your component. Props are a one-way message from parent to child, and modifying them would break the predictable data flow that makes React easy to reason about.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Props flow down, never sideways, never up. A component receives props from its parent and uses them to decide what to render. It does not change them.</p></div>
+
+<h3>4.5 The Children Prop</h3>
+<p>There is one special prop: <code>children</code>. It is whatever you put between the opening and closing tags of a component. It is how you build wrappers and layouts.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">Card</span>({ children }) {
+  <span class="kw">return</span> &lt;<span class="tag">div</span> <span class="typ">className</span>=<span class="str">"card"</span>&gt;{children}&lt;/<span class="tag">div</span>&gt;;
+}
+
+<span class="com">// Usage:</span>
+&lt;<span class="tag">Card</span>&gt;
+  &lt;<span class="tag">h2</span>&gt;Anything in here&lt;/<span class="tag">h2</span>&gt;
+&lt;/<span class="tag">Card</span>&gt;</code></pre>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>A component is a function; props are its arguments; the return value is a description of the UI for those arguments. Same component, different props, different outputs.</p></div>
+
+<h3>4.6 TypeScript Tip — Typing Props with an Interface</h3>
+<p>This is the first place TypeScript really starts to help. You can declare exactly what props a component expects:</p>
+
+<pre><code><span class="kw">interface</span> <span class="typ">PropertyCardProps</span> {
+  title: <span class="typ">string</span>;
+  price: <span class="typ">number</span>;
+  location?: <span class="typ">string</span>; <span class="com">// optional</span>
+}
+
+<span class="kw">function</span> <span class="fn">PropertyCard</span>({ title, price, location }: PropertyCardProps) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">h2</span>&gt;{title}&lt;/<span class="tag">h2</span>&gt;
+      &lt;<span class="tag">p</span>&gt;{location ?? <span class="str">'Unknown location'</span>}&lt;/<span class="tag">p</span>&gt;
+      &lt;<span class="tag">p</span>&gt;${price.<span class="fn">toLocaleString</span>()}&lt;/<span class="tag">p</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>The <code>?</code> after a field name means the prop is optional. TypeScript will now catch any call to <code>PropertyCard</code> that forgets <code>title</code> or passes the wrong type, before your code even runs.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Every 3D object in R3F takes props. A mesh's position is a prop. A material's color is a prop. A light's intensity is a prop. The typed-props pattern you just learned is the exact same pattern you will use a hundred times in Book 2 when describing 3D objects.</p></div>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>Why are props read-only?</li>
+  <li>What is the difference between destructured props and using the props object directly?</li>
+  <li>When would you use the children prop?</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 4A</div>
+<p>Write a typed <code>PropertyCard</code> component with props for <code>title</code>, <code>price</code>, <code>bedrooms</code>, and an optional <code>isFeatured</code> boolean. Render all the info as a card.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">interface</span> <span class="typ">Props</span> {
+  title: <span class="typ">string</span>;
+  price: <span class="typ">number</span>;
+  bedrooms: <span class="typ">number</span>;
+  isFeatured?: <span class="typ">boolean</span>;
+}
+
+<span class="kw">function</span> <span class="fn">PropertyCard</span>({ title, price, bedrooms, isFeatured }: Props) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      &lt;<span class="tag">h2</span>&gt;{title} {isFeatured && <span class="str">'⭐'</span>}&lt;/<span class="tag">h2</span>&gt;
+      &lt;<span class="tag">p</span>&gt;{bedrooms} bd · ${price.<span class="fn">toLocaleString</span>()}&lt;/<span class="tag">p</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Build the First PropertyCard</h4>
+<p>Create a fully typed <code>PropertyCard</code> component with props for title, price, bedrooms, and location. Render three instances in your App with different data. Notice what stays the same (the structure) and what changes (the props). This component will grow with you across the rest of the book.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch3"><span>Previous</span><strong>Ch 3 — Components & JSX</strong></a><a class="next" href="#ch5"><span>Next</span><strong>Ch 5 — State</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 5 ================ -->
+<section class="chapter" id="ch5">
+<div class="chapter-num">Chapter 5</div>
+<h1 class="chapter-title">State — When Components Need to Remember</h1>
+<p class="chapter-sub">Props come from outside. State lives inside. That distinction is the whole chapter.</p>
+
+<h3>5.1 Why State Exists</h3>
+<p>Props let a component receive data from its parent, but some data does not come from the parent. It belongs to the component itself. Whether a card is expanded, whether a button is pressed, whether an input holds the value the user just typed — these are internal to the component. State is React's mechanism for holding this internal data and reacting when it changes.</p>
+
+<h3>5.2 Introducing useState</h3>
+
+<pre><code><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">function</span> <span class="fn">Counter</span>() {
+  <span class="kw">const</span> [count, setCount] = <span class="fn">useState</span>(<span class="num">0</span>);
+  <span class="kw">return</span> (
+    &lt;<span class="tag">button</span> <span class="typ">onClick</span>={() => <span class="fn">setCount</span>(count + <span class="num">1</span>)}&gt;
+      Clicked {count} times
+    &lt;/<span class="tag">button</span>&gt;
+  );
+}</code></pre>
+
+<p><code>useState</code> is a hook — a special function React provides for giving components powers they would not otherwise have. It returns a pair: the current state value and a function to update it. You destructure them into local variables, conventionally named <code>[thing, setThing]</code>.</p>
+
+<h3>5.3 What Happens When You Call setCount</h3>
+<p>Calling <code>setCount</code> does two things. It updates the stored value, and it tells React: "this component should re-render." React then re-runs your component function, which produces a new description of the UI based on the new state value. React compares the new description to the old one and updates only what changed.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Setting state is not assignment. It is a request to React to re-render the component with a new value. Your component function runs again, top to bottom, each time state changes.</p></div>
+
+<h3>5.4 State vs Props</h3>
+<table>
+<tr><th>Props</th><th>State</th></tr>
+<tr><td>Come from the parent</td><td>Owned by the component</td></tr>
+<tr><td>Read-only inside the component</td><td>Updatable via setter</td></tr>
+<tr><td>Same for every render unless parent changes them</td><td>Persists across renders; changes when setter is called</td></tr>
+<tr><td>Think of them as function arguments</td><td>Think of them as instance memory</td></tr>
+</table>
+
+<h3>5.5 State Is Private Per Instance</h3>
+<p>If you render five <code>Counter</code> components, each one has its own independent count. State is local to the component instance — not shared between instances. This is how you can have ten PropertyCards on a page, each with its own favorited state, without any of them interfering with the others.</p>
+
+<h3>5.6 Lifting State Up</h3>
+<p>Sometimes two sibling components need to share the same piece of state. For example, a filter bar and a property grid both need to know the current search term. The solution is to move the state up to their nearest common parent and pass it down as props. This is called "lifting state up" and it is a recurring pattern.</p>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>State is a component's personal notebook. Nobody else can read it. When the component writes a new page, it asks React to redraw what it shows the world.</p></div>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Mutating state directly instead of calling the setter. <code>count++</code> or <code>list.push(x)</code> will not cause React to re-render. You must call <code>setCount</code> or <code>setList([...list, x])</code>. Always use the setter; always produce a new value rather than mutating the old one.</p></div>
+
+<h3>5.7 TypeScript Tip — Typing State</h3>
+<p>Most of the time, TypeScript can infer the type of state from the initial value:</p>
+<pre><code><span class="kw">const</span> [count, setCount] = <span class="fn">useState</span>(<span class="num">0</span>); <span class="com">// inferred as number</span>
+<span class="kw">const</span> [name, setName] = <span class="fn">useState</span>(<span class="str">''</span>); <span class="com">// inferred as string</span></code></pre>
+<p>When the initial value does not fully describe the type — for example, state that might be a string or null — you can make it explicit:</p>
+<pre><code><span class="kw">const</span> [user, setUser] = <span class="fn">useState</span>&lt;<span class="typ">string</span> | <span class="typ">null</span>&gt;(<span class="kw">null</span>);</code></pre>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, state drives almost every kind of interactivity. Hover state decides whether a building glows. Selected state decides whether a room shows its details. A toggled lights state decides whether a scene is illuminated. Everything you learn here applies directly: state triggers re-renders, re-renders update the description, and the 3D scene changes to match.</p></div>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>What is the difference between state and props in your own words?</li>
+  <li>Why does calling the setter cause a re-render?</li>
+  <li>Why is mutating state directly a bad idea?</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 5A</div>
+<p>Build a <code>FavoriteButton</code> component that shows a filled heart or an empty heart based on state. Clicking the button toggles between them.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">function</span> <span class="fn">FavoriteButton</span>() {
+  <span class="kw">const</span> [favored, setFavored] = <span class="fn">useState</span>(<span class="kw">false</span>);
+  <span class="kw">return</span> (
+    &lt;<span class="tag">button</span> <span class="typ">onClick</span>={() => <span class="fn">setFavored</span>(!favored)}&gt;
+      {favored ? <span class="str">'♥'</span> : <span class="str">'♡'</span>}
+    &lt;/<span class="tag">button</span>&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Add Favoriting to PropertyCard</h4>
+<p>Extend your <code>PropertyCard</code> from the previous chapter. Add a favoriting heart button. The heart should be toggleable. Each card should have its own independent favorite state. Confirm that clicking the heart on one card does not affect others — this proves that state is local to each instance.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch4"><span>Previous</span><strong>Ch 4 — Props</strong></a><a class="next" href="#ch6"><span>Next</span><strong>Ch 6 — Events</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 6 ================ -->
+<section class="chapter" id="ch6">
+<div class="chapter-num">Chapter 6</div>
+<h1 class="chapter-title">Events — Responding to the World</h1>
+<p class="chapter-sub">State is how components remember. Events are how they listen.</p>
+
+<h3>6.1 Events in React</h3>
+<p>React's event system is a thin layer over the browser's native events. You attach event handlers in JSX using camelCase attributes — <code>onClick</code>, <code>onChange</code>, <code>onPointerOver</code> — and you pass a function as the value. When the event fires, React calls your function with a SyntheticEvent object that behaves nearly identically to a native browser event.</p>
+
+<pre><code>&lt;<span class="tag">button</span> <span class="typ">onClick</span>={() => <span class="fn">alert</span>(<span class="str">'clicked'</span>)}&gt;Click me&lt;/<span class="tag">button</span>&gt;</code></pre>
+
+<h3>6.2 Handlers as Functions</h3>
+<p>You pass a function, not a function call. This is the most common beginner stumble.</p>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p><code>onClick={handleClick()}</code> calls <code>handleClick</code> immediately when the component renders, and passes the return value (probably undefined) as the handler. You almost always want <code>onClick={handleClick}</code> — a reference to the function — or <code>onClick={() => handleClick(arg)}</code> if you need to pass arguments.</p></div>
+
+<h3>6.3 Connecting Events to State</h3>
+<p>The full loop: user triggers an event, your handler updates state, state change causes a re-render, the new description replaces the old. This loop is the entire interactive model of React.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 560 180" xmlns="http://www.w3.org/2000/svg">
+  <rect x="20" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#2DD4BF" stroke-width="2"/>
+  <text x="75" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">1. User Event</text>
+  <text x="75" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">click, hover</text>
+  <rect x="160" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="215" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">2. Handler</text>
+  <text x="215" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">calls setState</text>
+  <rect x="300" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#7B68EE" stroke-width="2"/>
+  <text x="355" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">3. Re-render</text>
+  <text x="355" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">React reruns</text>
+  <rect x="440" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#34D399" stroke-width="2"/>
+  <text x="495" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">4. UI Updates</text>
+  <text x="495" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">DOM changes</text>
+  <path d="M130 90 L160 90" stroke="#A5AABE" stroke-width="2" marker-end="url(#arr2)"/>
+  <path d="M270 90 L300 90" stroke="#A5AABE" stroke-width="2" marker-end="url(#arr2)"/>
+  <path d="M410 90 L440 90" stroke="#A5AABE" stroke-width="2" marker-end="url(#arr2)"/>
+  <defs><marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#A5AABE"/></marker></defs>
+</svg>
+<div class="diagram-caption">The React interaction loop. Memorize this — it is the heartbeat of every React app.</div>
+</div>
+
+<h3>6.4 TypeScript Tip — Typing Events</h3>
+<pre><code><span class="kw">function</span> <span class="fn">handleClick</span>(e: React.MouseEvent&lt;<span class="typ">HTMLButtonElement</span>&gt;) {
+  <span class="fn">console</span>.<span class="fn">log</span>(e.currentTarget);
+}</code></pre>
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>If you never use the event object inside a handler, you do not need to type it at all. Type it only when you use it.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>R3F attaches pointer events directly to 3D meshes: <code>onClick</code>, <code>onPointerOver</code>, <code>onPointerOut</code>. The pattern is identical to DOM events. You get a ThreeEvent object instead of a MouseEvent, but it plays the same role. If you can wire up a button click here, you can wire up a 3D mesh click in Book 2.</p></div>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>Why do you pass a function reference instead of calling it?</li>
+  <li>Describe the full loop from event to UI update in one sentence.</li>
+  <li>Where does state fit into the event loop?</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 6A</div>
+<p>Make a card that highlights (changes border color) when the mouse enters it and un-highlights when the mouse leaves. Use <code>onMouseEnter</code> and <code>onMouseLeave</code> and a state boolean.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">function</span> <span class="fn">HoverCard</span>() {
+  <span class="kw">const</span> [hovered, setHovered] = <span class="fn">useState</span>(<span class="kw">false</span>);
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>
+      <span class="typ">onMouseEnter</span>={() => <span class="fn">setHovered</span>(<span class="kw">true</span>)}
+      <span class="typ">onMouseLeave</span>={() => <span class="fn">setHovered</span>(<span class="kw">false</span>)}
+      <span class="typ">style</span>={{ border: hovered ? <span class="str">'2px solid violet'</span> : <span class="str">'2px solid gray'</span> }}
+    &gt;Hover me&lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Interactive PropertyCard</h4>
+<p>Make your PropertyCard respond to pointer events. Hovering highlights it (a subtle border or shadow). Clicking it selects it and logs the title to the console. Combine with your favorite-heart state from Chapter 5. All typed in TypeScript.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch5"><span>Previous</span><strong>Ch 5 — State</strong></a><a class="next" href="#ch7"><span>Next</span><strong>Ch 7 — Re-rendering</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 7 ================ -->
+<section class="chapter" id="ch7">
+<div class="chapter-num">Chapter 7</div>
+<h1 class="chapter-title">Understanding Re-rendering</h1>
+<p class="chapter-sub">Most React courses bury this chapter. For R3F, it comes now.</p>
+
+<h3>7.1 The Render Cycle in Three Phases</h3>
+<p>When you call <code>setState</code>, React goes through three phases. First, the <em>render phase</em>: React calls your component function, and you return a new JSX description of the UI. Second, the <em>reconcile phase</em>: React compares the new description to the previous one and figures out what actually changed. Third, the <em>commit phase</em>: React applies those changes to the real DOM.</p>
+<p>The render phase is fast because it is just running functions and comparing JavaScript objects. The commit phase is slow because it touches the real DOM. React's design is intentional: do as much work as possible in the fast phase, and as little as possible in the slow one.</p>
+
+<h3>7.2 What Triggers a Re-render</h3>
+<p>A component re-renders when:</p>
+<ul>
+  <li>Its own state changes (you called a setter).</li>
+  <li>Its props change (the parent passed different values).</li>
+  <li>Its parent re-renders (by default, children re-render too).</li>
+</ul>
+<p>This last point is the one that surprises beginners. If a parent re-renders, all its children re-render as well, even if their props did not change. React then compares each child's new output to the old one and usually finds they are identical, so nothing actually hits the DOM. The render function runs, but the DOM does not update.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>"Re-render" does not mean "the DOM updated." It means "React called the component function again." Whether the DOM changes depends on whether the new output differs from the old.</p></div>
+
+<h3>7.3 Why This Matters for 3D</h3>
+<p>A 3D scene runs at 60 frames per second. If you accidentally cause a re-render every frame — for example, by driving an animation with state — you will bring your scene to a crawl. In R3F, you learn to use <code>useRef</code> and the <code>useFrame</code> hook instead of state for animation. That is a Book 2 topic, but the intuition starts here: understand what triggers a re-render so you can avoid the ones you do not want.</p>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>Think of React as a photographer. Every render is a new photograph of your UI. The reconciler compares the new photo to the last one and only updates what changed. The commit is the part where the developed photo gets pinned to the wall.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>R3F has two separate loops: React's render cycle (for structural changes) and the animation loop via <code>useFrame</code> (for per-frame updates). Understanding that they are different is one of the most important realizations for R3F beginners. Every frame of animation should NOT trigger a React re-render — that would be disastrous for performance.</p></div>
+
+<h3>Reflection Questions</h3>
+<ol>
+  <li>Name the three phases of a React render.</li>
+  <li>What causes a child component to re-render?</li>
+  <li>Does re-rendering always mean the DOM updates? Explain.</li>
+</ol>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 7A</div>
+<p>Given a parent that contains three children, and the parent calls <code>setState</code> on itself, how many components re-render? Does it depend on the children's props?</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><p>All four components re-render: the parent (because its state changed) and all three children (because when a parent re-renders, its children re-render by default). The DOM only updates where the output actually changed, but the functions all run.</p></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Diagram the Re-render Flow</h4>
+<p>On paper, draw the component tree of your PropertyCard exercise. Mark where state lives. Now imagine the user clicks the favorite heart on one card. Draw arrows showing which components re-render. Annotate why each one re-renders or does not. Explain the diagram to yourself in plain English.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch6"><span>Previous</span><strong>Ch 6 — Events</strong></a><a class="next" href="#ch8"><span>Next</span><strong>Ch 8 — Conditional Rendering</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 8 ================ -->
+<section class="chapter" id="ch8">
+<div class="chapter-num">Chapter 8</div>
+<h1 class="chapter-title">Conditional Rendering</h1>
+<p class="chapter-sub">Your description includes every possible UI. Conditions pick one.</p>
+
+<h3>8.1 Conditions Are Part of the Description</h3>
+<p>In a declarative world, conditional rendering means "based on this state, the UI looks like this; otherwise it looks like that." You do not write code that shows or hides elements. You write a description whose output depends on data.</p>
+
+<h3>8.2 The Common Patterns</h3>
+
+<pre><code><span class="com">// Ternary</span>
+{isSold ? &lt;<span class="tag">SoldBadge</span> /&gt; : &lt;<span class="tag">AvailableBadge</span> /&gt;}
+
+<span class="com">// Logical AND (for "show only if")</span>
+{isFeatured && &lt;<span class="tag">FeaturedTag</span> /&gt;}
+
+<span class="com">// Early return</span>
+<span class="kw">if</span> (!property) <span class="kw">return</span> &lt;<span class="tag">Loading</span> /&gt;;
+<span class="kw">return</span> &lt;<span class="tag">Card</span> ... /&gt;;</code></pre>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>The logical AND pattern has a famous pitfall: <code>{count && &lt;Badge /&gt;}</code> will render the literal <code>0</code> on screen when count is zero, because <code>0</code> is falsy but is still a valid React child. Use <code>{count > 0 && &lt;Badge /&gt;}</code> or a ternary to be safe.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, conditional rendering lets you show and hide 3D objects, swap materials, toggle labels, and manage visibility without touching Three.js directly. The same patterns you learn here work for 3D objects.</p></div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 8A</div>
+<p>Write a component that shows "Sold" in red if <code>isSold</code> is true, otherwise shows "Available" in green. Use a ternary.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code>{isSold
+  ? &lt;<span class="tag">span</span> <span class="typ">style</span>={{color:<span class="str">'red'</span>}}&gt;Sold&lt;/<span class="tag">span</span>&gt;
+  : &lt;<span class="tag">span</span> <span class="typ">style</span>={{color:<span class="str">'green'</span>}}&gt;Available&lt;/<span class="tag">span</span>&gt;}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Conditional Badges on PropertyCard</h4>
+<p>Add to your PropertyCard: a "Sold" overlay that only appears when <code>isSold</code> is true, a "Featured" badge that only appears when <code>isFeatured</code> is true, and a placeholder message when no image URL is provided. All conditionally rendered, all typed.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch7"><span>Previous</span><strong>Ch 7 — Re-rendering</strong></a><a class="next" href="#ch9"><span>Next</span><strong>Ch 9 — Lists & Keys</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 9 ================ -->
+<section class="chapter" id="ch9">
+<div class="chapter-num">Chapter 9</div>
+<h1 class="chapter-title">Lists and Keys</h1>
+<p class="chapter-sub">Every real app renders arrays of data. Do it carelessly and strange bugs appear.</p>
+
+<h3>9.1 Rendering a List with .map()</h3>
+<p>To render a collection, you turn an array of data into an array of elements using JavaScript's <code>.map()</code>:</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">PropertyList</span>({ properties }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      {properties.<span class="fn">map</span>(p =&gt; (
+        &lt;<span class="tag">PropertyCard</span> <span class="typ">key</span>={p.id} <span class="typ">title</span>={p.title} <span class="typ">price</span>={p.price} /&gt;
+      ))}
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+
+<h3>9.2 The key Prop</h3>
+<p>Every element in a list needs a unique <code>key</code> prop. React uses keys to match items between renders — to know which items are new, which were removed, and which just moved. Without keys, React may reuse DOM nodes for the wrong items and your UI will develop subtle bugs.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>A good key is stable, unique, and comes from the data itself — usually an <code>id</code> field. Avoid using the array index as a key if the list can be reordered or filtered.</p></div>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Using <code>index</code> as a key in a list that can be sorted, filtered, or have items inserted at the start. The index belongs to the position in the array, not to the item, so React ends up matching the wrong items and strange state bugs appear.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In your real estate portfolio, you will map over an array of building data to render a 3D building for each. The same key pattern applies. Good keys mean R3F can efficiently update, add, and remove 3D objects as the data changes.</p></div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 9A</div>
+<p>Given an array of property objects with an <code>id</code> field, render a PropertyCard for each.</p>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Build PropertyGrid</h4>
+<p>Create a <code>PropertyGrid</code> component that accepts an array of property objects as a prop and renders a grid of <code>PropertyCard</code> components. Handle the empty array case with a friendly "No properties available" message. Use proper keys. Type everything.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch8"><span>Previous</span><strong>Ch 8 — Conditional Rendering</strong></a><a class="next" href="#ch10"><span>Next</span><strong>Ch 10 — Composition</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 10 ================ -->
+<section class="chapter" id="ch10">
+<div class="chapter-num">Chapter 10</div>
+<h1 class="chapter-title">Composition</h1>
+<p class="chapter-sub">Complex UIs are just small pieces nested inside bigger pieces.</p>
+
+<h3>10.1 Composition in One Sentence</h3>
+<p>Composition is the practice of building complex components by combining smaller ones. Instead of writing one giant component that does everything, you write many small components that each do one thing, and nest them to build the whole. React has no inheritance — composition is its only structural tool, and it is enough.</p>
+
+<h3>10.2 The children Prop in Depth</h3>
+<p>The children prop is how you write wrapper components — shells that accept arbitrary content inside them.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">Panel</span>({ title, children }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">section</span> <span class="typ">className</span>=<span class="str">"panel"</span>&gt;
+      &lt;<span class="tag">h3</span>&gt;{title}&lt;/<span class="tag">h3</span>&gt;
+      {children}
+    &lt;/<span class="tag">section</span>&gt;
+  );
+}
+
+&lt;<span class="tag">Panel</span> <span class="typ">title</span>=<span class="str">"Featured"</span>&gt;
+  &lt;<span class="tag">PropertyGrid</span> <span class="typ">properties</span>={featured} /&gt;
+&lt;/<span class="tag">Panel</span>&gt;</code></pre>
+
+<h3>10.3 The Scene Graph Is Composition</h3>
+<p>This is the most important preview in the book. A 3D scene in R3F is nothing more than a composition of components. A building is composed of floors. A floor is composed of rooms. A room is composed of walls, furniture, lights. You compose 3D scenes exactly the way you compose UI.</p>
+
+<div class="diagram">
+<svg viewBox="0 0 600 260" xmlns="http://www.w3.org/2000/svg">
+  <rect x="240" y="10" width="120" height="36" rx="6" fill="#7B68EE" stroke="#a5b4fc" stroke-width="2"/>
+  <text x="300" y="33" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">Canvas</text>
+  <line x1="300" y1="46" x2="300" y2="68" stroke="#4a4d63" stroke-width="2"/>
+  <rect x="240" y="68" width="120" height="36" rx="6" fill="#161824" stroke="#2DD4BF" stroke-width="2"/>
+  <text x="300" y="91" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">Scene Group</text>
+  <line x1="300" y1="104" x2="150" y2="140" stroke="#4a4d63" stroke-width="2"/>
+  <line x1="300" y1="104" x2="300" y2="140" stroke="#4a4d63" stroke-width="2"/>
+  <line x1="300" y1="104" x2="450" y2="140" stroke="#4a4d63" stroke-width="2"/>
+  <rect x="100" y="140" width="100" height="36" rx="6" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="150" y="163" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">Building A</text>
+  <rect x="250" y="140" width="100" height="36" rx="6" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="300" y="163" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">Building B</text>
+  <rect x="400" y="140" width="100" height="36" rx="6" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
+  <text x="450" y="163" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle">Building C</text>
+  <line x1="150" y1="176" x2="150" y2="200" stroke="#4a4d63" stroke-width="2"/>
+  <rect x="110" y="200" width="80" height="30" rx="6" fill="#161824" stroke="#34D399" stroke-width="2"/>
+  <text x="150" y="220" fill="#fff" font-family="Inter" font-size="11" text-anchor="middle">Mesh</text>
+  <text x="300" y="255" fill="#A5AABE" font-family="Inter" font-size="11" text-anchor="middle">Your scene graph is just a component tree in 3D</text>
+</svg>
+<div class="diagram-caption">In R3F, composition and scene graph are the same idea wearing different clothes.</div>
+</div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Everything you just learned about composition is the most important concept in this entire book for R3F preparation. A scene graph is a component tree. Nothing more. When you see nested R3F components in Book 2, remember: this is composition, and you already know composition.</p></div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Architect the Portfolio</h4>
+<p>Design the full component tree for your future 3D real estate portfolio. Sketch it: what components will exist? Which ones hold state? Which are pure presentation? Do not write code. Draw the tree and annotate it. This is architectural thinking, and it is a skill.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch9"><span>Previous</span><strong>Ch 9 — Lists & Keys</strong></a><a class="next" href="#ch11"><span>Next</span><strong>Ch 11 — useRef</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 11 ================ -->
+<section class="chapter" id="ch11">
+<div class="chapter-num">Chapter 11</div>
+<h1 class="chapter-title">useRef — The Imperative Escape Hatch</h1>
+<p class="chapter-sub">Sometimes you need to reach through React and touch something directly. useRef is how.</p>
+
+<h3>11.1 Why useRef Exists</h3>
+<p>React prefers you describe things declaratively. But some things cannot be fully described: focusing an input, measuring a DOM element's size, holding a value that should survive re-renders but not trigger them. For these, React gives you <code>useRef</code> — a controlled hole through the abstraction.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">AutoFocusInput</span>() {
+  <span class="kw">const</span> inputRef = <span class="fn">useRef</span>&lt;<span class="typ">HTMLInputElement</span>&gt;(<span class="kw">null</span>);
+  <span class="fn">useEffect</span>(() => {
+    inputRef.current?.<span class="fn">focus</span>();
+  }, []);
+  <span class="kw">return</span> &lt;<span class="tag">input</span> <span class="typ">ref</span>={inputRef} /&gt;;
+}</code></pre>
+
+<h3>11.2 The Ref Does Not Trigger a Re-render</h3>
+<p>This is the point of refs. You can update <code>ref.current</code> freely and React will not re-render the component. For values that should persist across renders but whose changes should not redraw the UI, refs are the right tool.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>A ref is a box that holds something. The box is stable across renders. What you put in the box can change without causing a re-render. This is exactly the opposite of state.</p></div>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>State is for data the user sees. Refs are for data the code needs to remember but the user does not directly see. If changing a value should redraw the screen, use state. If it should not, use a ref.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>This chapter is one of the most directly critical for R3F. In R3F, you attach a ref to a mesh and use it to access the underlying Three.js object. Inside the <code>useFrame</code> hook, you then mutate the mesh's position and rotation directly — at 60 frames per second — without ever touching React state. If you used state for animation, you would trigger sixty re-renders per second and crash the browser. <code>useRef</code> is the reason this works. Please re-read this chapter before you open Book 2.</p></div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 11A</div>
+<p>Create a component with an input field and a button. Clicking the button focuses the input. Use useRef.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">function</span> <span class="fn">FocusDemo</span>() {
+  <span class="kw">const</span> ref = <span class="fn">useRef</span>&lt;<span class="typ">HTMLInputElement</span>&gt;(<span class="kw">null</span>);
+  <span class="kw">return</span> (
+    &lt;&gt;
+      &lt;<span class="tag">input</span> <span class="typ">ref</span>={ref} /&gt;
+      &lt;<span class="tag">button</span> <span class="typ">onClick</span>={() => ref.current?.<span class="fn">focus</span>()}&gt;
+        Focus
+      &lt;/<span class="tag">button</span>&gt;
+    &lt;/&gt;
+  );
+}</code></pre></div>
+</div>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Remember Without Re-rendering</h4>
+<p>Add a ref to your PropertyGrid that stores the title of the last-clicked property without updating visible UI. Discuss: why is this the wrong use for state, and the right use for a ref?</p>
+</div>
+
+<div class="chap-nav"><a href="#ch10"><span>Previous</span><strong>Ch 10 — Composition</strong></a><a class="next" href="#ch12"><span>Next</span><strong>Ch 12 — useEffect</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 12 ================ -->
+<section class="chapter" id="ch12">
+<div class="chapter-num">Chapter 12</div>
+<h1 class="chapter-title">useEffect — Living with the Outside World</h1>
+<p class="chapter-sub">React describes the UI. useEffect is how React talks to everything else.</p>
+
+<h3>12.1 What Is a Side Effect?</h3>
+<p>A side effect is anything your component does that reaches outside its own rendering. Fetching data, subscribing to events, setting a timer, loading a texture, attaching a scroll listener — all side effects. They should not run during rendering; they should run after the render is committed to the DOM. <code>useEffect</code> is how you schedule them.</p>
+
+<pre><code><span class="fn">useEffect</span>(() => {
+  document.title = <span class="str">`Selected: </span>${title}<span class="str">`</span>;
+}, [title]);</code></pre>
+
+<h3>12.2 The Dependency Array</h3>
+<p>The second argument to <code>useEffect</code> is a dependency array. It tells React: "re-run this effect only when one of these values changes." An empty array means "run once after the first render." No array at all means "run after every render" — which is usually wrong.</p>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Forgetting the dependency array and causing infinite loops: your effect updates state, which triggers a re-render, which runs the effect, which updates state again. Always think carefully about what your effect depends on.</p></div>
+
+<h3>12.3 Cleanup</h3>
+<p>If your effect creates something that needs to be cleaned up — an event listener, a timer, a subscription — return a cleanup function. React will call it before re-running the effect and when the component unmounts.</p>
+
+<pre><code><span class="fn">useEffect</span>(() => {
+  <span class="kw">const</span> id = <span class="fn">setInterval</span>(tick, <span class="num">1000</span>);
+  <span class="kw">return</span> () => <span class="fn">clearInterval</span>(id);
+}, []);</code></pre>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, useEffect is where you load textures, subscribe to keyboard events, initialize non-React Three.js systems, and — most importantly — clean up resources when a component unmounts. Three.js objects hold GPU memory, and forgetting to dispose them leaks memory. The cleanup pattern you learn here is how you keep R3F scenes well-behaved.</p></div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 12A</div>
+<p>Write a component that updates <code>document.title</code> whenever the <code>count</code> state changes.</p>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Simulated Data Fetching</h4>
+<p>Add "data fetching" to your PropertyGrid using useEffect. Use <code>setTimeout</code> to simulate an API call that returns a list of properties after one second. Show a loading state during the fetch. Add a cleanup function that clears the timeout if the component unmounts early.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch11"><span>Previous</span><strong>Ch 11 — useRef</strong></a><a class="next" href="#ch13"><span>Next</span><strong>Ch 13 — useMemo</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 13 ================ -->
+<section class="chapter" id="ch13">
+<div class="chapter-num">Chapter 13</div>
+<h1 class="chapter-title">useMemo — Making Expensive Work Cheaper</h1>
+<p class="chapter-sub">Do the work once. Remember the answer. Skip the work next time if the inputs are the same.</p>
+
+<h3>13.1 The Problem</h3>
+<p>Every time a component re-renders, everything inside the function body runs again. Usually that is fine. But if you have an expensive calculation — sorting, filtering, computing a complex geometry — running it on every render is wasteful.</p>
+
+<h3>13.2 useMemo</h3>
+
+<pre><code><span class="kw">const</span> filtered = <span class="fn">useMemo</span>(
+  () => properties.<span class="fn">filter</span>(p =&gt; p.price &lt; maxPrice),
+  [properties, maxPrice]
+);</code></pre>
+
+<p>React will run the function the first time, remember the result, and skip running it on subsequent renders as long as the dependencies — <code>properties</code> and <code>maxPrice</code> — have not changed.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>useMemo is a cache with inputs. If the inputs are the same as last time, return the cached result. If they changed, recompute.</p></div>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Memoizing everything. <code>useMemo</code> has a cost — React must track dependencies and compare them. For trivial calculations, it is slower than just recomputing. Memoize expensive work, not cheap work.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, useMemo is often used to memoize geometries and materials — both of which are expensive to construct and hold GPU memory. A pattern you will see constantly in Book 2: <code>const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), [])</code>. This keeps your scene efficient and predictable.</p></div>
+
+<div class="callout c-exercise">
+<div class="callout-label"><span class="icon">✏</span> Exercise 13A</div>
+<p>Memoize a filtered version of an array of properties. The filter should only re-run when the array or filter criteria change.</p>
+</div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Filter the Grid</h4>
+<p>Add a price filter to your PropertyGrid. Memoize the filtered list with useMemo. Confirm that typing in an unrelated field does not cause the filter to recompute.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch12"><span>Previous</span><strong>Ch 12 — useEffect</strong></a><a class="next" href="#ch14"><span>Next</span><strong>Ch 14 — TypeScript</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 14 ================ -->
+<section class="chapter" id="ch14">
+<div class="chapter-num">Chapter 14</div>
+<h1 class="chapter-title">TypeScript for React — A Focused Reference</h1>
+<p class="chapter-sub">You have been using TypeScript for ten chapters. Now we organize what you know.</p>
+
+<h3>14.1 Why TypeScript Helps</h3>
+<p>TypeScript is not a new language; it is JavaScript with optional type annotations. Those annotations catch a huge class of bugs before your code ever runs, and — just as importantly — they give you autocomplete and inline documentation in your editor. Once you have used typed props, you will not want to go back.</p>
+
+<h3>14.2 Typing Props</h3>
+<pre><code><span class="kw">interface</span> <span class="typ">PropertyCardProps</span> {
+  title: <span class="typ">string</span>;
+  price: <span class="typ">number</span>;
+  bedrooms: <span class="typ">number</span>;
+  isFeatured?: <span class="typ">boolean</span>;
+  location?: <span class="typ">string</span>;
+}</code></pre>
+
+<h3>14.3 Typing State</h3>
+<pre><code><span class="kw">const</span> [count, setCount] = <span class="fn">useState</span>(<span class="num">0</span>); <span class="com">// inferred</span>
+<span class="kw">const</span> [user, setUser] = <span class="fn">useState</span>&lt;<span class="typ">string</span> | <span class="typ">null</span>&gt;(<span class="kw">null</span>); <span class="com">// explicit</span></code></pre>
+
+<h3>14.4 Typing Events</h3>
+<pre><code><span class="fn">onClick</span>={(e: React.MouseEvent&lt;<span class="typ">HTMLButtonElement</span>&gt;) =&gt; {...}}
+<span class="fn">onChange</span>={(e: React.ChangeEvent&lt;<span class="typ">HTMLInputElement</span>&gt;) =&gt; {...}}</code></pre>
+
+<h3>14.5 Typing Refs</h3>
+<pre><code><span class="kw">const</span> ref = <span class="fn">useRef</span>&lt;<span class="typ">HTMLDivElement</span>&gt;(<span class="kw">null</span>);</code></pre>
+
+<h3>14.6 Union Types and Optional Props</h3>
+<pre><code><span class="kw">type</span> <span class="typ">Status</span> = <span class="str">'available'</span> | <span class="str">'pending'</span> | <span class="str">'sold'</span>;
+<span class="kw">interface</span> <span class="typ">Props</span> { status: <span class="typ">Status</span>; }</code></pre>
+
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Avoid the <code>React.FC</code> type for components — it has quirks around children and default props. Type your props directly as the function argument, as shown in every example in this book.</p></div>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Write Your Property Data Model</h4>
+<p>In a file called <code>types.ts</code>, write a complete TypeScript type definition for a Property object: id, title, price, bedrooms, bathrooms, location, isFeatured, isSold, imageUrl, and amenities (an array of strings). Use this type everywhere in your project. This type definition will travel with you into Book 2.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch13"><span>Previous</span><strong>Ch 13 — useMemo</strong></a><a class="next" href="#ch15"><span>Next</span><strong>Ch 15 — The Bridge</strong></a></div>
+</section>
+
+<!-- ================ CHAPTER 15 ================ -->
+<section class="chapter" id="ch15">
+<div class="chapter-num">Chapter 15</div>
+<h1 class="chapter-title">The Bridge — Mental Models for React Three Fiber</h1>
+<p class="chapter-sub">Every concept from Book 1, mapped directly to how it reappears in Book 2.</p>
+
+<h3>15.1 You Already Know More Than You Think</h3>
+<p>Here is the secret about React Three Fiber that takes most learners too long to realize: it is not a new library you have to learn. It is React. The same React you have been using for fourteen chapters. The only things that are truly new are the names of the components — <code>mesh</code>, <code>boxGeometry</code>, <code>meshStandardMaterial</code> — and the fact that those components describe 3D objects instead of HTML elements. Everything else transfers without modification.</p>
+
+<h3>15.2 The Full Concept Map</h3>
+<table>
+<tr><th>What You Learned in Book 1</th><th>How It Reappears in Book 2</th></tr>
+<tr><td>Component tree</td><td>Scene graph — nested meshes, groups, lights</td></tr>
+<tr><td>JSX tags</td><td>R3F tags like <code>&lt;mesh&gt;</code> and <code>&lt;group&gt;</code></td></tr>
+<tr><td>Props</td><td>position, rotation, scale, color — all props</td></tr>
+<tr><td>useState</td><td>Hover state, selected state, UI interaction state</td></tr>
+<tr><td>Events</td><td>onClick and onPointerOver directly on meshes</td></tr>
+<tr><td>Re-render awareness</td><td>Avoiding state-driven animations</td></tr>
+<tr><td>Composition</td><td>Scene composition — buildings inside blocks inside worlds</td></tr>
+<tr><td>Conditional rendering</td><td>Showing and hiding 3D objects</td></tr>
+<tr><td>Lists and keys</td><td>Rendering many 3D objects from data arrays</td></tr>
+<tr><td>useRef</td><td>Direct mesh access for per-frame animation</td></tr>
+<tr><td>useEffect</td><td>Loading textures, cleaning up resources</td></tr>
+<tr><td>useMemo</td><td>Memoizing expensive geometries and materials</td></tr>
+<tr><td>TypeScript interfaces</td><td>Typed 3D component props</td></tr>
+</table>
+
+<h3>15.3 Reading Your First R3F Component</h3>
+<p>Here is a real R3F component — a rotating box that changes color on hover. Read it slowly. Point at each piece and name what it is doing in Book 1 terms.</p>
+
+<pre><code><span class="kw">import</span> { useRef, useState } <span class="kw">from</span> <span class="str">'react'</span>;
+<span class="kw">import</span> { useFrame } <span class="kw">from</span> <span class="str">'@react-three/fiber'</span>;
+<span class="kw">import</span> * <span class="kw">as</span> THREE <span class="kw">from</span> <span class="str">'three'</span>;
+
+<span class="kw">function</span> <span class="fn">SpinningBox</span>() {
+  <span class="kw">const</span> meshRef = <span class="fn">useRef</span>&lt;<span class="typ">THREE.Mesh</span>&gt;(<span class="kw">null</span>);
+  <span class="kw">const</span> [hovered, setHovered] = <span class="fn">useState</span>(<span class="kw">false</span>);
+
+  <span class="fn">useFrame</span>((_, delta) => {
+    <span class="kw">if</span> (meshRef.current) {
+      meshRef.current.rotation.y += delta;
+    }
+  });
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">mesh</span>
+      <span class="typ">ref</span>={meshRef}
+      <span class="typ">onPointerOver</span>={() => <span class="fn">setHovered</span>(<span class="kw">true</span>)}
+      <span class="typ">onPointerOut</span>={() => <span class="fn">setHovered</span>(<span class="kw">false</span>)}
+    &gt;
+      &lt;<span class="tag">boxGeometry</span> <span class="typ">args</span>={[<span class="num">1</span>, <span class="num">1</span>, <span class="num">1</span>]} /&gt;
+      &lt;<span class="tag">meshStandardMaterial</span> <span class="typ">color</span>={hovered ? <span class="str">'tomato'</span> : <span class="str">'royalblue'</span>} /&gt;
+    &lt;/<span class="tag">mesh</span>&gt;
+  );
+}</code></pre>
+
+<p>Look at everything you recognize. <code>useRef</code> holds the mesh. <code>useState</code> holds the hover boolean. The return is JSX. The mesh has event handlers for pointer events, just like buttons had onClick. Its color is determined by state via a ternary — conditional rendering. The geometry and material are nested children — composition. The only truly new part is <code>useFrame</code>, which runs every animation frame and directly mutates the mesh's rotation through the ref. And you already know why that works: refs do not trigger re-renders, so mutating them sixty times per second is fast and safe.</p>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Every concept in the component above is a concept from Book 1. Book 2 will formally introduce R3F, but you should close this book knowing you already understand the shape of R3F code. The rest is vocabulary and 3D math.</p></div>
+
+<h3>15.4 What Book 2 Will Cover</h3>
+<p>Book 2 picks up where this book ends. It introduces the Three.js concepts you need — geometries, materials, lights, cameras — wrapped in the R3F component style. It covers useFrame for animation, drei helpers for common patterns, GLTF model loading, cameras and controls, and finally walks you through building an interactive 3D real estate portfolio. You will recognize the React patterns on every page.</p>
+
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Chapter Task</div>
+<h4>Annotate the R3F Component</h4>
+<p>Copy the SpinningBox component above into a file. Next to every line, write a comment in your own words identifying which concept from Book 1 it uses. If you can annotate every line with a confident label, you are ready for Book 2.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
+</section>
+
+<!-- ================ DEBUGGING ================ -->
+<section class="chapter" id="debugging">
+<div class="chapter-num">Appendix</div>
+<h1 class="chapter-title">The Debugging Mindset</h1>
+<p class="chapter-sub">Bugs are not failures. They are clues.</p>
+
+<h3>Read the Error Message Twice</h3>
+<p>React error messages are unusually helpful. They tell you what went wrong, where, and often why. Do not skim them. Read them twice. Most of the time, the answer is in the first line.</p>
+
+<h3>The Three Questions</h3>
+<ol>
+  <li><strong>What did I expect to happen?</strong> Be specific. Not "the button should work" but "clicking the button should increment the count by 1."</li>
+  <li><strong>What actually happened?</strong> Describe the observation, not the interpretation.</li>
+  <li><strong>What is the gap?</strong> The gap is where the bug lives.</li>
+</ol>
+
+<h3>Console.log Is Your Friend</h3>
+<p>Put <code>console.log</code> statements everywhere you are not sure. Log props. Log state. Log whether an effect is running. Remove them when you are done. This is not cheating — it is how professionals debug.</p>
+
+<h3>Check Your Renders</h3>
+<p>A surprising number of bugs come from the component not re-rendering when you expected it to, or re-rendering when you did not. Add a <code>console.log('rendering X')</code> at the top of a component to see what is actually running.</p>
+
+<h3>The Rubber Duck</h3>
+<p>When you are stuck, explain your problem, out loud, to an inanimate object — a rubber duck, a coffee mug, your cat. You will often solve the bug while describing it. This is a real technique and it works.</p>
+</section>
+
+<!-- ================ GLOSSARY ================ -->
+<section class="chapter" id="glossary">
+<div class="chapter-num">Reference</div>
+<h1 class="chapter-title">Glossary</h1>
+<p class="chapter-sub">Every term in this book, in one place.</p>
+
+<div class="glossary-grid">
+<div class="glos-term"><strong>Component</strong><span>A JavaScript function that returns a description of some UI. The atomic unit of React.</span></div>
+<div class="glos-term"><strong>JSX</strong><span>A syntax extension that lets you write HTML-like tags inside JavaScript. Each tag becomes a function call.</span></div>
+<div class="glos-term"><strong>Props</strong><span>Data passed from a parent component to a child component. Read-only inside the child.</span></div>
+<div class="glos-term"><strong>State</strong><span>Internal data owned by a component that can change over time. Changes trigger re-renders.</span></div>
+<div class="glos-term"><strong>Hook</strong><span>A special function like useState or useEffect that gives components extra powers. Hook names always start with "use".</span></div>
+<div class="glos-term"><strong>useState</strong><span>The hook for adding state to a component. Returns a [value, setter] pair.</span></div>
+<div class="glos-term"><strong>useEffect</strong><span>The hook for running side effects after a component renders. Takes a function and a dependency array.</span></div>
+<div class="glos-term"><strong>useRef</strong><span>The hook for holding a mutable value that survives renders but does not trigger them.</span></div>
+<div class="glos-term"><strong>useMemo</strong><span>The hook for caching the result of an expensive calculation between renders.</span></div>
+<div class="glos-term"><strong>Re-render</strong><span>The process of React calling a component function again because its state or props changed.</span></div>
+<div class="glos-term"><strong>Reconciliation</strong><span>The process by which React compares new and old descriptions and figures out what to update.</span></div>
+<div class="glos-term"><strong>Virtual DOM</strong><span>An in-memory JavaScript representation of the UI that React uses to decide what to update in the real DOM.</span></div>
+<div class="glos-term"><strong>Declarative</strong><span>A style of programming where you describe the desired result rather than the steps to achieve it.</span></div>
+<div class="glos-term"><strong>Imperative</strong><span>A style of programming where you give explicit step-by-step instructions.</span></div>
+<div class="glos-term"><strong>Composition</strong><span>Building complex components by nesting smaller ones. React's primary structural tool.</span></div>
+<div class="glos-term"><strong>Children</strong><span>A special prop containing whatever was placed between a component's opening and closing tags.</span></div>
+<div class="glos-term"><strong>Key</strong><span>A unique identifier prop used when rendering lists, so React can track items between renders.</span></div>
+<div class="glos-term"><strong>Event handler</strong><span>A function you pass to JSX props like onClick that React calls when the event fires.</span></div>
+<div class="glos-term"><strong>Dependency array</strong><span>The list of values a useEffect or useMemo watches to decide when to re-run.</span></div>
+<div class="glos-term"><strong>Cleanup function</strong><span>A function returned from useEffect that React calls to tear down whatever the effect set up.</span></div>
+<div class="glos-term"><strong>Interface (TypeScript)</strong><span>A declaration describing the shape of an object, commonly used to type component props.</span></div>
+<div class="glos-term"><strong>Type inference</strong><span>TypeScript's ability to figure out types automatically without explicit annotations.</span></div>
+<div class="glos-term"><strong>Scene graph (R3F preview)</strong><span>A tree of 3D objects that describes a 3D scene. In R3F, it is built out of components — just like a React component tree.</span></div>
+<div class="glos-term"><strong>useFrame (R3F preview)</strong><span>A hook in R3F that runs once per animation frame. Used for per-frame animation of 3D objects via refs.</span></div>
+<div class="glos-term"><strong>Mesh (R3F preview)</strong><span>A 3D object composed of geometry and material. In R3F, rendered with the <code>&lt;mesh&gt;</code> component.</span></div>
+</div>
+</section>
+
+<!-- ================ BRIDGE ================ -->
+<section class="chapter" id="bridge">
+<div class="chapter-num">Final Word</div>
+<h1 class="chapter-title">Bridge to Book 2: React Three Fiber</h1>
+<p class="chapter-sub">You have everything you need. Here is what comes next.</p>
+
+<h3>What You Can Do Now</h3>
+<p>You have completed a focused foundation in React. You can read a React component and understand every line. You can explain state, props, events, re-rendering, composition, and the core hooks. You can write typed components. You can build a component tree from scratch and reason about how it will behave. You understand why React is declarative and why that matters in 3D.</p>
+
+<h3>What Book 2 Introduces</h3>
+<p>Book 2 covers React Three Fiber and the Three.js concepts you need to build 3D scenes. Specifically:</p>
+<ul>
+  <li>The R3F Canvas and scene graph.</li>
+  <li>Geometries, materials, and meshes as components.</li>
+  <li>Cameras, lights, and controls.</li>
+  <li>The useFrame animation loop.</li>
+  <li>Helpers from drei — the R3F utility library.</li>
+  <li>GLTF model loading.</li>
+  <li>Zustand for global scene state.</li>
+  <li>Building, chapter by chapter, your interactive 3D real estate portfolio.</li>
+</ul>
+
+<h3>How to Prepare in the Gap Between Books</h3>
+<p>If you want to keep your momentum between now and Book 2, here are three small things that will pay off:</p>
+<ol>
+  <li>Rebuild your PropertyGrid from memory, without looking at your earlier code. This cements everything.</li>
+  <li>Install <code>@react-three/fiber</code> in a throwaway project and render one <code>&lt;mesh&gt;</code>. You will probably recognize most of the code.</li>
+  <li>Reread Chapter 11 (useRef) and Chapter 15 (the Bridge). These are the two most load-bearing chapters for R3F.</li>
+</ol>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>The first time you see a working R3F scene, you should feel recognition, not confusion. If you completed the exercises in this book honestly, you will. Welcome to the bridge. See you on the other side.</p></div>
+
+<p style="margin-top:3em;text-align:center;color:var(--text-mute);font-style:italic;">End of Book 1<br>React Foundations for React Three Fiber</p>
+</section>
+
+</div><!-- /.main -->
+</main>
+</div><!-- /.layout -->
+
+<script>
+function toggleReveal(btn){
+  // find the nearest sibling .reveal-content after the clicked button
+  var btnText = btn.textContent.trim().toLowerCase();
+  var parent = btn.parentElement;
+  var contents = parent.querySelectorAll('.reveal-content');
+  var target;
+  if(btnText.indexOf('hint') > -1){
+    target = parent.querySelector('.reveal-content.hint');
+  } else {
+    // pick the one without .hint class
+    contents.forEach(function(c){ if(!c.classList.contains('hint')) target = c; });
+  }
+  if(target){
+    target.classList.toggle('show');
+    btn.textContent = target.classList.contains('show')
+      ? (btnText.indexOf('hint')>-1 ? 'Hide Hint' : 'Hide Answer')
+      : (btnText.indexOf('hint')>-1 ? 'Show Hint' : 'Show Answer');
+  }
+}
+
+// Collapsible sections
+document.querySelectorAll('.collapse-head').forEach(function(h){
+  h.addEventListener('click', function(){
+    h.parentElement.classList.toggle('open');
+  });
+});
+
+// Highlight active sidebar link on scroll
+var sections = document.querySelectorAll('main section[id], main .chapter[id]');
+var navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
+function onScroll(){
+  var y = window.scrollY + 120;
+  var current = '';
+  sections.forEach(function(s){ if(s.offsetTop <= y) current = s.id; });
+  navLinks.forEach(function(a){
+    a.style.borderLeftColor = (a.getAttribute('href') === '#'+current) ? '#7B68EE' : 'transparent';
+    a.style.color = (a.getAttribute('href') === '#'+current) ? '#fff' : '';
+  });
+}
+window.addEventListener('scroll', onScroll);
+onScroll();
+</script>
+</body>
+</html>
