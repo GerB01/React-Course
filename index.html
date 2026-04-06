@@ -37,7 +37,20 @@ h4{font-size:1.05rem;font-weight:600;margin:1.4em 0 0.4em;color:#E8EAF6}
 p{margin:0.9em 0;color:var(--text)}
 ul,ol{padding-left:1.3em}
 li{margin:0.4em 0}
+/* Password */
+body, html { height: 100%; margin: 0; background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; justify-content: center; align-items: center; overflow: hidden; }
+        
+        #gate { background: var(--surface); padding: 3rem 2rem; border-radius: 16px; border: 1px solid var(--border); text-align: center; width: 100%; max-width: 400px; z-index: 100; box-shadow: 0 20px 40px rgba(0,0,0,0.4); }
+        .react-logo { width: 60px; margin-bottom: 1rem; filter: drop-shadow(0 0 10px var(--indigo-soft)); animation: rotate 20s linear infinite; }
+        @keyframes rotate { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        
+        input { width: 100%; background: var(--bg-2); border: 1px solid var(--border); padding: 12px; border-radius: 8px; color: var(--text); margin: 1.5rem 0; text-align: center; outline: none; font-size: 1rem; }
+        input:focus { border-color: var(--indigo); box-shadow: 0 0 0 4px var(--indigo-soft); }
+        button { width: 100%; background: var(--indigo); color: white; border: none; padding: 12px; border-radius: 8px; font-weight: 600; cursor: pointer; font-size: 1rem; }
+        button:hover { filter: brightness(1.1); }
 
+        /* Actual Content starts hidden */
+        #protected-content { display: none; width: 100%; height: 100%; overflow-y: auto; padding: 40px; }
 /* Layout */
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
 .sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;background:var(--bg-2);border-right:1px solid var(--border);padding:28px 22px}
@@ -158,7 +171,43 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
 </style>
 </head>
 <body>
+<!-- Password -->
+ <div id="gate">
+        <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="react-logo" alt="React">
+        <h2 style="margin:0;">Private Preview</h2>
+        <p style="color: var(--text-dim); font-size: 0.9rem; margin-top: 8px;">Authorized Access Only</p>
+        <input type="password" id="pass" placeholder="Enter Access Key" autofocus>
+        <button onclick="unlock()">Unlock Project</button>
+    </div>
 
+    <div id="protected-content">
+        <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+            <h1 style="color: var(--indigo); font-size: 3rem;">Welcome to ALIV</h1>
+            <p style="color: var(--text-dim); font-size: 1.2rem;">Your secure preview is now active.</p>
+            <hr style="border: 0; border-top: 1px solid var(--border); margin: 40px 0;">
+            <p>This is where your design goes!</p>
+        </div>
+    </div>
+    <script>
+        function unlock() {
+            const key = document.getElementById('pass').value;
+            // SET YOUR PASSWORD HERE
+            if (key === "aliv2026") {
+                document.getElementById('gate').style.display = 'none';
+                document.getElementById('protected-content').style.display = 'block';
+                document.body.style.overflow = 'auto';
+            } else {
+                alert("Invalid Key");
+                document.getElementById('pass').value = '';
+            }
+        }
+
+        // Allow Enter key
+        document.getElementById('pass').addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') unlock();
+        });
+    </script>
+    
 <div class="layout">
 
 <aside class="sidebar">
