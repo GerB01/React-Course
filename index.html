@@ -368,9 +368,19 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
   .main{padding:48px 44px 100px}
   #scroll-track{left:220px}
 }
+
+/* ── TS / JS toggle ── */
+.lang-toggle{position:sticky;top:8px;z-index:5;display:inline-flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:4px;margin:0 0 18px;font-family:'JetBrains Mono',monospace;font-size:.78rem}
+.lang-toggle button{background:transparent;border:0;color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer;letter-spacing:.04em}
+.lang-toggle button.active{background:var(--indigo);color:#fff}
+body.lang-js .ts-only{display:none}
+body.lang-ts .js-only{display:none}
+.code-pair{margin:14px 0}
+.capstone-box{border:1px solid var(--amber);background:linear-gradient(135deg,rgba(245,158,11,.08),rgba(123,104,238,.06));border-radius:14px;padding:20px 22px;margin:22px 0}
+.capstone-box h4{color:var(--amber);margin:0 0 8px;font-family:'JetBrains Mono',monospace;font-size:.82rem;letter-spacing:.08em;text-transform:uppercase}
 </style>
 </head>
-<body>
+<body class="lang-ts">
 <div id="scroll-track"><div id="scroll-indicator"></div></div>
 <!-- Password -->
 <div id="login-overlay">
@@ -437,7 +447,9 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
     <li><a href="#how-to-use">How to Use This Book</a></li>
     <li><a href="#roadmap">Learning Roadmap</a></li>
     <li><a href="#toc">Table of Contents</a></li>
+    <li><a href="#capstone">Capstone Project</a></li>
     <li><a class="section">Chapters</a></li>
+    <li><a href="#ch0">0. Setting Up Your Environment</a></li>
     <li><a href="#ch1">1. What React Is</a></li>
     <li><a href="#ch2">2. Declarative Thinking</a></li>
     <li><a href="#ch3">3. Components & JSX</a></li>
@@ -453,6 +465,8 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
     <li><a href="#ch13">13. useMemo</a></li>
     <li><a href="#ch14">14. TypeScript for React</a></li>
     <li><a href="#ch15">15. Bridge to R3F</a></li>
+    <li><a class="section">Practice</a></li>
+    <li><a href="#workbook">Practical Workbook</a></li>
     <li><a class="section">Reference</a></li>
     <li><a href="#debugging">Debugging Mindset</a></li>
     <li><a href="#glossary">Glossary</a></li>
@@ -468,10 +482,10 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
   <h1>React Foundations for React Three Fiber</h1>
   <p class="hero-sub">A compact, focused manual for the JavaScript developer who wants to understand React well enough to build interactive 3D worlds with React Three Fiber — and not a syllable more than needed to get there.</p>
   <div class="hero-meta">
-    <div><strong>15 Chapters</strong>Short, self-contained lessons</div>
-    <div><strong>50+ Exercises</strong>Hands-on practice</div>
-    <div><strong>Gentle TypeScript</strong>Introduced progressively</div>
-    <div><strong>R3F-Oriented</strong>Every concept bridges to 3D</div>
+    <div><strong>16 Chapters</strong>Setup + 15 focused lessons</div>
+    <div><strong>60+ Exercises</strong>Compounding into one capstone</div>
+    <div><strong>TS / JS Toggle</strong>Learn React in TypeScript</div>
+    <div><strong>ArchViz Capstone</strong>Portfolio project for R3F jobs</div>
   </div>
 </section>
 
@@ -583,11 +597,106 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
 </div>
 </section>
 
+<!-- ================ CAPSTONE OVERVIEW ================ -->
+<section id="capstone">
+<h2>The Capstone: An ArchViz Property Browser</h2>
+<p>Every exercise in this book compounds into <strong>one</strong> deliverable: a small but real React application called <em>ArchViz Property Browser</em>. It is a single-page interface that an architect or real-estate studio could plausibly hand a client. By the end of Book 1 you will have built it entirely with plain HTML/CSS React components — no 3D yet. In Book 2, every component you wrote here gets paired with a React Three Fiber scene so the same data drives both a UI panel <em>and</em> a navigable 3D model of the building.</p>
+<p>Why this project? Because it is exactly the kind of thing studios in the architectural-visualization world hire React/R3F developers to build. Finishing it gives you something concrete to show in a job application, and every line of it will be code you wrote yourself, on purpose, with understanding.</p>
+<div class="capstone-box">
+<h4>What You Will Build</h4>
+<p>A property browser with: a list of architectural projects (loaded from a typed data file), a detail panel that updates when you click a project, filter chips (by style, by status), a "favorites" toggle that persists, a hero image gallery, an interactive floor-area calculator, a day/night theme switch, a contact form for inquiries, and a final "scene placeholder" component that Book 2 will replace with a live R3F canvas.</p>
+<p>Each chapter contributes one feature. By Chapter 15 the app is complete and ready to receive its 3D twin.</p>
+</div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>The data file you build in Chapter 4 — a typed list of <code>Property</code> objects — is the same data file Book 2's <code>&lt;Canvas&gt;</code> will consume to place 3D buildings on a virtual site plan. Nothing you write here gets thrown away.</p></div>
+</section>
+
+<!-- ================ CHAPTER 0 ================ -->
+<section class="chapter" id="ch0">
+<div class="chapter-num">Chapter 0</div>
+<h1 class="chapter-title">Setting Up Your Environment</h1>
+<p class="chapter-sub">Before the first line of React, the boring-but-essential five minutes of setup. Do this once and forget it.</p>
+
+<h3>0.1 What You Need Installed</h3>
+<p>React itself is a JavaScript library, but in 2026 nobody writes React by dropping a <code>&lt;script&gt;</code> tag into an HTML file. We use a build tool that handles JSX, TypeScript, hot reloading, and bundling. The build tool we will use throughout this book is <strong>Vite</strong> — it is fast, minimal, and the de facto choice for new React projects, including every React Three Fiber starter you will ever encounter.</p>
+<p>You need exactly three things on your machine:</p>
+<ol>
+  <li><strong>Node.js (LTS, version 20 or newer)</strong> — the JavaScript runtime that powers the build tool. Download from <a href="https://nodejs.org" target="_blank" rel="noopener">nodejs.org</a> and accept the defaults. Installing Node also installs <code>npm</code>, the package manager.</li>
+  <li><strong>A code editor</strong> — Visual Studio Code is the universal standard. It is free and has perfect React/TypeScript support out of the box.</li>
+  <li><strong>A modern browser</strong> — Chrome, Edge, Firefox, or Brave. You will live in the developer tools panel, so pick one you like opening.</li>
+</ol>
+<p>To verify Node installed correctly, open a terminal and type:</p>
+<pre><code>node --version
+npm --version</code></pre>
+<p>If both print version numbers, you are done with installation. If either errors, restart your terminal — the PATH variable updates only on new sessions.</p>
+
+<h3>0.2 Creating Your First React + TypeScript Project</h3>
+<p>Vite ships a project generator. From any folder on your computer, run:</p>
+<pre><code>npm create vite@latest archviz-browser -- --template react-ts
+cd archviz-browser
+npm install
+npm run dev</code></pre>
+<p>That is the entire setup. Line by line:</p>
+<ul>
+  <li><code>npm create vite@latest archviz-browser</code> tells npm to run the Vite scaffolder and name the new folder <code>archviz-browser</code>.</li>
+  <li><code>-- --template react-ts</code> tells Vite to use the React + TypeScript template. (If you prefer plain JS, use <code>react</code> instead — but this book defaults to TypeScript and you should follow along.)</li>
+  <li><code>cd archviz-browser</code> moves your terminal into the new folder.</li>
+  <li><code>npm install</code> downloads every dependency listed in <code>package.json</code> into a folder called <code>node_modules</code>.</li>
+  <li><code>npm run dev</code> starts the Vite development server, usually at <code>http://localhost:5173</code>. Open that URL in your browser and you will see the Vite + React starter page.</li>
+</ul>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Vite watches your files. The moment you save a change in your editor, the browser reloads and shows the new state. This feedback loop is the single most important thing about modern frontend development — make sure it works before moving on.</p></div>
+
+<h3>0.3 What's Inside the Project</h3>
+<p>Open the folder in VS Code. You will see a structure like this:</p>
+<pre><code>archviz-browser/
+├── node_modules/        (libraries — never edit, never commit)
+├── public/              (static files served as-is)
+├── src/                 (your code lives here)
+│   ├── App.tsx          (the root React component)
+│   ├── main.tsx         (the entry point that mounts App to the page)
+│   ├── index.css        (global styles)
+│   └── assets/
+├── index.html           (the single HTML file Vite serves)
+├── package.json         (project manifest and scripts)
+├── tsconfig.json        (TypeScript configuration)
+└── vite.config.ts       (Vite configuration)</code></pre>
+<p>For the next fifteen chapters you will spend essentially all of your time inside the <code>src/</code> folder. Open <code>src/App.tsx</code> — that file is your first React component, even if it does not look like much yet.</p>
+
+<h3>0.4 The Mental Model of a React File</h3>
+<p>A React file is a JavaScript (or TypeScript) file that <em>exports</em> a function. That function returns something that looks suspiciously like HTML. That "HTML-inside-JavaScript" is called <strong>JSX</strong>, and the rest of the book will unpack it. For now, just know: a React component is a function that returns a description of UI.</p>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Editing files inside <code>node_modules</code>. Never do this. Treat that folder as read-only. If you need to change the behavior of a library, you wrap it, not edit it.</p></div>
+
+<h3>0.5 Stopping and Restarting the Server</h3>
+<p>To stop the dev server, focus the terminal and press <kbd>Ctrl+C</kbd> (Windows/Linux) or <kbd>Cmd+C</kbd> (macOS). To start it again, run <code>npm run dev</code>. You can leave the server running in the background while you work — Vite will catch up to your edits automatically.</p>
+
+<h3>0.6 Optional: Useful VS Code Extensions</h3>
+<p>You can install React in five minutes with zero extensions, but a few are worth having:</p>
+<ul>
+  <li><strong>ES7+ React/Redux/React-Native snippets</strong> — type <code>rfc</code> and get a complete component scaffold.</li>
+  <li><strong>Prettier</strong> — auto-formats your code on save so you stop arguing with yourself about indentation.</li>
+  <li><strong>Error Lens</strong> — shows TypeScript errors inline next to the offending code instead of hidden in a panel.</li>
+</ul>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Book 2 starts the same way — <code>npm create vite@latest</code> — and then adds three extra packages: <code>three</code>, <code>@react-three/fiber</code>, and <code>@react-three/drei</code>. The setup you do now is exactly the setup you will reuse in Book 2. Get comfortable with it.</p></div>
+
+<h3>Chapter Task</h3>
+<div class="callout c-task">
+<div class="callout-label"><span class="icon">★</span> Capstone Step 0</div>
+<h4>Spin Up the Project</h4>
+<p>Create the <code>archviz-browser</code> project as described above. Verify that <code>npm run dev</code> opens a working page in your browser. Then open <code>src/App.tsx</code>, find the text inside the heading, change it to "ArchViz Property Browser", save, and confirm the browser updates without reloading. That feedback loop is now yours for the rest of the book.</p>
+</div>
+</section>
+
 <!-- ================ CHAPTER 1 ================ -->
 <section class="chapter" id="ch1">
 <div class="chapter-num">Chapter 1</div>
 <h1 class="chapter-title">What React Is — and Why It Exists</h1>
 <p class="chapter-sub">Every tool solves a problem. Understanding React starts with understanding that problem.</p>
+<div class="lang-toggle" role="tablist" aria-label="Code language">
+  <button data-lang="ts" onclick="setLang('ts')">TypeScript</button>
+  <button data-lang="js" onclick="setLang('js')">JavaScript</button>
+</div>
 
 <h3>1.1 The Problem React Solves</h3>
 <p>Imagine you are building a web page that shows the price of a house. Somewhere in your JavaScript, you hold a variable: <code>let price = 450000</code>. Somewhere in your HTML, there is a span that displays that price. Now imagine the price changes. You have a problem, and the problem is keeping these two things in sync.</p>
@@ -1582,6 +1691,409 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
 </section>
 
+<!-- ================ PRACTICAL WORKBOOK ================ -->
+<section class="chapter" id="workbook">
+<div class="chapter-num">Workbook</div>
+<h1 class="chapter-title">The Practical React Workbook</h1>
+<p class="chapter-sub">Real, runnable code for every concept in this book — in TypeScript or JavaScript — and the fifteen exercises that build the ArchViz Property Browser, one feature at a time.</p>
+<div class="lang-toggle"><button data-lang="ts" onclick="setLang('ts')">TypeScript</button><button data-lang="js" onclick="setLang('js')">JavaScript</button></div>
+
+<p>The earlier chapters taught you the React mindset. This workbook teaches you the React keystrokes. Work through it linearly with your <code>archviz-browser</code> Vite project open in one window and this page in the other. Type the code yourself — do not paste — because muscle memory is the entire point. The TS / JS toggle above switches every code example in this workbook between TypeScript and JavaScript; pick whichever you want to learn in. The book defaults to TypeScript because R3F code in the wild is overwhelmingly typed, but every idea is identical in plain JS.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> How to Use the Workbook</div><p>Each section maps to a chapter. Read the chapter first for the mindset, then come here for the code and the capstone task. By the end you will have a complete, working application.</p></div>
+
+<!-- WB Chapter 1 -->
+<h3>W1 · What React Actually Looks Like</h3>
+<p>Before any concepts, here is the smallest possible React component. Open <code>src/App.tsx</code> in your project, delete everything, and paste this:</p>
+<div class="ts-only"><pre><code>export default function App() {
+  return &lt;h1&gt;ArchViz Property Browser&lt;/h1&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>export default function App() {
+  return &lt;h1&gt;ArchViz Property Browser&lt;/h1&gt;;
+}</code></pre></div>
+<p>That is a complete React component. It is a function. It returns something that looks like HTML but lives inside a JavaScript file — that is JSX. Save the file. Your browser updates. You just wrote React.</p>
+<p>Read the official intro alongside this: <a href="https://react.dev/learn" target="_blank" rel="noopener">react.dev/learn</a>.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 1</div><h4>Hello, ArchViz</h4><p>Replace the contents of <code>App.tsx</code> with the snippet above and confirm the page shows the new title. This becomes the shell of your application.</p></div>
+
+<!-- WB Chapter 2 -->
+<h3>W2 · Declarative in Practice</h3>
+<p>Here is the same idea — "show a price" — first imperatively in plain DOM, then declaratively in React.</p>
+<p><strong>Imperative (plain JS):</strong></p>
+<pre><code>let price = 450000;
+const el = document.querySelector('#price');
+el.textContent = '$' + price.toLocaleString();
+// later:
+price = 480000;
+el.textContent = '$' + price.toLocaleString(); // must remember to update</code></pre>
+<p><strong>Declarative (React):</strong></p>
+<div class="ts-only"><pre><code>function PriceTag({ price }: { price: number }) {
+  return &lt;span&gt;${price.toLocaleString()}&lt;/span&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>function PriceTag({ price }) {
+  return &lt;span&gt;${price.toLocaleString()}&lt;/span&gt;;
+}</code></pre></div>
+<p>You describe the relationship between data and DOM <em>once</em>. When <code>price</code> changes, React handles the rest.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 2</div><h4>Add a PriceTag</h4><p>Create <code>src/components/PriceTag.tsx</code> with the component above. Import it into <code>App.tsx</code> and render <code>&lt;PriceTag price={450000} /&gt;</code> below the heading.</p></div>
+
+<!-- WB Chapter 3 -->
+<h3>W3 · Components & JSX in Detail</h3>
+<p>JSX is JavaScript with HTML-shaped syntax. The rules are short:</p>
+<ul>
+  <li>A component must return <strong>one</strong> root element. If you need two siblings, wrap them in <code>&lt;&gt;...&lt;/&gt;</code> (a Fragment).</li>
+  <li>HTML attributes use camelCase: <code>className</code> instead of <code>class</code>, <code>onClick</code> instead of <code>onclick</code>, <code>htmlFor</code> instead of <code>for</code>.</li>
+  <li>Curly braces <code>{ }</code> drop you out of JSX and back into JavaScript. Anything inside them is evaluated as a JS expression.</li>
+  <li>Self-close tags that have no children: <code>&lt;img /&gt;</code>, <code>&lt;br /&gt;</code>.</li>
+</ul>
+<div class="ts-only"><pre><code>function PropertyCard() {
+  const title = "Lakeside Pavilion";
+  const beds = 3;
+  return (
+    &lt;article className="card"&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;{beds} bedrooms · {beds * 1.5} bathrooms&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>function PropertyCard() {
+  const title = "Lakeside Pavilion";
+  const beds = 3;
+  return (
+    &lt;article className="card"&gt;
+      &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;p&gt;{beds} bedrooms · {beds * 1.5} bathrooms&lt;/p&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+<p>Reference: <a href="https://react.dev/learn/writing-markup-with-jsx" target="_blank" rel="noopener">Writing Markup with JSX</a>.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 3</div><h4>Build the PropertyCard</h4><p>Create <code>src/components/PropertyCard.tsx</code>. For now, hard-code one property inside it. Render it from <code>App.tsx</code>. Add a few CSS classes in <code>index.css</code> so it actually looks like a card.</p></div>
+
+<!-- WB Chapter 4 -->
+<h3>W4 · Props (and Your First Real Type)</h3>
+<p>A component that always shows the same property is useless. We want one component, many properties. Props are how data enters a component.</p>
+<div class="ts-only"><pre><code>// src/types.ts
+export type Property = {
+  id: string;
+  title: string;
+  style: "modern" | "classical" | "industrial";
+  beds: number;
+  area: number;       // square meters
+  price: number;      // USD
+  status: "available" | "sold" | "reserved";
+  image: string;
+};
+
+// src/components/PropertyCard.tsx
+import type { Property } from "../types";
+
+type Props = { property: Property };
+
+export default function PropertyCard({ property }: Props) {
+  return (
+    &lt;article className="card"&gt;
+      &lt;img src={property.image} alt={property.title} /&gt;
+      &lt;h2&gt;{property.title}&lt;/h2&gt;
+      &lt;p&gt;{property.beds} bd · {property.area} m²&lt;/p&gt;
+      &lt;strong&gt;${property.price.toLocaleString()}&lt;/strong&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>// src/components/PropertyCard.jsx
+export default function PropertyCard({ property }) {
+  return (
+    &lt;article className="card"&gt;
+      &lt;img src={property.image} alt={property.title} /&gt;
+      &lt;h2&gt;{property.title}&lt;/h2&gt;
+      &lt;p&gt;{property.beds} bd · {property.area} m²&lt;/p&gt;
+      &lt;strong&gt;${property.price.toLocaleString()}&lt;/strong&gt;
+    &lt;/article&gt;
+  );
+}</code></pre></div>
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Defining a <code>type Property</code> once and reusing it everywhere is the single biggest reason TS pays off. When you mistype <code>property.tilte</code>, the editor underlines it before you save. Multiply that by every component in your app and you understand why R3F codebases are typed.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 4</div><h4>The Properties Data File</h4><p>Create <code>src/data/properties.ts</code> exporting an array of at least five <code>Property</code> objects. Use real-sounding names (Lakeside Pavilion, Steel Atrium, Cliff House…). This file is the data that will eventually feed Book 2's 3D scene.</p></div>
+
+<!-- WB Chapter 5 -->
+<h3>W5 · State — When Components Remember</h3>
+<p>State is data a component owns and can change over time. Whenever state changes, React re-renders the component with the new value. The hook is <code>useState</code>.</p>
+<div class="ts-only"><pre><code>import { useState } from "react";
+
+export default function FavoriteButton() {
+  const [isFav, setIsFav] = useState&lt;boolean&gt;(false);
+  return (
+    &lt;button onClick={() =&gt; setIsFav(!isFav)}&gt;
+      {isFav ? "★ Saved" : "☆ Save"}
+    &lt;/button&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>import { useState } from "react";
+
+export default function FavoriteButton() {
+  const [isFav, setIsFav] = useState(false);
+  return (
+    &lt;button onClick={() =&gt; setIsFav(!isFav)}&gt;
+      {isFav ? "★ Saved" : "☆ Save"}
+    &lt;/button&gt;
+  );
+}</code></pre></div>
+<p>Three things to internalize:</p>
+<ol>
+  <li><code>useState</code> returns a pair: the current value and a setter. Destructure it.</li>
+  <li>Never mutate state directly. To update an array, pass a <em>new</em> array. To update an object, pass a <em>new</em> object.</li>
+  <li>Calling the setter schedules a re-render. The new value is not visible on the next line — it shows up on the next render.</li>
+</ol>
+<p>Reference: <a href="https://react.dev/reference/react/useState" target="_blank" rel="noopener">useState</a>.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 5</div><h4>Selected Property State</h4><p>In <code>App.tsx</code>, add <code>const [selectedId, setSelectedId] = useState&lt;string | null&gt;(null);</code>. Render the list of properties as cards and a separate <code>&lt;DetailPanel /&gt;</code> that shows the selected one (or "Select a property" if none).</p></div>
+
+<!-- WB Chapter 6 -->
+<h3>W6 · Events — Talking Back</h3>
+<p>React event handlers are camelCase props that take a function. The function receives a synthetic event object.</p>
+<div class="ts-only"><pre><code>type Props = { onSelect: (id: string) =&gt; void; id: string };
+
+export function SelectButton({ onSelect, id }: Props) {
+  return &lt;button onClick={() =&gt; onSelect(id)}&gt;View&lt;/button&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>export function SelectButton({ onSelect, id }) {
+  return &lt;button onClick={() =&gt; onSelect(id)}&gt;View&lt;/button&gt;;
+}</code></pre></div>
+<p>Notice the inline arrow function. We do not write <code>onClick={onSelect(id)}</code> — that would <em>call</em> the function during render. We write <code>onClick={() =&gt; onSelect(id)}</code>, which gives React a function it can call later.</p>
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Writing <code>onClick={doStuff()}</code> instead of <code>onClick={doStuff}</code>. The first invokes the function during rendering and assigns its <em>return value</em> as the handler. You will see this bug at least once in your life. Probably this week.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 6</div><h4>Click to Select</h4><p>Wire the property cards so that clicking one calls <code>setSelectedId(property.id)</code>. The detail panel should now update on click.</p></div>
+
+<!-- WB Chapter 7 -->
+<h3>W7 · Re-rendering — The Mental Model You Cannot Skip</h3>
+<p>When state changes, React calls your component function again. The whole function. Top to bottom. With the new state value. It then compares the JSX you returned to the previous JSX and updates only the DOM nodes that differ.</p>
+<p>This means three things, all important:</p>
+<ul>
+  <li>Local variables inside your function reset every render. They are <em>not</em> memory.</li>
+  <li>Anything you want to survive between renders has to live in <code>useState</code>, <code>useRef</code>, or props.</li>
+  <li>Re-renders are usually cheap. Do not pre-optimize.</li>
+</ul>
+<div class="ts-only"><pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+  console.log("rendering with", count); // fires every render
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>function Counter() {
+  const [count, setCount] = useState(0);
+  console.log("rendering with", count);
+  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;;
+}</code></pre></div>
+<p>Open the console, click the button, watch the log. That is React's loop.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 7</div><h4>A Render Counter</h4><p>Add a temporary <code>console.log</code> at the top of <code>App</code>. Click around. Confirm that you understand <em>why</em> the log fires when it does. Delete the log when satisfied.</p></div>
+
+<!-- WB Chapter 8 -->
+<h3>W8 · Conditional Rendering</h3>
+<p>React has no special syntax for if/else inside JSX — you use plain JavaScript expressions.</p>
+<div class="ts-only"><pre><code>function StatusBadge({ status }: { status: Property["status"] }) {
+  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
+  if (status === "reserved") return &lt;span className="badge res"&gt;Reserved&lt;/span&gt;;
+  return &lt;span className="badge ok"&gt;Available&lt;/span&gt;;
+}
+
+// Inline ternary:
+{property.status === "sold" &amp;&amp; &lt;p&gt;No longer available&lt;/p&gt;}
+{isLoading ? &lt;Spinner /&gt; : &lt;Content /&gt;}</code></pre></div>
+<div class="js-only"><pre><code>function StatusBadge({ status }) {
+  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
+  if (status === "reserved") return &lt;span className="badge res"&gt;Reserved&lt;/span&gt;;
+  return &lt;span className="badge ok"&gt;Available&lt;/span&gt;;
+}</code></pre></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 8</div><h4>Status Badges</h4><p>Add <code>StatusBadge</code> to each <code>PropertyCard</code>. Sold properties should also be visually dimmed via a CSS class.</p></div>
+
+<!-- WB Chapter 9 -->
+<h3>W9 · Lists and Keys</h3>
+<p>To render a collection, map an array to JSX. React needs a <code>key</code> on each item so it can track them across renders.</p>
+<div class="ts-only"><pre><code>import { properties } from "./data/properties";
+
+function PropertyList({ onSelect }: { onSelect: (id: string) =&gt; void }) {
+  return (
+    &lt;div className="grid"&gt;
+      {properties.map((p) =&gt; (
+        &lt;PropertyCard key={p.id} property={p} onSelect={onSelect} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>import { properties } from "./data/properties";
+
+function PropertyList({ onSelect }) {
+  return (
+    &lt;div className="grid"&gt;
+      {properties.map((p) =&gt; (
+        &lt;PropertyCard key={p.id} property={p} onSelect={onSelect} /&gt;
+      ))}
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Using the array index as a key. It works until the order changes — then React mismatches state to the wrong item. Always use a stable id from the data itself.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 9</div><h4>Filter Chips</h4><p>Add a row of style filter buttons (Modern / Classical / Industrial / All). Maintain a <code>filter</code> state. Use <code>properties.filter(...)</code> before mapping. Verify the list updates as you click chips.</p></div>
+
+<!-- WB Chapter 10 -->
+<h3>W10 · Composition</h3>
+<p>Components compose by nesting. The <code>children</code> prop is the slot inside.</p>
+<div class="ts-only"><pre><code>type CardProps = { children: React.ReactNode; title: string };
+
+function Panel({ title, children }: CardProps) {
+  return (
+    &lt;section className="panel"&gt;
+      &lt;header&gt;{title}&lt;/header&gt;
+      &lt;div className="panel-body"&gt;{children}&lt;/div&gt;
+    &lt;/section&gt;
+  );
+}
+
+// Usage:
+&lt;Panel title="Details"&gt;
+  &lt;p&gt;Anything you put here lands inside the panel.&lt;/p&gt;
+&lt;/Panel&gt;</code></pre></div>
+<div class="js-only"><pre><code>function Panel({ title, children }) {
+  return (
+    &lt;section className="panel"&gt;
+      &lt;header&gt;{title}&lt;/header&gt;
+      &lt;div className="panel-body"&gt;{children}&lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre></div>
+<p>"Lifting state up" is the second composition skill: when two siblings need the same state, move it to their nearest common parent and pass it down as props. The parent owns it; the children read it.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 10</div><h4>Panel Wrappers</h4><p>Create a generic <code>Panel</code> component and use it to wrap the filters, the list, and the detail view. The <code>selectedId</code> state stays in <code>App</code> and is lifted above all three children.</p></div>
+
+<!-- WB Chapter 11 -->
+<h3>W11 · useRef — The Imperative Escape Hatch</h3>
+<p>Sometimes you need to reach into the real DOM (focus an input, measure an element) or hold a value across renders without triggering re-renders. <code>useRef</code> gives you a mutable object whose <code>.current</code> you can read and write freely.</p>
+<div class="ts-only"><pre><code>import { useRef, useEffect } from "react";
+
+function SearchBox() {
+  const inputRef = useRef&lt;HTMLInputElement&gt;(null);
+  useEffect(() =&gt; { inputRef.current?.focus(); }, []);
+  return &lt;input ref={inputRef} placeholder="Search properties…" /&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>import { useRef, useEffect } from "react";
+
+function SearchBox() {
+  const inputRef = useRef(null);
+  useEffect(() =&gt; { inputRef.current &amp;&amp; inputRef.current.focus(); }, []);
+  return &lt;input ref={inputRef} placeholder="Search properties…" /&gt;;
+}</code></pre></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>This is the hook you will use most in R3F. Every 3D mesh you want to rotate, animate, or measure gets a ref. Master it now and Book 2 will feel familiar.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 11</div><h4>Auto-Focus Search</h4><p>Add a <code>SearchBox</code> above the property list. On mount, focus the input. Wire it to filter properties whose <code>title</code> matches the typed text.</p></div>
+
+<!-- WB Chapter 12 -->
+<h3>W12 · useEffect — Talking to the World Outside React</h3>
+<p>Anything that is not "compute the JSX from state" is a side effect: fetching data, reading <code>localStorage</code>, attaching window listeners, starting a timer. Side effects belong inside <code>useEffect</code>.</p>
+<div class="ts-only"><pre><code>import { useState, useEffect } from "react";
+
+function FavoritesPersist() {
+  const [favs, setFavs] = useState&lt;string[]&gt;(() =&gt; {
+    const raw = localStorage.getItem("favs");
+    return raw ? JSON.parse(raw) : [];
+  });
+
+  useEffect(() =&gt; {
+    localStorage.setItem("favs", JSON.stringify(favs));
+  }, [favs]); // run whenever favs changes
+
+  return &lt;p&gt;{favs.length} saved&lt;/p&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>import { useState, useEffect } from "react";
+
+function FavoritesPersist() {
+  const [favs, setFavs] = useState(() =&gt; {
+    const raw = localStorage.getItem("favs");
+    return raw ? JSON.parse(raw) : [];
+  });
+  useEffect(() =&gt; {
+    localStorage.setItem("favs", JSON.stringify(favs));
+  }, [favs]);
+  return &lt;p&gt;{favs.length} saved&lt;/p&gt;;
+}</code></pre></div>
+<p>The second argument is the <em>dependency array</em>. <code>[]</code> = run once after mount. <code>[favs]</code> = run after every render where <code>favs</code> changed. Omit it = run after every render (you almost never want this).</p>
+<p>Reference: <a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener">useEffect</a> — and the page <a href="https://react.dev/learn/you-might-not-need-an-effect" target="_blank" rel="noopener">You Might Not Need an Effect</a> is required reading before you write your tenth one.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 12</div><h4>Persistent Favorites</h4><p>Add a favorites array to <code>App</code>. Toggle membership when the user clicks the star on a card. Persist the list to <code>localStorage</code> with the pattern above. Reload the page — the stars stay lit.</p></div>
+
+<!-- WB Chapter 13 -->
+<h3>W13 · useMemo — Skipping Work You Already Did</h3>
+<p><code>useMemo</code> remembers the result of an expensive calculation between renders, recomputing it only when its dependencies change.</p>
+<div class="ts-only"><pre><code>import { useMemo } from "react";
+
+function Stats({ properties }: { properties: Property[] }) {
+  const totalArea = useMemo(
+    () =&gt; properties.reduce((sum, p) =&gt; sum + p.area, 0),
+    [properties]
+  );
+  return &lt;p&gt;Total area: {totalArea} m²&lt;/p&gt;;
+}</code></pre></div>
+<div class="js-only"><pre><code>import { useMemo } from "react";
+
+function Stats({ properties }) {
+  const totalArea = useMemo(
+    () =&gt; properties.reduce((sum, p) =&gt; sum + p.area, 0),
+    [properties]
+  );
+  return &lt;p&gt;Total area: {totalArea} m²&lt;/p&gt;;
+}</code></pre></div>
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Wrapping <em>everything</em> in <code>useMemo</code>. It is not free — the comparison itself costs cycles. Reach for it only when a calculation is genuinely expensive or when a stable reference matters (often the case in R3F when passing arrays into geometries).</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 13</div><h4>Filtered Stats</h4><p>Compute the count, average price, and total area of the <em>currently filtered</em> properties using <code>useMemo</code>. Display them in a stats bar above the grid.</p></div>
+
+<!-- WB Chapter 14 -->
+<h3>W14 · TypeScript for React — The Cheat Sheet You Will Actually Use</h3>
+<p>You have already been writing React in TypeScript through the whole workbook. Here is the consolidated reference of the patterns that come up daily.</p>
+<pre><code>// 1. Typing props with an inline type:
+function Hello({ name }: { name: string }) { return &lt;p&gt;Hi {name}&lt;/p&gt;; }
+
+// 2. Typing props with a separate alias (preferred for anything non-trivial):
+type ButtonProps = { label: string; onClick: () =&gt; void; disabled?: boolean };
+function Button({ label, onClick, disabled = false }: ButtonProps) { ... }
+
+// 3. Typing useState — usually inferred, occasionally explicit:
+const [count, setCount] = useState(0);                // inferred number
+const [user, setUser] = useState&lt;User | null&gt;(null);  // explicit when null
+
+// 4. Typing useRef:
+const divRef = useRef&lt;HTMLDivElement&gt;(null);
+
+// 5. Typing event handlers:
+function handleChange(e: React.ChangeEvent&lt;HTMLInputElement&gt;) {
+  setName(e.target.value);
+}
+
+// 6. Children prop:
+type Props = { children: React.ReactNode };
+
+// 7. Importing only the type (no runtime cost):
+import type { Property } from "./types";</code></pre>
+<p>That is genuinely 90% of the TypeScript you will write in React for the next year. Reference: <a href="https://react.dev/learn/typescript" target="_blank" rel="noopener">react.dev/learn/typescript</a>.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 14</div><h4>Type Audit</h4><p>Open every file in <code>src/components/</code>. Make sure every component has an explicit <code>Props</code> type alias. Make sure every <code>useState</code> with a non-trivial type is annotated. Run <code>npm run build</code> — it must complete with zero TS errors.</p></div>
+
+<!-- WB Chapter 15 -->
+<h3>W15 · Bridge to R3F — The Scene Placeholder</h3>
+<p>You have a working ArchViz Property Browser. Every component is typed. State is lifted. Effects persist favorites. The data file is the source of truth. Now we plant the seed for Book 2.</p>
+<div class="ts-only"><pre><code>// src/components/ScenePlaceholder.tsx
+import type { Property } from "../types";
+
+type Props = { property: Property | null };
+
+export default function ScenePlaceholder({ property }: Props) {
+  if (!property) return &lt;div className="scene empty"&gt;Select a property to preview&lt;/div&gt;;
+  return (
+    &lt;div className="scene"&gt;
+      &lt;p&gt;3D preview of &lt;strong&gt;{property.title}&lt;/strong&gt; will live here.&lt;/p&gt;
+      &lt;small&gt;Book 2 replaces this div with a &amp;lt;Canvas&amp;gt; from @react-three/fiber.&lt;/small&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>export default function ScenePlaceholder({ property }) {
+  if (!property) return &lt;div className="scene empty"&gt;Select a property to preview&lt;/div&gt;;
+  return (
+    &lt;div className="scene"&gt;
+      &lt;p&gt;3D preview of &lt;strong&gt;{property.title}&lt;/strong&gt; will live here.&lt;/p&gt;
+    &lt;/div&gt;
+  );
+}</code></pre></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In Book 2, this exact component is renamed to <code>PropertyScene.tsx</code>, the outer <code>div</code> becomes a <code>&lt;Canvas&gt;</code>, and the placeholder text becomes a real 3D model loaded from <code>property.modelUrl</code>. Nothing else in your app changes. That is the entire promise of React's "describe what you want" model — your UI logic and your 3D logic share the same data and the same component tree.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 15 — Final</div><h4>Ship It</h4><p>Add <code>ScenePlaceholder</code> next to the detail panel. Run <code>npm run build</code>. Deploy the <code>dist/</code> folder to Vercel (drag-and-drop, or <code>vercel --prod</code>). The deployed URL is now the first link in your portfolio. You are ready for Book 2.</p></div>
+
+<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — Bridge</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
+</section>
+
 <!-- ================ DEBUGGING ================ -->
 <section class="chapter" id="debugging">
 <div class="chapter-num">Appendix</div>
@@ -1753,6 +2265,20 @@ function updateScrollProgress() {
 window.addEventListener('scroll', updateScrollProgress);
 document.addEventListener('scroll', updateScrollProgress, true);
 updateScrollProgress();
+
+// Language toggle (TS / JS)
+function setLang(lang){
+  document.body.classList.remove('lang-ts','lang-js');
+  document.body.classList.add('lang-'+lang);
+  document.querySelectorAll('.lang-toggle button').forEach(function(b){
+    b.classList.toggle('active', b.dataset.lang===lang);
+  });
+  try{ localStorage.setItem('book1Lang', lang); }catch(e){}
+}
+(function(){
+  var saved='ts'; try{ saved=localStorage.getItem('book1Lang')||'ts'; }catch(e){}
+  setLang(saved);
+})();
 </script>
 </body>
 </html>
