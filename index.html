@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>React Foundations for React Three Fiber — Book 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
 <link rel="icon"  href="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg">
@@ -243,15 +243,37 @@ section.chapter{padding-top:60px;margin-top:-20px}
 .chap-nav a strong{color:#fff;font-size:0.95rem}
 .chap-nav .next{text-align:right}
 
+/* Sidebar Toggle */
+.sidebar-header{display:flex;justify-content:space-between;align-items:center}
+.sidebar-meta{flex:1}
+.sidebar-toggle{display:none;background:var(--surface-2);border:1px solid var(--border);border-radius:6px;color:var(--text-dim);font-size:1.1rem;line-height:1;padding:5px 10px;cursor:pointer;flex-shrink:0;margin-left:10px;width:auto;transition:all 0.15s}
+.sidebar-toggle:hover{background:var(--surface);color:#fff;border-color:var(--indigo)}
+
+/* ── Tablet / Mobile (≤900px) ── */
 @media (max-width:900px){
+  /* Mobile background — dark indigo-navy instead of near-black */
+  :root{--bg:#14172A;--bg-2:#181C30;--surface:#1C2038;--surface-2:#222640}
+  html,body{background:var(--bg)}
+  /* Prevent horizontal overflow */
+  html,body{overflow-x:hidden}
+  p,li,h1,h2,h3,h4,td,th,blockquote{overflow-wrap:break-word;word-break:break-word}
+  img,svg{max-width:100%;height:auto}
+  .layout,.main,.hero,.callout,.collapse,.toc-card,.chap-nav a{min-width:0}
+  /* Layout */
   .layout{grid-template-columns:1fr}
-  .sidebar{position:static;height:auto;border-right:none;border-bottom:1px solid var(--border)}
-  .main{padding:40px 24px 80px}
-  .hero{padding:60px 28px 40px}
+  .sidebar{position:sticky;top:0;height:auto;max-height:none;overflow-y:visible;border-right:none;border-bottom:1px solid var(--border);padding:14px 20px;z-index:100}
+  .sidebar-toggle{display:flex;align-items:center;justify-content:center}
+  .sidebar-sub{display:none}
+  .nav-list{display:none;margin-top:12px;padding-bottom:8px}
+  .sidebar.nav-open .nav-list{display:block}
+  .sidebar.nav-open .sidebar-sub{display:block;margin-top:2px;margin-bottom:8px}
+  .hero{padding:60px 24px 40px}
   .hero h1{font-size:2.2rem}
   h1{font-size:1.9rem}
   h2{font-size:1.4rem}
   .toc-grid{grid-template-columns:1fr}
+  .main{padding:40px 24px 80px}
+  #scroll-track{left:0;top:env(safe-area-inset-top,0px)}
 }
 
 /* Focus */
@@ -281,8 +303,40 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
   background: linear-gradient(90deg,var(--indigo),var(--sky));
   transition: width 0.1s linear;
 }
-@media (max-width: 900px) {
-  #scroll-track { left: 0; }
+
+/* ── iPhone 16 Pro & small phones (≤430px) ── */
+@media (max-width:430px){
+  html,body{font-size:16px}
+  /* Code blocks: contain, don't overflow the screen */
+  pre{font-size:0.76rem;padding:12px;max-width:100%;overflow-x:auto;white-space:pre;word-break:normal}
+  code{word-break:break-all}
+  .hero{padding:36px 18px 28px}
+  .hero h1{font-size:1.75rem}
+  .hero-sub{font-size:0.98rem}
+  .hero-meta{gap:12px;margin-top:20px}
+  .hero-meta strong{font-size:0.95rem}
+  h1{font-size:1.6rem}
+  h2{font-size:1.2rem}
+  h3{font-size:1.05rem}
+  h4{font-size:0.95rem}
+  .chapter-title{font-size:1.6rem}
+  .main{padding:28px 16px calc(50px + env(safe-area-inset-bottom,0px))}
+  .callout{padding:13px 15px}
+  .c-task{padding:16px}
+  .chap-nav{flex-direction:column}
+  .chap-nav a{max-width:100%}
+  .chap-nav .next{text-align:left}
+  input{font-size:16px}
+  .login-card{padding:1.75rem 1.25rem}
+  table{display:block;overflow-x:auto;-webkit-overflow-scrolling:touch;max-width:100%}
+}
+
+/* ── iPhone 16 Pro landscape ── */
+@media (orientation:landscape) and (max-height:430px){
+  .sidebar{padding:8px 16px}
+  .hero{padding:20px max(env(safe-area-inset-right,20px),20px) 16px max(env(safe-area-inset-left,20px),20px)}
+  .hero h1{font-size:1.5rem}
+  .main{padding:16px max(env(safe-area-inset-right,20px),20px) 32px max(env(safe-area-inset-left,20px),20px)}
 }
 </style>
 </head>
@@ -340,8 +394,13 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
 <div class="layout">
 
 <aside class="sidebar">
-  <div class="sidebar-brand">React Foundations</div>
-  <div class="sidebar-sub">Book 1 · For R3F</div>
+  <div class="sidebar-header">
+    <div class="sidebar-meta">
+      <div class="sidebar-brand">React Foundations</div>
+      <div class="sidebar-sub">Book 1 · For R3F</div>
+    </div>
+    <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">&#9776;</button>
+  </div>
   <ul class="nav-list">
     <li><a href="#hero">Cover</a></li>
     <li><a href="#intro">Introduction</a></li>
@@ -1621,6 +1680,11 @@ document.querySelectorAll('.collapse-head').forEach(function(h){
   });
 });
 
+// Sidebar toggle for mobile
+function toggleSidebar() {
+  document.querySelector('.sidebar').classList.toggle('nav-open');
+}
+
 // Highlight active sidebar link on scroll
 var sections = document.querySelectorAll('main section[id], main .chapter[id]');
 var navLinks = document.querySelectorAll('.sidebar a[href^="#"]');
@@ -1635,6 +1699,15 @@ function onScroll(){
 }
 window.addEventListener('scroll', onScroll);
 onScroll();
+
+// Close sidebar after nav link click on mobile
+navLinks.forEach(function(a){
+  a.addEventListener('click', function(){
+    if(window.innerWidth <= 900){
+      document.querySelector('.sidebar').classList.remove('nav-open');
+    }
+  });
+});
 
 // Scroll progress indicator
 var scrollIndicator = document.getElementById('scroll-indicator');
