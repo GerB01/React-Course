@@ -251,11 +251,15 @@ section.chapter{padding-top:60px;margin-top:-20px}
 
 /* ── Tablet / Mobile (≤900px) ── */
 @media (max-width:900px){
-  /* Mobile background — dark indigo-navy instead of near-black */
+  /* Mobile background — dark indigo-navy */
   :root{--bg:#14172A;--bg-2:#181C30;--surface:#1C2038;--surface-2:#222640}
   html,body{background:var(--bg)}
-  /* Prevent horizontal overflow */
-  html,body{overflow-x:hidden}
+  /* Overflow fix: html never unlocked, body.ready overrides overflow:auto — both need x:hidden */
+  html{overflow-x:hidden}
+  body,body.ready{overflow-x:hidden}
+  /* Root cause fix: <main> is a grid item — without min-width:0 it expands to fit content */
+  main{min-width:0;max-width:100%;overflow-x:hidden}
+  pre{max-width:100%}
   p,li,h1,h2,h3,h4,td,th,blockquote{overflow-wrap:break-word;word-break:break-word}
   img,svg{max-width:100%;height:auto}
   .layout,.main,.hero,.callout,.collapse,.toc-card,.chap-nav a{min-width:0}
@@ -337,6 +341,32 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
   .hero{padding:20px max(env(safe-area-inset-right,20px),20px) 16px max(env(safe-area-inset-left,20px),20px)}
   .hero h1{font-size:1.5rem}
   .main{padding:16px max(env(safe-area-inset-right,20px),20px) 32px max(env(safe-area-inset-left,20px),20px)}
+}
+
+/* ── iPad portrait (601px – 900px) ── */
+/* Overrides the single-column mobile layout: restores 2-column sidebar */
+@media (min-width:601px) and (max-width:900px){
+  .layout{grid-template-columns:200px 1fr}
+  .sidebar{position:sticky;top:0;height:100vh;overflow-y:auto;border-right:1px solid var(--border);border-bottom:none;padding:20px 16px;z-index:1}
+  .sidebar-toggle{display:none!important}
+  .nav-list{display:block!important;margin-top:0;padding-bottom:0}
+  .sidebar-sub{display:block!important;margin:0 0 16px}
+  .nav-list a{font-size:0.82rem;padding:6px 8px}
+  .hero{padding:50px 28px 36px}
+  .hero h1{font-size:2.2rem}
+  h2{font-size:1.5rem}
+  .main{padding:36px 28px 80px}
+  #scroll-track{left:200px;top:0}
+}
+
+/* ── iPad landscape / compact desktop (901px – 1080px) ── */
+@media (min-width:901px) and (max-width:1080px){
+  .layout{grid-template-columns:220px 1fr}
+  .sidebar{padding:22px 16px}
+  .nav-list a{font-size:0.84rem}
+  .hero{padding:60px 44px 44px}
+  .main{padding:48px 44px 100px}
+  #scroll-track{left:220px}
 }
 </style>
 </head>
