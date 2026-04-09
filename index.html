@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
-<title>React Foundations for React Three Fiber — Book 1</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<title>Premium React for Real Estate Experiences — Book 1</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="icon"  href="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg">
 <!-- Making it Public -->
 <style>
@@ -90,63 +90,7 @@ li{margin:0.4em 0}
     background-color: var(--teal);   /* Change color on hover for feedback */
 }
 
-/* Password */
-body, html { 
-            height: 100%; margin: 0; padding: 0;
-            background: var(--bg); color: var(--text); 
-            font-family: 'Inter', sans-serif; overflow: hidden; 
-        }
-
-        /* 1. THE SHIELD (Login Screen) */
-        #login-overlay {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            display: flex; justify-content: center; align-items: center;
-            z-index: 9999;
-            transition: opacity 0.6s ease, visibility 0.6s ease;
-        }
-
-        .login-card {
-            background: var(--surface); padding: 3rem 2rem; border-radius: 16px;
-            border: 1px solid var(--border); text-align: center; width: 90%; max-width: 400px;
-        }
-
-        .react-logo { width: 64px; margin-bottom: 1.5rem; filter: drop-shadow(0 0 10px var(--indigo-soft)); }
-        
-        input {
-            width: 100%; background: var(--bg-2); border: 1px solid var(--border);
-            padding: 14px; border-radius: 8px; color: var(--text);
-            margin: 1.5rem 0; text-align: center; outline: none;
-        }
-
-        button {
-            width: 100%; background: var(--indigo); color: white;
-            border: none; padding: 14px; border-radius: 8px;
-            font-weight: 600; cursor: pointer;
-        }
-
-        /* 2. THE INTRO MESSAGE (Temporary) */
-        #intro-message {
-            position: fixed; inset: 0;
-            background: var(--bg);
-            display: none; /* Shown via JS */
-            flex-direction: column; justify-content: center; align-items: center;
-            z-index: 9998;
-            transition: transform 0.8s cubic-bezier(0.87, 0, 0.13, 1), opacity 0.5s ease;
-        }
-
-        /* 3. FINAL WEBSITE CONTENT */
-        #main-content {
-            opacity: 0; visibility: hidden;
-            height: 100vh; overflow-y: auto; padding: 2rem;
-        }
-
-        /* States */
-        body.unlocked #login-overlay { opacity: 0; visibility: hidden; }
-        body.ready #main-content { opacity: 1; visibility: visible; transition: opacity 1s ease; }
-        body.ready { overflow: auto; }
-        
-        .fade-out { transform: translateY(-100%); opacity: 0; }
+/* ── Password / welcome screen removed — elements kept in HTML comments below ── */
 
 /* Layout */
 .layout{display:grid;grid-template-columns:280px 1fr;min-height:100vh}
@@ -193,6 +137,16 @@ body, html {
 .c-task::after{content:"★";position:absolute;top:20px;right:26px;font-size:1.8rem;color:var(--indigo);opacity:0.35}
 .c-task .callout-label{color:var(--indigo);font-size:0.78rem}
 .c-task h4{margin-top:0;color:#fff}
+
+/* Real-estate context callout */
+.c-re{border-color:var(--gold);background:linear-gradient(90deg,var(--gold-soft),transparent 60%);position:relative}
+.c-re .callout-label{color:var(--gold)}
+.c-re::before{content:"⌂";position:absolute;top:14px;right:18px;font-size:1.2rem;opacity:0.25;color:var(--gold)}
+
+/* Skill map diagram */
+.skill-map{background:#070910;border:1px solid var(--border-soft);border-radius:14px;padding:28px 24px;margin:2.4em 0}
+.skill-map-title{font-family:var(--serif);font-size:1.05rem;font-weight:600;color:var(--gold);margin-bottom:20px;letter-spacing:.02em}
+.skill-map svg{max-width:100%;height:auto;display:block;margin:0 auto}
 
 /* Reveal toggle */
 .reveal{margin-top:10px}
@@ -369,6 +323,25 @@ blockquote{border-left:3px solid var(--indigo);margin:1.4em 0;padding:0.2em 1.2e
   #scroll-track{left:220px}
 }
 
+/* ── Premium real-estate brand layer ── */
+:root{
+  --gold:#C9A96E;
+  --gold-soft:#C9A96E22;
+  --ivory:#F3EDE2;
+  --serif:'Cormorant Garamond', Georgia, serif;
+}
+.hero h1, .chapter-title, h1.chapter-title{font-family:var(--serif);font-weight:500;letter-spacing:-0.01em}
+.hero h1{font-size:3rem;line-height:1.1}
+.hero-tag{color:var(--gold);letter-spacing:0.22em;text-transform:uppercase;font-size:.72rem;font-weight:600}
+.chapter-num{color:var(--gold)}
+.sidebar-brand{font-family:var(--serif);font-weight:600;letter-spacing:0.01em;font-size:1.1rem}
+h2{font-family:var(--serif);font-weight:600;letter-spacing:-0.005em}
+.hero::after{content:"";display:block;width:72px;height:1px;background:linear-gradient(90deg,var(--gold),transparent);margin-top:22px}
+.capstone-box{border:1px solid var(--gold);background:linear-gradient(135deg,rgba(201,169,110,.08),rgba(243,237,226,.02))}
+.capstone-box h4{color:var(--gold)}
+a{color:var(--gold)}
+.nav-list a:hover{color:var(--gold)}
+
 /* ── TS / JS toggle ── */
 .lang-toggle{position:sticky;top:8px;z-index:5;display:inline-flex;gap:0;background:var(--surface);border:1px solid var(--border);border-radius:999px;padding:4px;margin:0 0 18px;font-family:'JetBrains Mono',monospace;font-size:.78rem}
 .lang-toggle button{background:transparent;border:0;color:var(--muted);padding:6px 14px;border-radius:999px;cursor:pointer;letter-spacing:.04em}
@@ -382,62 +355,42 @@ body.lang-ts .js-only{display:none}
 </head>
 <body class="lang-ts">
 <div id="scroll-track"><div id="scroll-indicator"></div></div>
-<!-- Password -->
-<div id="login-overlay">
-        <div class="login-card">
-            <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="react-logo" alt="React">
-            <h2 style="margin:0;">Protected Page</h2>
-            <input type="password" id="passInput" placeholder="Enter Access Key" autofocus>
-            <button onclick="checkKey()">Unlock Project</button>
-        </div>
+<!--
+  PASSWORD / WELCOME SCREEN — kept as reference, not rendered
+  ============================================================
+  <div id="login-overlay">
+    <div class="login-card">
+      <img src="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg" class="react-logo" alt="React">
+      <h2>Protected Page</h2>
+      <input type="password" id="passInput" placeholder="Enter Access Key" autofocus>
+      <button onclick="checkKey()">Unlock Project</button>
     </div>
-
-    <div id="intro-message">
-        <h1 style="color: var(--indigo); font-size: 3.5rem; letter-spacing: -2px; margin: 0;">Germán Secures</h1>
-        <p style="color: var(--text-dim); font-size: 1.25rem;">This content is now decrypted and visible.</p>
-    </div>
-
-   
-    <script>
-        function checkKey() {
-            const input = document.getElementById('passInput').value;
-            const secret = "tono2026"; 
-
-            if (input === secret) {
-                // 1. Hide login
-                document.body.classList.add('unlocked');
-                
-                // 2. Show intro message
-                const intro = document.getElementById('intro-message');
-                intro.style.display = 'flex';
-
-                // 3. Wait 3 seconds, then transition to main content
-                setTimeout(() => {
-                    intro.classList.add('fade-out'); // Slide it up
-                    document.body.classList.add('ready'); // Reveal main site
-                    
-                    // Optional: Remove intro from DOM after animation finishes
-                    setTimeout(() => { intro.remove(); }, 800);
-                }, 1500); 
-
-            } else {
-                alert("Incorrect Access Key");
-                document.getElementById('passInput').value = '';
-            }
-        }
-
-        document.getElementById('passInput').addEventListener('keypress', function(e) {
-            if (e.key === 'Enter') checkKey();
-        });
-    </script>
+  </div>
+  <div id="intro-message">
+    <h1>Germán Secures</h1>
+    <p>This content is now decrypted and visible.</p>
+  </div>
+  <script>
+    function checkKey() {
+      const input = document.getElementById('passInput').value;
+      if (input === "tono2026") {
+        document.body.classList.add('unlocked');
+        const intro = document.getElementById('intro-message');
+        intro.style.display = 'flex';
+        setTimeout(() => { intro.classList.add('fade-out'); document.body.classList.add('ready'); }, 1500);
+      } else { alert("Incorrect Access Key"); document.getElementById('passInput').value = ''; }
+    }
+    document.getElementById('passInput').addEventListener('keypress', function(e){ if(e.key==='Enter') checkKey(); });
+  </script>
+-->
 
 <div class="layout">
 
 <aside class="sidebar">
   <div class="sidebar-header">
     <div class="sidebar-meta">
-      <div class="sidebar-brand">React Foundations</div>
-      <div class="sidebar-sub">Book 1 · For R3F</div>
+      <div class="sidebar-brand">Premium React</div>
+      <div class="sidebar-sub">Book 1 · Real Estate Experiences</div>
     </div>
     <button class="sidebar-toggle" onclick="toggleSidebar()" aria-label="Toggle navigation">&#9776;</button>
   </div>
@@ -465,8 +418,14 @@ body.lang-ts .js-only{display:none}
     <li><a href="#ch13">13. useMemo</a></li>
     <li><a href="#ch14">14. TypeScript for React</a></li>
     <li><a href="#ch15">15. Bridge to R3F</a></li>
+    <li><a class="section">Skill Maps</a></li>
+    <li><a href="#skillmap-1">Movement 1 — Mindset</a></li>
+    <li><a href="#skillmap-2">Movement 2 — Building</a></li>
+    <li><a href="#skillmap-3">Movement 3 — Hooks</a></li>
+    <li><a href="#skillmap-4">Movement 4 — Bridge</a></li>
     <li><a class="section">Practice</a></li>
-    <li><a href="#workbook">Practical Workbook</a></li>
+    <li><a href="#mini-project">Mini-Project: Property Hero</a></li>
+    <li><a href="#workbook">Aurelia Workbook</a></li>
     <li><a class="section">Reference</a></li>
     <li><a href="#debugging">Debugging Mindset</a></li>
     <li><a href="#glossary">Glossary</a></li>
@@ -478,14 +437,14 @@ body.lang-ts .js-only{display:none}
 
 <!-- HERO -->
 <section class="hero" id="hero">
-  <div class="hero-tag">Book 1 of 2 · Focused Foundations</div>
-  <h1>React Foundations for React Three Fiber</h1>
-  <p class="hero-sub">A compact, focused manual for the JavaScript developer who wants to understand React well enough to build interactive 3D worlds with React Three Fiber — and not a syllable more than needed to get there.</p>
+  <div class="hero-tag">Book One of Two · React Foundations</div>
+  <h1>React for Premium Real&nbsp;Estate — and Beyond</h1>
+  <p class="hero-sub">A practical manual for learning React through the lens of premium real estate interfaces — so every component you write doubles as preparation for the immersive React Three Fiber experiences you build in Book Two.</p>
   <div class="hero-meta">
-    <div><strong>16 Chapters</strong>Setup + 15 focused lessons</div>
-    <div><strong>60+ Exercises</strong>Compounding into one capstone</div>
-    <div><strong>TS / JS Toggle</strong>Learn React in TypeScript</div>
-    <div><strong>ArchViz Capstone</strong>Portfolio project for R3F jobs</div>
+    <div><strong>16 Chapters</strong>Setup and sixteen refined lessons</div>
+    <div><strong>60+ Exercises</strong>One compounding capstone project</div>
+    <div><strong>TS / JS Toggle</strong>Learn in TypeScript from day one</div>
+    <div><strong>Aurelia Residences</strong>A portfolio-worthy launch site</div>
   </div>
 </section>
 
@@ -497,13 +456,13 @@ body.lang-ts .js-only{display:none}
 <!-- INTRODUCTION -->
 <section id="intro">
 <h2>Introduction</h2>
-<p>This book exists because the usual way of learning React takes too long, covers too much, and leaves you holding a toolbox of features without a clear sense of which ones actually matter for the thing you came here to build. If your goal is React Three Fiber — the library that lets you describe interactive 3D scenes with React components — you do not need every corner of the React ecosystem. You need the mindset, the core hooks, and a handful of mental models that survive the jump from flat web UI into three-dimensional space.</p>
-<p>That is what this book delivers. It teaches React as a thinking tool rather than a catalogue of APIs. Every chapter is short on purpose. Every exercise is small on purpose. And every concept ends with a short note explaining how it will resurface in Book 2, when you begin building the interactive real estate portfolio that is the larger arc of your journey.</p>
-<p>You will not find Redux, React Router, server components, class components, forms, or the many other topics that dominate generic React courses. They are real, they are useful, and they are deliberately absent. If you need them later, you will learn them later. For now, the goal is to get you from "I know JavaScript" to "I can read an R3F component and recognize every idea in it" in the shortest honest path possible.</p>
+<p>The premium property world has changed. Buyers no longer arrive through a brochure — they arrive through a website that must look, move, and feel as considered as the residence it represents. A single misaligned card, a sluggish hover, an awkwardly placed call-to-action, and the prospect is gone. Building those experiences well is a craft. This book is about the foundation of that craft.</p>
+<p>These pages teach React, but through a single lens: the interfaces of high-end real estate. Every example is a component you would plausibly ship on a luxury residence site or a developer's launch microsite. Every exercise contributes to a real deliverable — a boutique launch platform called Aurelia Residences — that you can open in front of a client, a hiring manager, or your own portfolio page and defend line by line.</p>
+<p>You will not find Redux, React Router, server components, class components, or any of the other topics that dominate generic React courses. They are real, they are useful, and they are deliberately absent. The goal is to get you from "I know JavaScript" to "I can ship a premium real-estate React interface and understand everything in it" along the shortest honest path.</p>
 
 <div class="callout c-why">
   <div class="callout-label"><span class="icon">✦</span> Why It Matters</div>
-  <p>Focused learning beats comprehensive learning when you have a specific destination. This book is shaped like a flight path, not like a library. Every page pushes you toward Book 2.</p>
+  <p>Focused learning beats comprehensive learning when you have a specific destination. This book is shaped like a flight path toward a single, sellable deliverable. Book Two then layers React Three Fiber on top as the immersive enhancement that turns a polished real estate site into a cinematic digital property experience.</p>
 </div>
 </section>
 
@@ -599,15 +558,15 @@ body.lang-ts .js-only{display:none}
 
 <!-- ================ CAPSTONE OVERVIEW ================ -->
 <section id="capstone">
-<h2>The Capstone: An ArchViz Property Browser</h2>
-<p>Every exercise in this book compounds into <strong>one</strong> deliverable: a small but real React application called <em>ArchViz Property Browser</em>. It is a single-page interface that an architect or real-estate studio could plausibly hand a client. By the end of Book 1 you will have built it entirely with plain HTML/CSS React components — no 3D yet. In Book 2, every component you wrote here gets paired with a React Three Fiber scene so the same data drives both a UI panel <em>and</em> a navigable 3D model of the building.</p>
-<p>Why this project? Because it is exactly the kind of thing studios in the architectural-visualization world hire React/R3F developers to build. Finishing it gives you something concrete to show in a job application, and every line of it will be code you wrote yourself, on purpose, with understanding.</p>
+<h2>The Capstone · Aurelia Residences</h2>
+<p>Every exercise in this book compounds into <strong>one</strong> deliverable: a boutique real-estate launch site for a fictional development called <em>Aurelia Residences</em>. You will build it as a polished, conversion-aware React application of the kind a luxury agency, property developer, or premium marketing studio would actually commission. By the end of Book One the entire experience runs on elegant, typed React components — editorial typography, cinematic imagery, refined micro-interactions, and a clean inquiry funnel. Book Two then replaces the static "scene placeholder" with a live React Three Fiber canvas, transforming the site into an immersive digital property experience.</p>
+<p>Why this project? Because it is the exact kind of deliverable premium developers, real-estate branding studios, and luxury marketing agencies are currently paying for. Finishing it gives you something you can put in front of a real client, a founder, or a hiring conversation and defend every line of.</p>
 <div class="capstone-box">
 <h4>What You Will Build</h4>
-<p>A property browser with: a list of architectural projects (loaded from a typed data file), a detail panel that updates when you click a project, filter chips (by style, by status), a "favorites" toggle that persists, a hero image gallery, an interactive floor-area calculator, a day/night theme switch, a contact form for inquiries, and a final "scene placeholder" component that Book 2 will replace with a live R3F canvas.</p>
-<p>Each chapter contributes one feature. By Chapter 15 the app is complete and ready to receive its 3D twin.</p>
+<p>A single-page launch site for Aurelia Residences featuring: a cinematic <strong>hero</strong> with editorial copy and a sticky call-to-action; a <strong>featured residences</strong> grid driven by a typed data file; a <strong>residence detail</strong> panel with pricing, floor area, and status; an <strong>availability board</strong> for unit selection; an <strong>amenities</strong> highlight section; a <strong>gallery</strong> with interactive media; a <strong>neighborhood</strong> story block; a <strong>private viewing</strong> inquiry form with validation; <strong>conversion elements</strong> such as sticky CTAs and saved-favorites persistence; and a final <strong>Experience</strong> placeholder that Book Two turns into an immersive 3D walk-through of the development.</p>
+<p>Each chapter contributes one section of the site. By the end of the workbook, the platform is complete, typed, responsive, and ready to be published.</p>
 </div>
-<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>The data file you build in Chapter 4 — a typed list of <code>Property</code> objects — is the same data file Book 2's <code>&lt;Canvas&gt;</code> will consume to place 3D buildings on a virtual site plan. Nothing you write here gets thrown away.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>The <code>Residence</code> type you define in Chapter 4 becomes the exact shape Book Two's <code>&lt;Canvas&gt;</code> consumes to render each property as a cinematic 3D scene. The launch site you ship here is not a throwaway exercise — it is the commercial shell inside which the immersive experience later lives.</p></div>
 </section>
 
 <!-- ================ CHAPTER 0 ================ -->
@@ -631,15 +590,15 @@ npm --version</code></pre>
 
 <h3>0.2 Creating Your First React + TypeScript Project</h3>
 <p>Vite ships a project generator. From any folder on your computer, run:</p>
-<pre><code>npm create vite@latest archviz-browser -- --template react-ts
-cd archviz-browser
+<pre><code>npm create vite@latest aurelia-residences -- --template react-ts
+cd aurelia-residences
 npm install
 npm run dev</code></pre>
 <p>That is the entire setup. Line by line:</p>
 <ul>
-  <li><code>npm create vite@latest archviz-browser</code> tells npm to run the Vite scaffolder and name the new folder <code>archviz-browser</code>.</li>
+  <li><code>npm create vite@latest aurelia-residences</code> tells npm to run the Vite scaffolder and name the new folder <code>aurelia-residences</code>.</li>
   <li><code>-- --template react-ts</code> tells Vite to use the React + TypeScript template. (If you prefer plain JS, use <code>react</code> instead — but this book defaults to TypeScript and you should follow along.)</li>
-  <li><code>cd archviz-browser</code> moves your terminal into the new folder.</li>
+  <li><code>cd aurelia-residences</code> moves your terminal into the new folder.</li>
   <li><code>npm install</code> downloads every dependency listed in <code>package.json</code> into a folder called <code>node_modules</code>.</li>
   <li><code>npm run dev</code> starts the Vite development server, usually at <code>http://localhost:5173</code>. Open that URL in your browser and you will see the Vite + React starter page.</li>
 </ul>
@@ -648,7 +607,7 @@ npm run dev</code></pre>
 
 <h3>0.3 What's Inside the Project</h3>
 <p>Open the folder in VS Code. You will see a structure like this:</p>
-<pre><code>archviz-browser/
+<pre><code>aurelia-residences/
 ├── node_modules/        (libraries — never edit, never commit)
 ├── public/              (static files served as-is)
 ├── src/                 (your code lives here)
@@ -678,13 +637,13 @@ npm run dev</code></pre>
   <li><strong>Error Lens</strong> — shows TypeScript errors inline next to the offending code instead of hidden in a panel.</li>
 </ul>
 
-<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Book 2 starts the same way — <code>npm create vite@latest</code> — and then adds three extra packages: <code>three</code>, <code>@react-three/fiber</code>, and <code>@react-three/drei</code>. The setup you do now is exactly the setup you will reuse in Book 2. Get comfortable with it.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>Book Two begins from this exact project and adds three packages — <code>three</code>, <code>@react-three/fiber</code>, and <code>@react-three/drei</code> — to transform your static launch site into an immersive property experience. The environment you set up now is the environment you ship in.</p></div>
 
 <h3>Chapter Task</h3>
 <div class="callout c-task">
 <div class="callout-label"><span class="icon">★</span> Capstone Step 0</div>
 <h4>Spin Up the Project</h4>
-<p>Create the <code>archviz-browser</code> project as described above. Verify that <code>npm run dev</code> opens a working page in your browser. Then open <code>src/App.tsx</code>, find the text inside the heading, change it to "ArchViz Property Browser", save, and confirm the browser updates without reloading. That feedback loop is now yours for the rest of the book.</p>
+<p>Create the <code>aurelia-residences</code> project as described above. Verify that <code>npm run dev</code> opens a working page in your browser. Then open <code>src/App.tsx</code>, find the text inside the heading, change it to "Aurelia Residences", save, and confirm the browser updates without reloading. That feedback loop is now yours for the rest of the book.</p>
 </div>
 </section>
 
@@ -734,6 +693,8 @@ npm run dev</code></pre>
 <h4>Explain React to a Friend</h4>
 <p>Write a paragraph of three to five sentences explaining React to a developer friend who still uses jQuery. Do not mention syntax, components, or JSX. Focus only on the problem React solves and why the declarative approach is better than manual DOM manipulation. The goal is to convince them that React is worth learning — not by listing features, but by naming the pain it removes.</p>
 </div>
+
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>A luxury property launch site might display live pricing, availability status, and unit counts — all driven by the same data source. React's promise is that when the underlying data changes (a unit sells, a price updates), every display on the page syncs automatically. No jQuery selectors hunting through the DOM. The brand integrity stays intact without a single manual DOM call.</p></div>
 
 <div class="chap-nav"><a href="#intro"><span>Previous</span><strong>Introduction</strong></a><a class="next" href="#ch2"><span>Next</span><strong>Chapter 2 — Thinking Declaratively</strong></a></div>
 </section>
@@ -821,8 +782,42 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Pick any simple interaction: a button that changes color on click, a counter that increments, or a panel that opens on hover. Write it twice — once in imperative pseudocode describing every DOM operation step by step, and once in declarative pseudocode as a description of the UI as a function of state. Read the two side by side. Note which one feels shorter, which one feels clearer, and which one you could imagine scaling to ten similar components without losing your mind.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>Declarative thinking is exactly what separates a hand-crafted luxury site from a brittle patchwork of jQuery calls. When a prospect filters residences by collection, you do not manually update a counter, swap card images, and recalculate a price range. You describe what the page should look like for a given selection, and React produces it. This is how premium brands stay consistent at scale — one source of truth, one description, no drift.</p></div>
 <div class="chap-nav"><a href="#ch1"><span>Previous</span><strong>Ch 1 — What React Is</strong></a><a class="next" href="#ch3"><span>Next</span><strong>Ch 3 — Components & JSX</strong></a></div>
 </section>
+
+<!-- ── SKILL MAP: MOVEMENT 1 ── -->
+<div class="skill-map" id="skillmap-1">
+  <div class="skill-map-title">Movement 1 Skill Map — The React Mindset</div>
+  <svg viewBox="0 0 720 200" xmlns="http://www.w3.org/2000/svg" aria-label="Movement 1 skill map">
+    <defs>
+      <marker id="arr1" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#C9A96E" opacity=".7"/></marker>
+    </defs>
+    <!-- nodes -->
+    <rect x="20"  y="60" width="150" height="80" rx="10" fill="#11131C" stroke="#C9A96E" stroke-width="1.5"/>
+    <text x="95"  y="92"  fill="#C9A96E" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 1</text>
+    <text x="95"  y="112" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="11" text-anchor="middle">Why React exists</text>
+    <text x="95"  y="128" fill="#A5AABE" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">DOM problem → declaration</text>
+
+    <path d="M170 100 L210 100" stroke="#C9A96E" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr1)"/>
+
+    <rect x="210" y="60" width="150" height="80" rx="10" fill="#11131C" stroke="#C9A96E" stroke-width="1.5"/>
+    <text x="285" y="92"  fill="#C9A96E" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 2</text>
+    <text x="285" y="112" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="11" text-anchor="middle">Declarative thinking</text>
+    <text x="285" y="128" fill="#A5AABE" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Describe state → let React update</text>
+
+    <path d="M360 100 L440 100" stroke="#C9A96E" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr1)" stroke-dasharray="5,4"/>
+
+    <!-- outcomes -->
+    <rect x="440" y="30" width="260" height="140" rx="10" fill="#0a0c14" stroke="#C9A96E44" stroke-width="1"/>
+    <text x="570" y="58"  fill="#C9A96E" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">You now understand</text>
+    <text x="570" y="80"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  The DOM-sync problem React solves</text>
+    <text x="570" y="98"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  Declarative vs. imperative code</text>
+    <text x="570" y="116" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  The reconciler &amp; virtual DOM</text>
+    <text x="570" y="134" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  Why R3F uses the same model</text>
+    <text x="570" y="155" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle" font-style="italic">Foundation for everything that follows</text>
+  </svg>
+</div>
 
 <!-- ================ CHAPTER 3 ================ -->
 <section class="chapter" id="ch3">
@@ -952,6 +947,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Sketch on paper or in a digital notebook a simple property listing page you might build. Imagine: a header with a logo, a grid of property cards, and a footer. Do not write code. Instead, identify each component you would create, name it, and draw the tree hierarchy. For each component, write one line: what does it display? This is a design exercise, not a coding one. Good React developers think in trees before they type.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>A premium launch site is assembled from purposeful components: a <code>ResidenceHero</code>, a <code>SpecsBar</code>, an <code>AmenityList</code>, an <code>InquiryForm</code>. Each is self-contained and reusable across multiple pages. JSX is the syntax that lets you describe these pieces in a readable, design-aware way — making your components legible both to the browser and to a designer reviewing your code.</p></div>
 <div class="chap-nav"><a href="#ch2"><span>Previous</span><strong>Ch 2 — Declarative Thinking</strong></a><a class="next" href="#ch4"><span>Next</span><strong>Ch 4 — Props</strong></a></div>
 </section>
 
@@ -1063,6 +1059,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Create a fully typed <code>PropertyCard</code> component with props for title, price, bedrooms, and location. Render three instances in your App with different data. Notice what stays the same (the structure) and what changes (the props). This component will grow with you across the rest of the book.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>On a luxury site, the data behind a residence card is your contract with the client: name, price, floor area, collection tier, availability. Typing that shape as a <code>Residence</code> interface means your editor catches mismatches before the site goes live — no more "from €4.25m" appearing on a sold unit because a field name changed. Props are how that typed contract travels safely from data file to every visible pixel.</p></div>
 <div class="chap-nav"><a href="#ch3"><span>Previous</span><strong>Ch 3 — Components & JSX</strong></a><a class="next" href="#ch5"><span>Next</span><strong>Ch 5 — State</strong></a></div>
 </section>
 
@@ -1152,6 +1149,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Extend your <code>PropertyCard</code> from the previous chapter. Add a favoriting heart button. The heart should be toggleable. Each card should have its own independent favorite state. Confirm that clicking the heart on one card does not affect others — this proves that state is local to each instance.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>State is what makes a launch site feel <em>alive</em> rather than static. The selected residence, the active collection filter, the unit the prospect just saved — these are all state. A brochure PDF cannot react to a prospect's interest. A React application can: it tracks what they care about, adapts the interface, and gently nudges toward an inquiry. That interactivity is the commercial advantage of building in React.</p></div>
 <div class="chap-nav"><a href="#ch4"><span>Previous</span><strong>Ch 4 — Props</strong></a><a class="next" href="#ch6"><span>Next</span><strong>Ch 6 — Events</strong></a></div>
 </section>
 
@@ -1235,8 +1233,48 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Make your PropertyCard respond to pointer events. Hovering highlights it (a subtle border or shadow). Clicking it selects it and logs the title to the console. Combine with your favorite-heart state from Chapter 5. All typed in TypeScript.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>On a high-intent real estate page, every click carries weight. "Request a private viewing," "Save this residence," "Contact our team" — these are conversion moments, not decorative affordances. React's event system lets you attach crisp, intentional handlers to these elements without event listener soup. A sticky CTA bar that changes label based on the selected residence, a gallery that advances on arrow key, an inquiry button that transforms into a confirmation — all just event handlers calling state setters.</p></div>
 <div class="chap-nav"><a href="#ch5"><span>Previous</span><strong>Ch 5 — State</strong></a><a class="next" href="#ch7"><span>Next</span><strong>Ch 7 — Re-rendering</strong></a></div>
 </section>
+
+<!-- ── SKILL MAP: MOVEMENT 2 ── -->
+<div class="skill-map" id="skillmap-2">
+  <div class="skill-map-title">Movement 2 Skill Map — Building Blocks</div>
+  <svg viewBox="0 0 760 220" xmlns="http://www.w3.org/2000/svg" aria-label="Movement 2 skill map">
+    <defs>
+      <marker id="arr2" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#7B68EE" opacity=".7"/></marker>
+    </defs>
+    <rect x="10"  y="65" width="140" height="90" rx="10" fill="#11131C" stroke="#7B68EE" stroke-width="1.5"/>
+    <text x="80"  y="97"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 3</text>
+    <text x="80"  y="116" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Components &amp; JSX</text>
+    <text x="80"  y="132" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Functions returning UI</text>
+
+    <path d="M150 110 L188 110" stroke="#7B68EE" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr2)"/>
+
+    <rect x="188" y="65" width="140" height="90" rx="10" fill="#11131C" stroke="#7B68EE" stroke-width="1.5"/>
+    <text x="258" y="97"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 4</text>
+    <text x="258" y="116" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Props</text>
+    <text x="258" y="132" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Data in · TypeScript types</text>
+
+    <path d="M328 110 L366 110" stroke="#7B68EE" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr2)"/>
+
+    <rect x="366" y="65" width="140" height="90" rx="10" fill="#11131C" stroke="#7B68EE" stroke-width="1.5"/>
+    <text x="436" y="97"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 5</text>
+    <text x="436" y="116" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">State · useState</text>
+    <text x="436" y="132" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Memory that triggers renders</text>
+
+    <path d="M506 110 L544 110" stroke="#7B68EE" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr2)"/>
+
+    <rect x="544" y="65" width="140" height="90" rx="10" fill="#11131C" stroke="#7B68EE" stroke-width="1.5"/>
+    <text x="614" y="97"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 6</text>
+    <text x="614" y="116" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Events</text>
+    <text x="614" y="132" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Handlers · conversion moments</text>
+
+    <rect x="10" y="175" width="730" height="36" rx="8" fill="#0a0c14" stroke="#7B68EE33"/>
+    <text x="375" y="190" fill="#A5AABE" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">✓ Write components  ✓ Pass props  ✓ Hold state  ✓ Respond to clicks  ✓ Type everything</text>
+    <text x="375" y="204" fill="#6E7389" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">You can now build any static, data-driven, interactive UI section</text>
+  </svg>
+</div>
 
 <!-- ================ CHAPTER 7 ================ -->
 <section class="chapter" id="ch7">
@@ -1288,6 +1326,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>On paper, draw the component tree of your PropertyCard exercise. Mark where state lives. Now imagine the user clicks the favorite heart on one card. Draw arrows showing which components re-render. Annotate why each one re-renders or does not. Explain the diagram to yourself in plain English.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>Understanding re-renders is what stops you from building a sluggish, flickering launch site. A well-structured premium interface re-renders exactly the components that need updating — the detail panel refreshes, but the fixed navigation and the hero section stay untouched. Knowing how React's render loop works is the difference between a site that feels instantaneous and one that visibly lags when a prospect selects a residence.</p></div>
 <div class="chap-nav"><a href="#ch6"><span>Previous</span><strong>Ch 6 — Events</strong></a><a class="next" href="#ch8"><span>Next</span><strong>Ch 8 — Conditional Rendering</strong></a></div>
 </section>
 
@@ -1333,6 +1372,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Add to your PropertyCard: a "Sold" overlay that only appears when <code>isSold</code> is true, a "Featured" badge that only appears when <code>isFeatured</code> is true, and a placeholder message when no image URL is provided. All conditionally rendered, all typed.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>Availability is the most commercially sensitive piece of information on a residence site. Showing "Sold" when a unit is gone, hiding the price when a unit is off-market, revealing a "Join the waitlist" CTA only when a collection is exhausted — all conditional rendering. A premium interface never shows irrelevant information; it reveals the right thing at the right moment, guided by the current state of the data.</p></div>
 <div class="chap-nav"><a href="#ch7"><span>Previous</span><strong>Ch 7 — Re-rendering</strong></a><a class="next" href="#ch9"><span>Next</span><strong>Ch 9 — Lists & Keys</strong></a></div>
 </section>
 
@@ -1362,7 +1402,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Using <code>index</code> as a key in a list that can be sorted, filtered, or have items inserted at the start. The index belongs to the position in the array, not to the item, so React ends up matching the wrong items and strange state bugs appear.</p></div>
 
-<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In your real estate portfolio, you will map over an array of building data to render a 3D building for each. The same key pattern applies. Good keys mean R3F can efficiently update, add, and remove 3D objects as the data changes.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>In the immersive version of Aurelia, you will map over the same residences array to render one 3D scene per residence. The key pattern applies identically. Good keys mean React Three Fiber can efficiently add, swap, and remove 3D residences as the data changes.</p></div>
 
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 9A</div>
@@ -1375,6 +1415,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Create a <code>PropertyGrid</code> component that accepts an array of property objects as a prop and renders a grid of <code>PropertyCard</code> components. Handle the empty array case with a friendly "No properties available" message. Use proper keys. Type everything.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>A residence grid is a list render. A gallery of amenities is a list render. A neighborhood highlights row is a list render. Getting keys right means the grid re-orders cleanly when a filter changes — no wrong images flickering into the wrong cards, no stale availability badges persisting on the wrong unit. Correctness here is directly tied to whether the client trusts what they see on screen.</p></div>
 <div class="chap-nav"><a href="#ch8"><span>Previous</span><strong>Ch 8 — Conditional Rendering</strong></a><a class="next" href="#ch10"><span>Next</span><strong>Ch 10 — Composition</strong></a></div>
 </section>
 
@@ -1435,9 +1476,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-task">
 <div class="callout-label"><span class="icon">★</span> Chapter Task</div>
 <h4>Architect the Portfolio</h4>
-<p>Design the full component tree for your future 3D real estate portfolio. Sketch it: what components will exist? Which ones hold state? Which are pure presentation? Do not write code. Draw the tree and annotate it. This is architectural thinking, and it is a skill.</p>
+<p>Design the full component tree for the Aurelia Residences launch site. Sketch it on paper: which components will exist, which ones own state, which are pure presentation? Do not write code yet. Draw the tree and annotate it. This is the thinking work that separates a polished premium site from a cluttered one.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>The visual rhythm of a luxury site — consistent spacing, the same elegant header pattern on every section, a unified card shape across all residences — comes from composition. You define one <code>&lt;Section&gt;</code>, one <code>&lt;ResidenceCard&gt;</code>, one <code>&lt;AmenityItem&gt;</code>, and the whole site coheres. Composition is how small, understandable pieces produce a result that feels bespoke and considered rather than assembled.</p></div>
 <div class="chap-nav"><a href="#ch9"><span>Previous</span><strong>Ch 9 — Lists & Keys</strong></a><a class="next" href="#ch11"><span>Next</span><strong>Ch 11 — useRef</strong></a></div>
 </section>
 
@@ -1492,6 +1534,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Add a ref to your PropertyGrid that stores the title of the last-clicked property without updating visible UI. Discuss: why is this the wrong use for state, and the right use for a ref?</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>On a luxury site, <code>useRef</code> is what drives the details that make the difference: auto-focusing the name field when the private viewing panel slides open, measuring the height of a gallery container before applying a parallax offset, smoothly scrolling to the inquiry section when a sticky CTA is clicked. These are not tricks — they are the interaction touches that distinguish a considered premium experience from a flat page.</p></div>
 <div class="chap-nav"><a href="#ch10"><span>Previous</span><strong>Ch 10 — Composition</strong></a><a class="next" href="#ch12"><span>Next</span><strong>Ch 12 — useEffect</strong></a></div>
 </section>
 
@@ -1534,6 +1577,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Add "data fetching" to your PropertyGrid using useEffect. Use <code>setTimeout</code> to simulate an API call that returns a list of properties after one second. Show a loading state during the fetch. Add a cleanup function that clears the timeout if the component unmounts early.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>A polished real estate site earns repeat visits when it remembers the prospect: the residences they saved, their last viewed collection, their inquiry details pre-filled. <code>useEffect</code> is the bridge between React's render cycle and that persistent world — <code>localStorage</code>, analytics pings, and eventually API calls. Getting effects right means the site behaves like a personal concierge, not a forgetful brochure.</p></div>
 <div class="chap-nav"><a href="#ch11"><span>Previous</span><strong>Ch 11 — useRef</strong></a><a class="next" href="#ch13"><span>Next</span><strong>Ch 13 — useMemo</strong></a></div>
 </section>
 
@@ -1572,8 +1616,69 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Add a price filter to your PropertyGrid. Memoize the filtered list with useMemo. Confirm that typing in an unrelated field does not cause the filter to recompute.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>A "development at a glance" summary strip — showing the lowest starting price, the count of available units, total buildable area — must recompute whenever the active filter changes. <code>useMemo</code> ensures this recalculates only when the residences list changes, not on every keystroke or mouse move elsewhere on the page. On a public-facing site, every unnecessary computation is an opportunity for a visible stutter — and stutters erode trust in a premium brand.</p></div>
 <div class="chap-nav"><a href="#ch12"><span>Previous</span><strong>Ch 12 — useEffect</strong></a><a class="next" href="#ch14"><span>Next</span><strong>Ch 14 — TypeScript</strong></a></div>
 </section>
+
+<!-- ── SKILL MAP: MOVEMENT 3 ── -->
+<div class="skill-map" id="skillmap-3">
+  <div class="skill-map-title">Movement 3 Skill Map — Patterns &amp; Hooks</div>
+  <svg viewBox="0 0 780 260" xmlns="http://www.w3.org/2000/svg" aria-label="Movement 3 skill map">
+    <defs>
+      <marker id="arr3" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="#F59E0B" opacity=".7"/></marker>
+    </defs>
+    <!-- Row 1: Ch7 Ch8 Ch9 Ch10 -->
+    <rect x="8"   y="20" width="168" height="82" rx="9" fill="#11131C" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="92"  y="46" fill="#FFCB6B" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 7 — Re-rendering</text>
+    <text x="92"  y="63" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">React's update loop</text>
+    <text x="92"  y="78" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Local vars reset · state persists</text>
+
+    <path d="M176 61 L202 61" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr3)"/>
+
+    <rect x="202" y="20" width="168" height="82" rx="9" fill="#11131C" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="286" y="46" fill="#FFCB6B" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 8 — Conditionals</text>
+    <text x="286" y="63" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Show / hide by data</text>
+    <text x="286" y="78" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">&&  ternary  early return</text>
+
+    <path d="M370 61 L396 61" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr3)"/>
+
+    <rect x="396" y="20" width="168" height="82" rx="9" fill="#11131C" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="480" y="46" fill="#FFCB6B" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 9 — Lists &amp; Keys</text>
+    <text x="480" y="63" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">map() over data</text>
+    <text x="480" y="78" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Stable keys · filtered grids</text>
+
+    <path d="M564 61 L590 61" stroke="#F59E0B" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr3)"/>
+
+    <rect x="590" y="20" width="168" height="82" rx="9" fill="#11131C" stroke="#F59E0B" stroke-width="1.5"/>
+    <text x="674" y="46" fill="#FFCB6B" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 10 — Composition</text>
+    <text x="674" y="63" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">children · lifting state</text>
+    <text x="674" y="78" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Reusable sections &amp; wrappers</text>
+
+    <!-- Row 2: Ch11 Ch12 Ch13 -->
+    <rect x="100"  y="128" width="168" height="82" rx="9" fill="#11131C" stroke="#2DD4BF" stroke-width="1.5"/>
+    <text x="184"  y="154" fill="#5eead4" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 11 — useRef</text>
+    <text x="184"  y="171" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">DOM access · no re-render</text>
+    <text x="184"  y="186" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Focus, measure, animate</text>
+
+    <path d="M268 169 L304 169" stroke="#2DD4BF" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr3)"/>
+
+    <rect x="304"  y="128" width="168" height="82" rx="9" fill="#11131C" stroke="#2DD4BF" stroke-width="1.5"/>
+    <text x="388"  y="154" fill="#5eead4" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 12 — useEffect</text>
+    <text x="388"  y="171" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Side effects · world outside React</text>
+    <text x="388"  y="186" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">localStorage · listeners · cleanup</text>
+
+    <path d="M472 169 L508 169" stroke="#2DD4BF" stroke-width="1.5" fill="none" opacity=".6" marker-end="url(#arr3)"/>
+
+    <rect x="508"  y="128" width="168" height="82" rx="9" fill="#11131C" stroke="#2DD4BF" stroke-width="1.5"/>
+    <text x="592"  y="154" fill="#5eead4" font-family="'Cormorant Garamond',serif" font-size="12" font-weight="600" text-anchor="middle">Ch 13 — useMemo</text>
+    <text x="592"  y="171" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">Memoised derivations</text>
+    <text x="592"  y="186" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Skip expensive recalculations</text>
+
+    <!-- outcome bar -->
+    <rect x="8" y="228" width="760" height="24" rx="7" fill="#0a0c14" stroke="#F59E0B22"/>
+    <text x="390" y="244" fill="#A5AABE" font-family="Inter,sans-serif" font-size="10" text-anchor="middle">✓ Re-render model  ✓ Conditional UI  ✓ List rendering  ✓ Composition  ✓ useRef  ✓ useEffect  ✓ useMemo</text>
+  </svg>
+</div>
 
 <!-- ================ CHAPTER 14 ================ -->
 <section class="chapter" id="ch14">
@@ -1616,6 +1721,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>In a file called <code>types.ts</code>, write a complete TypeScript type definition for a Property object: id, title, price, bedrooms, bathrooms, location, isFeatured, isSold, imageUrl, and amenities (an array of strings). Use this type everywhere in your project. This type definition will travel with you into Book 2.</p>
 </div>
 
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>TypeScript is how a premium project survives a handoff. When you pass this codebase to a colleague, a client's dev team, or your future self six months later, the <code>Residence</code> type is the documentation that never goes stale. Every component that accepts a residence knows exactly what it will receive — no guessing field names from console logs, no "what is this prop actually for." This is what separates hobby projects from client-ready code.</p></div>
 <div class="chap-nav"><a href="#ch13"><span>Previous</span><strong>Ch 13 — useMemo</strong></a><a class="next" href="#ch15"><span>Next</span><strong>Ch 15 — The Bridge</strong></a></div>
 </section>
 
@@ -1680,7 +1786,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Every concept in the component above is a concept from Book 1. Book 2 will formally introduce R3F, but you should close this book knowing you already understand the shape of R3F code. The rest is vocabulary and 3D math.</p></div>
 
 <h3>15.4 What Book 2 Will Cover</h3>
-<p>Book 2 picks up where this book ends. It introduces the Three.js concepts you need — geometries, materials, lights, cameras — wrapped in the R3F component style. It covers useFrame for animation, drei helpers for common patterns, GLTF model loading, cameras and controls, and finally walks you through building an interactive 3D real estate portfolio. You will recognize the React patterns on every page.</p>
+<p>Book Two picks up where this book ends. It introduces the Three.js concepts you need — geometries, materials, lights, cameras — wrapped in the React Three Fiber component style. It covers <code>useFrame</code> for animation, drei helpers for common patterns, GLTF model loading, cameras and controls, and finally walks you through layering a cinematic immersive experience directly into the Aurelia Residences launch site you just shipped. You will recognise the React patterns on every page.</p>
 
 <div class="callout c-task">
 <div class="callout-label"><span class="icon">★</span> Chapter Task</div>
@@ -1688,149 +1794,494 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Copy the SpinningBox component above into a file. Next to every line, write a comment in your own words identifying which concept from Book 1 it uses. If you can annotate every line with a confident label, you are ready for Book 2.</p>
 </div>
 
-<div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
+<div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>The bridge to R3F matters commercially because the gap between "a premium real estate website" and "an immersive property experience" is exactly what studios are commissioning right now. Static sites show images. React Three Fiber sites let a prospect walk through a penthouse, pivot the building, see where the sun hits the terrace at 4pm. Book Two equips you to build that. Everything in Book One was the prerequisite.</p></div>
+<div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#mini-project"><span>Next</span><strong>Mini-Project: Property Hero</strong></a></div>
+</section>
+
+<!-- ── SKILL MAP: MOVEMENT 4 ── -->
+<div class="skill-map" id="skillmap-4">
+  <div class="skill-map-title">Movement 4 Skill Map — The Bridge</div>
+  <svg viewBox="0 0 760 210" xmlns="http://www.w3.org/2000/svg" aria-label="Movement 4 skill map">
+    <defs>
+      <linearGradient id="gbridge" x1="0" x2="1"><stop offset="0" stop-color="#7B68EE"/><stop offset="1" stop-color="#2DD4BF"/></linearGradient>
+      <marker id="arr4" viewBox="0 0 10 10" refX="8" refY="5" markerWidth="6" markerHeight="6" orient="auto"><path d="M0 0 L10 5 L0 10 z" fill="url(#gbridge)" opacity=".8"/></marker>
+    </defs>
+
+    <rect x="10"  y="40" width="200" height="100" rx="10" fill="#11131C" stroke="#7B68EE" stroke-width="1.5"/>
+    <text x="110" y="70"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 14 — TypeScript</text>
+    <text x="110" y="90"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">Typed props, state, refs</text>
+    <text x="110" y="107" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Events · children · import type</text>
+    <text x="110" y="124" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Zero build errors = client-ready</text>
+
+    <path d="M210 90 L260 90" stroke="url(#gbridge)" stroke-width="2" fill="none" opacity=".8" marker-end="url(#arr4)"/>
+
+    <rect x="260" y="40" width="200" height="100" rx="10" fill="#11131C" stroke="#2DD4BF" stroke-width="1.5"/>
+    <text x="360" y="70"  fill="#5eead4" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Ch 15 — The Bridge</text>
+    <text x="360" y="90"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">R3F component anatomy</text>
+    <text x="360" y="107" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Annotate every line of R3F code</text>
+    <text x="360" y="124" fill="#A5AABE" font-family="Inter,sans-serif" font-size="9.5" text-anchor="middle">Scene graph = component tree</text>
+
+    <path d="M460 90 L510 90" stroke="url(#gbridge)" stroke-width="2" fill="none" opacity=".8" marker-end="url(#arr4)" stroke-dasharray="6,4"/>
+
+    <rect x="510" y="20" width="235" height="150" rx="10" fill="#0a0c14" stroke="url(#gbridge)" stroke-width="1.5"/>
+    <text x="627" y="50"  fill="#a5b4fc" font-family="'Cormorant Garamond',serif" font-size="13" font-weight="600" text-anchor="middle">Book One Complete</text>
+    <text x="627" y="72"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  16 chapters of React foundations</text>
+    <text x="627" y="91"  fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  Typed, working launch site</text>
+    <text x="627" y="110" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  All hooks understood in depth</text>
+    <text x="627" y="129" fill="#E8EAF6" font-family="Inter,sans-serif" font-size="10.5" text-anchor="middle">✓  R3F code is readable</text>
+    <text x="627" y="152" fill="#C9A96E" font-family="'Cormorant Garamond',serif" font-size="12" text-anchor="middle" font-style="italic">Next → Book Two: Immersive Experiences</text>
+  </svg>
+</div>
+
+<!-- ================ MINI-PROJECT ================ -->
+<section class="chapter" id="mini-project">
+<div class="chapter-num">Mini-Project</div>
+<h1 class="chapter-title">Build a Premium Property Hero Section</h1>
+<p class="chapter-sub">Before tackling the full Aurelia Residences capstone, consolidate everything you have learned in one self-contained, portfolio-ready component: a premium hero section for a luxury property page.</p>
+<div class="lang-toggle"><button data-lang="ts" onclick="setLang('ts')">TypeScript</button><button data-lang="js" onclick="setLang('js')">JavaScript</button></div>
+
+<h3>What You Are Building</h3>
+<p>A standalone <code>PropertyHero</code> component that could open any high-end residence page: a full-width editorial hero with a background image, an eyebrow label, a serif headline, a one-line description, a set of key specs (beds, area, price), a primary CTA button, and a secondary "Save" toggle. It receives all its data through props, holds its own "saved" state, and calls a callback when the CTA is clicked.</p>
+<p>This is not a toy exercise — style it with real CSS. When you are done, it should look like something you would show a client.</p>
+
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> What This Covers</div><p>Components · JSX rules · typed props · local state · event handlers · conditional rendering · composition. In other words: Chapters 3 through 8 in one coherent, real-world build.</p></div>
+
+<h3>Step 1 — The Data Shape</h3>
+<p>Create or reuse <code>src/types.ts</code>. Your hero needs a subset of the full <code>Residence</code> type:</p>
+<div class="ts-only"><pre><code>// src/types.ts  (add to existing file or create fresh)
+export type HeroData = {
+  name: string;             // "Villa Mirador"
+  tagline: string;          // "A private estate above the bay"
+  collection: string;       // "Sea Collection"
+  bedrooms: number;
+  area: number;             // m²
+  priceFrom: number;        // USD
+  status: "available" | "reserved" | "sold";
+  heroImage: string;        // URL or local path
+  onInquire: () =&gt; void;   // callback — keeps component pure
+};</code></pre></div>
+<div class="js-only"><pre><code>// For JS: just use the object directly, no type needed
+// { name, tagline, collection, bedrooms, area, priceFrom, status, heroImage, onInquire }</code></pre></div>
+
+<h3>Step 2 — The Component</h3>
+<div class="ts-only"><pre><code>// src/components/PropertyHero.tsx
+import { useState } from "react";
+import type { HeroData } from "../types";
+
+export default function PropertyHero({
+  name, tagline, collection, bedrooms,
+  area, priceFrom, status, heroImage, onInquire,
+}: HeroData) {
+
+  const [saved, setSaved] = useState(false);
+  const isAvailable = status === "available";
+
+  return (
+    &lt;section
+      className="prop-hero"
+      style={{ backgroundImage: `url(${heroImage})` }}
+    &gt;
+      {/* Overlay so text stays legible over the image */}
+      &lt;div className="prop-hero__overlay" /&gt;
+
+      &lt;div className="prop-hero__content"&gt;
+
+        {/* Eyebrow */}
+        &lt;span className="eyebrow"&gt;{collection}&lt;/span&gt;
+
+        {/* Headline */}
+        &lt;h1 className="prop-hero__name"&gt;{name}&lt;/h1&gt;
+        &lt;p className="prop-hero__tagline"&gt;{tagline}&lt;/p&gt;
+
+        {/* Specs strip */}
+        &lt;dl className="prop-hero__specs"&gt;
+          &lt;div&gt;&lt;dt&gt;Bedrooms&lt;/dt&gt;&lt;dd&gt;{bedrooms}&lt;/dd&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;dt&gt;Area&lt;/dt&gt;&lt;dd&gt;{area} m²&lt;/dd&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;dt&gt;From&lt;/dt&gt;&lt;dd&gt;${priceFrom.toLocaleString()}&lt;/dd&gt;&lt;/div&gt;
+        &lt;/dl&gt;
+
+        {/* Availability badge — conditional rendering */}
+        {status !== "available" &amp;&amp; (
+          &lt;span className={`badge badge--${status}`}&gt;
+            {status === "sold" ? "Sold" : "Reserved"}
+          &lt;/span&gt;
+        )}
+
+        {/* CTAs */}
+        &lt;div className="prop-hero__ctas"&gt;
+          &lt;button
+            className="cta-primary"
+            onClick={onInquire}
+            disabled={!isAvailable}
+          &gt;
+            {isAvailable ? "Request a private viewing" : "Join the waitlist"}
+          &lt;/button&gt;
+
+          &lt;button
+            className={`cta-ghost ${saved ? "cta-ghost--saved" : ""}`}
+            onClick={() =&gt; setSaved(!saved)}
+          &gt;
+            {saved ? "✦ Saved" : "Save this residence"}
+          &lt;/button&gt;
+        &lt;/div&gt;
+
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>// src/components/PropertyHero.jsx
+import { useState } from "react";
+
+export default function PropertyHero({
+  name, tagline, collection, bedrooms,
+  area, priceFrom, status, heroImage, onInquire,
+}) {
+  const [saved, setSaved] = useState(false);
+  const isAvailable = status === "available";
+
+  return (
+    &lt;section className="prop-hero" style={{ backgroundImage: `url(${heroImage})` }}&gt;
+      &lt;div className="prop-hero__overlay" /&gt;
+      &lt;div className="prop-hero__content"&gt;
+        &lt;span className="eyebrow"&gt;{collection}&lt;/span&gt;
+        &lt;h1 className="prop-hero__name"&gt;{name}&lt;/h1&gt;
+        &lt;p className="prop-hero__tagline"&gt;{tagline}&lt;/p&gt;
+        &lt;dl className="prop-hero__specs"&gt;
+          &lt;div&gt;&lt;dt&gt;Bedrooms&lt;/dt&gt;&lt;dd&gt;{bedrooms}&lt;/dd&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;dt&gt;Area&lt;/dt&gt;&lt;dd&gt;{area} m²&lt;/dd&gt;&lt;/div&gt;
+          &lt;div&gt;&lt;dt&gt;From&lt;/dt&gt;&lt;dd&gt;${priceFrom.toLocaleString()}&lt;/dd&gt;&lt;/div&gt;
+        &lt;/dl&gt;
+        {status !== "available" &amp;&amp; (
+          &lt;span className={`badge badge--${status}`}&gt;
+            {status === "sold" ? "Sold" : "Reserved"}
+          &lt;/span&gt;
+        )}
+        &lt;div className="prop-hero__ctas"&gt;
+          &lt;button className="cta-primary" onClick={onInquire} disabled={!isAvailable}&gt;
+            {isAvailable ? "Request a private viewing" : "Join the waitlist"}
+          &lt;/button&gt;
+          &lt;button className={`cta-ghost ${saved ? "cta-ghost--saved" : ""}`}
+            onClick={() =&gt; setSaved(!saved)}&gt;
+            {saved ? "✦ Saved" : "Save this residence"}
+          &lt;/button&gt;
+        &lt;/div&gt;
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre></div>
+
+<div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>Notice how the component is pure from the outside. It does not know about the inquiry form, the booking system, or any parent state. It just calls <code>onInquire()</code> and trusts that whoever renders it wired the right thing up. This is the single most important pattern in React composition: components describe interactions, parents decide what those interactions mean.</p></div>
+
+<h3>Step 3 — The CSS</h3>
+<p>Add this to <code>src/index.css</code>. Adapt the values to your aesthetic, but the structure should stay:</p>
+<pre><code>/* Property Hero */
+.prop-hero {
+  position: relative;
+  min-height: 92vh;
+  background-size: cover;
+  background-position: center;
+  display: flex;
+  align-items: flex-end;  /* content anchored to the bottom */
+}
+
+.prop-hero__overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.85) 0%,
+    rgba(0,0,0,0.4) 50%,
+    rgba(0,0,0,0.1) 100%
+  );
+}
+
+.prop-hero__content {
+  position: relative;       /* sit above the overlay */
+  padding: 0 6vw 6vh;
+  max-width: 680px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 0.72rem;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: #C9A96E;
+  margin-bottom: 14px;
+}
+
+.prop-hero__name {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  font-size: clamp(2.4rem, 5vw, 4rem);
+  font-weight: 400;
+  color: #fff;
+  margin: 0 0 0.2em;
+  line-height: 1.05;
+}
+
+.prop-hero__tagline { color: rgba(255,255,255,0.7); margin: 0 0 28px; font-size: 1.1rem; }
+
+.prop-hero__specs {
+  display: flex;
+  gap: 32px;
+  margin: 0 0 28px;
+}
+.prop-hero__specs dt { font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.14em; color: rgba(255,255,255,0.5); margin-bottom: 4px; }
+.prop-hero__specs dd { font-size: 1.05rem; color: #fff; margin: 0; font-weight: 500; }
+
+.prop-hero__ctas { display: flex; gap: 14px; flex-wrap: wrap; margin-top: 8px; }
+
+.cta-primary {
+  background: #C9A96E;
+  color: #0D0F17;
+  border: none;
+  padding: 14px 26px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: background 0.2s;
+  width: auto;
+}
+.cta-primary:hover { background: #b8954f; }
+.cta-primary:disabled { opacity: 0.5; cursor: not-allowed; }
+
+.cta-ghost {
+  background: transparent;
+  color: rgba(255,255,255,0.75);
+  border: 1px solid rgba(255,255,255,0.3);
+  padding: 14px 22px;
+  border-radius: 4px;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: all 0.2s;
+  width: auto;
+}
+.cta-ghost:hover { border-color: #C9A96E; color: #C9A96E; }
+.cta-ghost--saved { color: #C9A96E; border-color: #C9A96E; }
+
+.badge { display: inline-block; font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; padding: 5px 12px; border-radius: 999px; margin-bottom: 14px; }
+.badge--reserved { background: rgba(245,158,11,0.2); color: #F59E0B; border: 1px solid #F59E0B66; }
+.badge--sold { background: rgba(248,113,113,0.2); color: #F87171; border: 1px solid #F8717166; }</code></pre>
+
+<h3>Step 4 — Wire It in App.tsx</h3>
+<div class="ts-only"><pre><code>// src/App.tsx
+import PropertyHero from "./components/PropertyHero";
+
+export default function App() {
+  function handleInquire() {
+    // In the full capstone this will scroll to the inquiry form
+    console.log("Inquiry requested");
+  }
+
+  return (
+    &lt;main&gt;
+      &lt;PropertyHero
+        name="Villa Mirador"
+        tagline="A private estate above the bay, framed by maritime pines"
+        collection="Sea Collection"
+        bedrooms={4}
+        area={340}
+        priceFrom={4_250_000}
+        status="available"
+        heroImage="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800"
+        onInquire={handleInquire}
+      /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>import PropertyHero from "./components/PropertyHero";
+
+export default function App() {
+  return (
+    &lt;main&gt;
+      &lt;PropertyHero
+        name="Villa Mirador"
+        tagline="A private estate above the bay, framed by maritime pines"
+        collection="Sea Collection"
+        bedrooms={4}
+        area={340}
+        priceFrom={4_250_000}
+        status="available"
+        heroImage="https://images.unsplash.com/photo-1613977257363-707ba9348227?w=1800"
+        onInquire={() =&gt; console.log("Inquiry requested")}
+      /&gt;
+    &lt;/main&gt;
+  );
+}</code></pre></div>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Stumble</div><p>The CSS rule <code>width: 100%</code> on the password button CSS is still in the codebase from the old password overlay (now commented out). If you find your CTA buttons stretching full-width, check <code>index.css</code> for any lingering global <code>button { width: 100% }</code> rule and scope it to <code>.login-card button</code> or simply delete it.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>In Book Two, this hero is joined by a <code>&lt;Canvas&gt;</code> element floating inside the hero section. The 3D scene shows the residence exterior — rotating slowly in the background, or responding to a mouse position hover. The <code>PropertyHero</code> component does not change: it still receives its data through typed props and calls the same <code>onInquire</code> callback. The R3F layer is additive, not destructive.</p></div>
+
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Mini-Project Challenge</div>
+<h4>Make It Yours</h4>
+<p>Once the default version is running, push further:</p>
+<ol>
+  <li>Change <code>status</code> to <code>"reserved"</code> and verify the badge appears and the CTA changes to "Join the waitlist".</li>
+  <li>Change <code>status</code> to <code>"sold"</code> and verify the button disables.</li>
+  <li>Add a <code>completionYear: number</code> prop and display it in the specs strip.</li>
+  <li>Add a keyboard handler so pressing <kbd>S</kbd> toggles the saved state (use the <code>useEffect</code> + window listener pattern from Chapter 12).</li>
+  <li>Style the saved button so it animates subtly when toggled.</li>
+</ol>
+<p>When the hero looks portfolio-worthy, screenshot it. That is your first deliverable.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — The Bridge</strong></a><a class="next" href="#workbook"><span>Next</span><strong>Aurelia Residences Workbook</strong></a></div>
 </section>
 
 <!-- ================ PRACTICAL WORKBOOK ================ -->
 <section class="chapter" id="workbook">
 <div class="chapter-num">Workbook</div>
-<h1 class="chapter-title">The Practical React Workbook</h1>
-<p class="chapter-sub">Real, runnable code for every concept in this book — in TypeScript or JavaScript — and the fifteen exercises that build the ArchViz Property Browser, one feature at a time.</p>
+<h1 class="chapter-title">The Aurelia Residences Workbook</h1>
+<p class="chapter-sub">Real, runnable code for every concept in this book — and the fifteen exercises that build a boutique premium real estate launch site, one refined section at a time.</p>
 <div class="lang-toggle"><button data-lang="ts" onclick="setLang('ts')">TypeScript</button><button data-lang="js" onclick="setLang('js')">JavaScript</button></div>
 
-<p>The earlier chapters taught you the React mindset. This workbook teaches you the React keystrokes. Work through it linearly with your <code>archviz-browser</code> Vite project open in one window and this page in the other. Type the code yourself — do not paste — because muscle memory is the entire point. The TS / JS toggle above switches every code example in this workbook between TypeScript and JavaScript; pick whichever you want to learn in. The book defaults to TypeScript because R3F code in the wild is overwhelmingly typed, but every idea is identical in plain JS.</p>
+<p>The earlier chapters taught you the React mindset. This workbook teaches you the React keystrokes. Work through it linearly with your <code>aurelia-residences</code> Vite project open in one window and this page in the other. Type the code yourself — do not paste — because muscle memory is the entire point. The TS / JS toggle above switches every code example between TypeScript and JavaScript; pick whichever you want to learn in. The book defaults to TypeScript because serious real estate and R3F codebases in production are overwhelmingly typed, but every idea is identical in plain JS.</p>
 
-<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> How to Use the Workbook</div><p>Each section maps to a chapter. Read the chapter first for the mindset, then come here for the code and the capstone task. By the end you will have a complete, working application.</p></div>
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> How to Use the Workbook</div><p>Each section maps to a chapter. Read the chapter first for the mindset, then come here for the code and the capstone step. By the end you will have shipped a complete premium real estate launch site.</p></div>
 
 <!-- WB Chapter 1 -->
-<h3>W1 · What React Actually Looks Like</h3>
-<p>Before any concepts, here is the smallest possible React component. Open <code>src/App.tsx</code> in your project, delete everything, and paste this:</p>
+<h3>W1 · First Strokes of the Brand</h3>
+<p>Before any concepts, here is the smallest possible React component. Open <code>src/App.tsx</code> in your project, delete everything inside, and replace it with this:</p>
 <div class="ts-only"><pre><code>export default function App() {
-  return &lt;h1&gt;ArchViz Property Browser&lt;/h1&gt;;
+  return &lt;h1&gt;Aurelia Residences&lt;/h1&gt;;
 }</code></pre></div>
 <div class="js-only"><pre><code>export default function App() {
-  return &lt;h1&gt;ArchViz Property Browser&lt;/h1&gt;;
+  return &lt;h1&gt;Aurelia Residences&lt;/h1&gt;;
 }</code></pre></div>
-<p>That is a complete React component. It is a function. It returns something that looks like HTML but lives inside a JavaScript file — that is JSX. Save the file. Your browser updates. You just wrote React.</p>
+<p>That is a complete React component. It is a function. It returns something that looks like HTML but lives inside a JavaScript file — that is JSX. Save the file. Your browser updates. You just wrote React, and you just placed the first letter of a luxury brand on the page.</p>
 <p>Read the official intro alongside this: <a href="https://react.dev/learn" target="_blank" rel="noopener">react.dev/learn</a>.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 1</div><h4>Hello, ArchViz</h4><p>Replace the contents of <code>App.tsx</code> with the snippet above and confirm the page shows the new title. This becomes the shell of your application.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 1</div><h4>Brand the Shell</h4><p>Replace the contents of <code>App.tsx</code> with the snippet above. Confirm the page shows the brand name. Add a small tagline below it — something like <em>"A collection of seven private residences."</em> — and a short CSS rule in <code>index.css</code> to centre the hero. This is the first pixel of the launch site.</p></div>
 
 <!-- WB Chapter 2 -->
-<h3>W2 · Declarative in Practice</h3>
-<p>Here is the same idea — "show a price" — first imperatively in plain DOM, then declaratively in React.</p>
+<h3>W2 · Declarative in Practice — The Price Line</h3>
+<p>Consider how a residence price might be displayed on a luxury listing. First imperatively, in plain DOM, then declaratively, in React.</p>
 <p><strong>Imperative (plain JS):</strong></p>
-<pre><code>let price = 450000;
+<pre><code>let price = 4_250_000;
 const el = document.querySelector('#price');
-el.textContent = '$' + price.toLocaleString();
-// later:
-price = 480000;
-el.textContent = '$' + price.toLocaleString(); // must remember to update</code></pre>
+el.textContent = 'From $' + price.toLocaleString();
+// later, when the pricing changes:
+price = 4_450_000;
+el.textContent = 'From $' + price.toLocaleString(); // must remember to update</code></pre>
 <p><strong>Declarative (React):</strong></p>
-<div class="ts-only"><pre><code>function PriceTag({ price }: { price: number }) {
-  return &lt;span&gt;${price.toLocaleString()}&lt;/span&gt;;
+<div class="ts-only"><pre><code>function PriceLine({ from }: { from: number }) {
+  return &lt;p className="price"&gt;From ${from.toLocaleString()}&lt;/p&gt;;
 }</code></pre></div>
-<div class="js-only"><pre><code>function PriceTag({ price }) {
-  return &lt;span&gt;${price.toLocaleString()}&lt;/span&gt;;
+<div class="js-only"><pre><code>function PriceLine({ from }) {
+  return &lt;p className="price"&gt;From ${from.toLocaleString()}&lt;/p&gt;;
 }</code></pre></div>
-<p>You describe the relationship between data and DOM <em>once</em>. When <code>price</code> changes, React handles the rest.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 2</div><h4>Add a PriceTag</h4><p>Create <code>src/components/PriceTag.tsx</code> with the component above. Import it into <code>App.tsx</code> and render <code>&lt;PriceTag price={450000} /&gt;</code> below the heading.</p></div>
+<p>You describe the relationship between data and interface <em>once</em>. When the price changes, React handles the rest — the exact kind of guarantee a developer or marketing team needs before letting a React app represent real figures to real buyers.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 2</div><h4>The Price Line</h4><p>Create <code>src/components/PriceLine.tsx</code> with the component above. Import it into <code>App.tsx</code> and render <code>&lt;PriceLine from={4250000} /&gt;</code> below the brand heading. Style it with a thin uppercase label in <code>index.css</code> so it looks editorial, not utilitarian.</p></div>
 
 <!-- WB Chapter 3 -->
-<h3>W3 · Components & JSX in Detail</h3>
+<h3>W3 · Components & JSX — The Residence Card</h3>
 <p>JSX is JavaScript with HTML-shaped syntax. The rules are short:</p>
 <ul>
-  <li>A component must return <strong>one</strong> root element. If you need two siblings, wrap them in <code>&lt;&gt;...&lt;/&gt;</code> (a Fragment).</li>
+  <li>A component must return <strong>one</strong> root element. If you need two siblings, wrap them in a Fragment: <code>&lt;&gt;...&lt;/&gt;</code>.</li>
   <li>HTML attributes use camelCase: <code>className</code> instead of <code>class</code>, <code>onClick</code> instead of <code>onclick</code>, <code>htmlFor</code> instead of <code>for</code>.</li>
   <li>Curly braces <code>{ }</code> drop you out of JSX and back into JavaScript. Anything inside them is evaluated as a JS expression.</li>
-  <li>Self-close tags that have no children: <code>&lt;img /&gt;</code>, <code>&lt;br /&gt;</code>.</li>
+  <li>Self-close tags with no children: <code>&lt;img /&gt;</code>, <code>&lt;br /&gt;</code>.</li>
 </ul>
-<div class="ts-only"><pre><code>function PropertyCard() {
-  const title = "Lakeside Pavilion";
-  const beds = 3;
+<div class="ts-only"><pre><code>function ResidenceCard() {
+  const name = "Villa Mirador";
+  const beds = 4;
+  const area = 320; // m²
   return (
-    &lt;article className="card"&gt;
-      &lt;h2&gt;{title}&lt;/h2&gt;
-      &lt;p&gt;{beds} bedrooms · {beds * 1.5} bathrooms&lt;/p&gt;
+    &lt;article className="residence-card"&gt;
+      &lt;span className="eyebrow"&gt;Private Residence&lt;/span&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p className="specs"&gt;{beds} bedrooms · {area} m² · Sea view&lt;/p&gt;
     &lt;/article&gt;
   );
 }</code></pre></div>
-<div class="js-only"><pre><code>function PropertyCard() {
-  const title = "Lakeside Pavilion";
-  const beds = 3;
+<div class="js-only"><pre><code>function ResidenceCard() {
+  const name = "Villa Mirador";
+  const beds = 4;
+  const area = 320;
   return (
-    &lt;article className="card"&gt;
-      &lt;h2&gt;{title}&lt;/h2&gt;
-      &lt;p&gt;{beds} bedrooms · {beds * 1.5} bathrooms&lt;/p&gt;
+    &lt;article className="residence-card"&gt;
+      &lt;span className="eyebrow"&gt;Private Residence&lt;/span&gt;
+      &lt;h2&gt;{name}&lt;/h2&gt;
+      &lt;p className="specs"&gt;{beds} bedrooms · {area} m² · Sea view&lt;/p&gt;
     &lt;/article&gt;
   );
 }</code></pre></div>
 <p>Reference: <a href="https://react.dev/learn/writing-markup-with-jsx" target="_blank" rel="noopener">Writing Markup with JSX</a>.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 3</div><h4>Build the PropertyCard</h4><p>Create <code>src/components/PropertyCard.tsx</code>. For now, hard-code one property inside it. Render it from <code>App.tsx</code>. Add a few CSS classes in <code>index.css</code> so it actually looks like a card.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 3</div><h4>The First Residence Card</h4><p>Create <code>src/components/ResidenceCard.tsx</code>. Hard-code one residence inside it. Render it from <code>App.tsx</code>. Add generous whitespace, a thin uppercase "eyebrow" label, and a serif heading in <code>index.css</code> so the card reads as editorial, not e-commerce.</p></div>
 
 <!-- WB Chapter 4 -->
-<h3>W4 · Props (and Your First Real Type)</h3>
-<p>A component that always shows the same property is useless. We want one component, many properties. Props are how data enters a component.</p>
+<h3>W4 · Props — The Residence Type</h3>
+<p>A card that always shows the same residence is useless. We want one card, many residences. Props are how data enters a component — and in a luxury brand, the shape of that data is a contract you want the compiler to enforce.</p>
 <div class="ts-only"><pre><code>// src/types.ts
-export type Property = {
+export type Residence = {
   id: string;
-  title: string;
-  style: "modern" | "classical" | "industrial";
-  beds: number;
-  area: number;       // square meters
-  price: number;      // USD
-  status: "available" | "sold" | "reserved";
-  image: string;
+  name: string;          // e.g. "Villa Mirador"
+  collection: "Sea" | "Park" | "Sky";
+  bedrooms: number;
+  area: number;          // m²
+  priceFrom: number;     // USD
+  status: "available" | "reserved" | "sold";
+  heroImage: string;
+  tagline: string;       // editorial one-liner
 };
 
-// src/components/PropertyCard.tsx
-import type { Property } from "../types";
+// src/components/ResidenceCard.tsx
+import type { Residence } from "../types";
 
-type Props = { property: Property };
+type Props = { residence: Residence };
 
-export default function PropertyCard({ property }: Props) {
+export default function ResidenceCard({ residence }: Props) {
   return (
-    &lt;article className="card"&gt;
-      &lt;img src={property.image} alt={property.title} /&gt;
-      &lt;h2&gt;{property.title}&lt;/h2&gt;
-      &lt;p&gt;{property.beds} bd · {property.area} m²&lt;/p&gt;
-      &lt;strong&gt;${property.price.toLocaleString()}&lt;/strong&gt;
+    &lt;article className="residence-card"&gt;
+      &lt;img src={residence.heroImage} alt={residence.name} /&gt;
+      &lt;span className="eyebrow"&gt;{residence.collection} Collection&lt;/span&gt;
+      &lt;h2&gt;{residence.name}&lt;/h2&gt;
+      &lt;p className="tagline"&gt;{residence.tagline}&lt;/p&gt;
+      &lt;p className="specs"&gt;{residence.bedrooms} bd · {residence.area} m²&lt;/p&gt;
+      &lt;strong&gt;From ${residence.priceFrom.toLocaleString()}&lt;/strong&gt;
     &lt;/article&gt;
   );
 }</code></pre></div>
-<div class="js-only"><pre><code>// src/components/PropertyCard.jsx
-export default function PropertyCard({ property }) {
+<div class="js-only"><pre><code>// src/components/ResidenceCard.jsx
+export default function ResidenceCard({ residence }) {
   return (
-    &lt;article className="card"&gt;
-      &lt;img src={property.image} alt={property.title} /&gt;
-      &lt;h2&gt;{property.title}&lt;/h2&gt;
-      &lt;p&gt;{property.beds} bd · {property.area} m²&lt;/p&gt;
-      &lt;strong&gt;${property.price.toLocaleString()}&lt;/strong&gt;
+    &lt;article className="residence-card"&gt;
+      &lt;img src={residence.heroImage} alt={residence.name} /&gt;
+      &lt;span className="eyebrow"&gt;{residence.collection} Collection&lt;/span&gt;
+      &lt;h2&gt;{residence.name}&lt;/h2&gt;
+      &lt;p className="tagline"&gt;{residence.tagline}&lt;/p&gt;
+      &lt;p className="specs"&gt;{residence.bedrooms} bd · {residence.area} m²&lt;/p&gt;
+      &lt;strong&gt;From ${residence.priceFrom.toLocaleString()}&lt;/strong&gt;
     &lt;/article&gt;
   );
 }</code></pre></div>
-<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Defining a <code>type Property</code> once and reusing it everywhere is the single biggest reason TS pays off. When you mistype <code>property.tilte</code>, the editor underlines it before you save. Multiply that by every component in your app and you understand why R3F codebases are typed.</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 4</div><h4>The Properties Data File</h4><p>Create <code>src/data/properties.ts</code> exporting an array of at least five <code>Property</code> objects. Use real-sounding names (Lakeside Pavilion, Steel Atrium, Cliff House…). This file is the data that will eventually feed Book 2's 3D scene.</p></div>
+<div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Defining a <code>Residence</code> type once and reusing it everywhere is the single biggest reason TS pays off. When you mistype <code>residence.bedroomz</code>, the editor underlines it before you save. Multiply that by every component in the launch site and you understand why production real estate codebases are typed.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 4</div><h4>The Residences Data File</h4><p>Create <code>src/data/residences.ts</code> exporting an array of at least five <code>Residence</code> objects. Invent editorial names (Villa Mirador, Maison Verte, Atelier Nord, Ciel Penthouse…), thoughtful taglines, and realistic pricing. This file is the single source of truth for the entire launch site and the exact data Book Two's <code>&lt;Canvas&gt;</code> will consume.</p></div>
 
 <!-- WB Chapter 5 -->
-<h3>W5 · State — When Components Remember</h3>
-<p>State is data a component owns and can change over time. Whenever state changes, React re-renders the component with the new value. The hook is <code>useState</code>.</p>
+<h3>W5 · State — The Saved Residence</h3>
+<p>State is data a component owns and can change over time. On a premium site, the smallest change is often the most meaningful — a prospect tapping "Save" on a residence is the beginning of a lead. Whenever state changes, React re-renders the component with the new value. The hook is <code>useState</code>.</p>
 <div class="ts-only"><pre><code>import { useState } from "react";
 
-export default function FavoriteButton() {
-  const [isFav, setIsFav] = useState&lt;boolean&gt;(false);
+export default function SaveButton() {
+  const [saved, setSaved] = useState&lt;boolean&gt;(false);
   return (
-    &lt;button onClick={() =&gt; setIsFav(!isFav)}&gt;
-      {isFav ? "★ Saved" : "☆ Save"}
+    &lt;button className={saved ? "btn saved" : "btn"}
+      onClick={() =&gt; setSaved(!saved)}&gt;
+      {saved ? "Saved to your list" : "Save this residence"}
     &lt;/button&gt;
   );
 }</code></pre></div>
 <div class="js-only"><pre><code>import { useState } from "react";
 
-export default function FavoriteButton() {
-  const [isFav, setIsFav] = useState(false);
+export default function SaveButton() {
+  const [saved, setSaved] = useState(false);
   return (
-    &lt;button onClick={() =&gt; setIsFav(!isFav)}&gt;
-      {isFav ? "★ Saved" : "☆ Save"}
+    &lt;button className={saved ? "btn saved" : "btn"}
+      onClick={() =&gt; setSaved(!saved)}&gt;
+      {saved ? "Saved to your list" : "Save this residence"}
     &lt;/button&gt;
   );
 }</code></pre></div>
@@ -1841,257 +2292,340 @@ export default function FavoriteButton() {
   <li>Calling the setter schedules a re-render. The new value is not visible on the next line — it shows up on the next render.</li>
 </ol>
 <p>Reference: <a href="https://react.dev/reference/react/useState" target="_blank" rel="noopener">useState</a>.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 5</div><h4>Selected Property State</h4><p>In <code>App.tsx</code>, add <code>const [selectedId, setSelectedId] = useState&lt;string | null&gt;(null);</code>. Render the list of properties as cards and a separate <code>&lt;DetailPanel /&gt;</code> that shows the selected one (or "Select a property" if none).</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 5</div><h4>The Featured Residence</h4><p>In <code>App.tsx</code>, add <code>const [selectedId, setSelectedId] = useState&lt;string | null&gt;(null);</code>. Render the list of residences as cards and a separate <code>&lt;ResidenceDetail /&gt;</code> panel that shows the currently selected residence, or an invitation ("Select a residence to learn more") when none is chosen.</p></div>
 
 <!-- WB Chapter 6 -->
-<h3>W6 · Events — Talking Back</h3>
-<p>React event handlers are camelCase props that take a function. The function receives a synthetic event object.</p>
+<h3>W6 · Events — The "View Residence" Interaction</h3>
+<p>React event handlers are camelCase props that take a function. The function receives a synthetic event object. A single well-designed click — soft, intentional, responsive — is what separates a cheap listing site from a premium one.</p>
 <div class="ts-only"><pre><code>type Props = { onSelect: (id: string) =&gt; void; id: string };
 
-export function SelectButton({ onSelect, id }: Props) {
-  return &lt;button onClick={() =&gt; onSelect(id)}&gt;View&lt;/button&gt;;
+export function ViewResidenceButton({ onSelect, id }: Props) {
+  return (
+    &lt;button className="cta-secondary" onClick={() =&gt; onSelect(id)}&gt;
+      View residence →
+    &lt;/button&gt;
+  );
 }</code></pre></div>
-<div class="js-only"><pre><code>export function SelectButton({ onSelect, id }) {
-  return &lt;button onClick={() =&gt; onSelect(id)}&gt;View&lt;/button&gt;;
+<div class="js-only"><pre><code>export function ViewResidenceButton({ onSelect, id }) {
+  return (
+    &lt;button className="cta-secondary" onClick={() =&gt; onSelect(id)}&gt;
+      View residence →
+    &lt;/button&gt;
+  );
 }</code></pre></div>
 <p>Notice the inline arrow function. We do not write <code>onClick={onSelect(id)}</code> — that would <em>call</em> the function during render. We write <code>onClick={() =&gt; onSelect(id)}</code>, which gives React a function it can call later.</p>
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Writing <code>onClick={doStuff()}</code> instead of <code>onClick={doStuff}</code>. The first invokes the function during rendering and assigns its <em>return value</em> as the handler. You will see this bug at least once in your life. Probably this week.</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 6</div><h4>Click to Select</h4><p>Wire the property cards so that clicking one calls <code>setSelectedId(property.id)</code>. The detail panel should now update on click.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 6</div><h4>Make the Cards Click</h4><p>Wire each <code>ResidenceCard</code> so that clicking its CTA calls <code>setSelectedId(residence.id)</code>. The detail panel you built in Step 5 should now update on click. Pair the click with a subtle CSS transition on the card so the interaction feels intentional, not abrupt.</p></div>
 
 <!-- WB Chapter 7 -->
-<h3>W7 · Re-rendering — The Mental Model You Cannot Skip</h3>
+<h3>W7 · Re-rendering — The Loop That Drives the Site</h3>
 <p>When state changes, React calls your component function again. The whole function. Top to bottom. With the new state value. It then compares the JSX you returned to the previous JSX and updates only the DOM nodes that differ.</p>
 <p>This means three things, all important:</p>
 <ul>
   <li>Local variables inside your function reset every render. They are <em>not</em> memory.</li>
   <li>Anything you want to survive between renders has to live in <code>useState</code>, <code>useRef</code>, or props.</li>
-  <li>Re-renders are usually cheap. Do not pre-optimize.</li>
+  <li>Re-renders are usually cheap. Do not pre-optimize a launch site you have not measured.</li>
 </ul>
-<div class="ts-only"><pre><code>function Counter() {
+<div class="ts-only"><pre><code>function InquiryCount() {
   const [count, setCount] = useState(0);
   console.log("rendering with", count); // fires every render
-  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;;
-}</code></pre></div>
-<div class="js-only"><pre><code>function Counter() {
-  const [count, setCount] = useState(0);
-  console.log("rendering with", count);
-  return &lt;button onClick={() =&gt; setCount(count + 1)}&gt;{count}&lt;/button&gt;;
-}</code></pre></div>
-<p>Open the console, click the button, watch the log. That is React's loop.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 7</div><h4>A Render Counter</h4><p>Add a temporary <code>console.log</code> at the top of <code>App</code>. Click around. Confirm that you understand <em>why</em> the log fires when it does. Delete the log when satisfied.</p></div>
-
-<!-- WB Chapter 8 -->
-<h3>W8 · Conditional Rendering</h3>
-<p>React has no special syntax for if/else inside JSX — you use plain JavaScript expressions.</p>
-<div class="ts-only"><pre><code>function StatusBadge({ status }: { status: Property["status"] }) {
-  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
-  if (status === "reserved") return &lt;span className="badge res"&gt;Reserved&lt;/span&gt;;
-  return &lt;span className="badge ok"&gt;Available&lt;/span&gt;;
-}
-
-// Inline ternary:
-{property.status === "sold" &amp;&amp; &lt;p&gt;No longer available&lt;/p&gt;}
-{isLoading ? &lt;Spinner /&gt; : &lt;Content /&gt;}</code></pre></div>
-<div class="js-only"><pre><code>function StatusBadge({ status }) {
-  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
-  if (status === "reserved") return &lt;span className="badge res"&gt;Reserved&lt;/span&gt;;
-  return &lt;span className="badge ok"&gt;Available&lt;/span&gt;;
-}</code></pre></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 8</div><h4>Status Badges</h4><p>Add <code>StatusBadge</code> to each <code>PropertyCard</code>. Sold properties should also be visually dimmed via a CSS class.</p></div>
-
-<!-- WB Chapter 9 -->
-<h3>W9 · Lists and Keys</h3>
-<p>To render a collection, map an array to JSX. React needs a <code>key</code> on each item so it can track them across renders.</p>
-<div class="ts-only"><pre><code>import { properties } from "./data/properties";
-
-function PropertyList({ onSelect }: { onSelect: (id: string) =&gt; void }) {
   return (
-    &lt;div className="grid"&gt;
-      {properties.map((p) =&gt; (
-        &lt;PropertyCard key={p.id} property={p} onSelect={onSelect} /&gt;
-      ))}
-    &lt;/div&gt;
+    &lt;button className="cta" onClick={() =&gt; setCount(count + 1)}&gt;
+      {count} inquiries so far
+    &lt;/button&gt;
   );
 }</code></pre></div>
-<div class="js-only"><pre><code>import { properties } from "./data/properties";
-
-function PropertyList({ onSelect }) {
+<div class="js-only"><pre><code>function InquiryCount() {
+  const [count, setCount] = useState(0);
+  console.log("rendering with", count);
   return (
-    &lt;div className="grid"&gt;
-      {properties.map((p) =&gt; (
-        &lt;PropertyCard key={p.id} property={p} onSelect={onSelect} /&gt;
-      ))}
-    &lt;/div&gt;
+    &lt;button className="cta" onClick={() =&gt; setCount(count + 1)}&gt;
+      {count} inquiries so far
+    &lt;/button&gt;
+  );
+}</code></pre></div>
+<p>Open the console, click the button, watch the log. That is React's loop.</p>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 7</div><h4>Read the Loop</h4><p>Add a temporary <code>console.log</code> at the top of <code>App</code>. Click around the site — select residences, toggle the save button. Confirm that you understand <em>why</em> the log fires when it does. Delete the log when satisfied.</p></div>
+
+<!-- WB Chapter 8 -->
+<h3>W8 · Conditional Rendering — Availability Badges</h3>
+<p>React has no special syntax for if/else inside JSX — you use plain JavaScript expressions. On a premium launch site, a single well-placed availability badge communicates scarcity, urgency, and trust.</p>
+<div class="ts-only"><pre><code>function AvailabilityBadge({ status }: { status: Residence["status"] }) {
+  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
+  if (status === "reserved") return &lt;span className="badge reserved"&gt;Reserved&lt;/span&gt;;
+  return &lt;span className="badge available"&gt;Available&lt;/span&gt;;
+}
+
+// Inline patterns you will reach for daily:
+{residence.status === "sold" &amp;&amp; &lt;p className="muted"&gt;No longer available&lt;/p&gt;}
+{isLoading ? &lt;Spinner /&gt; : &lt;ResidenceGrid /&gt;}</code></pre></div>
+<div class="js-only"><pre><code>function AvailabilityBadge({ status }) {
+  if (status === "sold") return &lt;span className="badge sold"&gt;Sold&lt;/span&gt;;
+  if (status === "reserved") return &lt;span className="badge reserved"&gt;Reserved&lt;/span&gt;;
+  return &lt;span className="badge available"&gt;Available&lt;/span&gt;;
+}</code></pre></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 8</div><h4>Signal Availability</h4><p>Add <code>AvailabilityBadge</code> to each <code>ResidenceCard</code>. Sold residences should also be visually softened (reduced opacity, muted price, disabled CTA). The result is a grid that tells a story at a glance: what is left, what is spoken for, what is gone.</p></div>
+
+<!-- WB Chapter 9 -->
+<h3>W9 · Lists and Keys — The Featured Residences Grid</h3>
+<p>To render a collection, map an array to JSX. React needs a stable <code>key</code> on each item so it can track them across renders.</p>
+<div class="ts-only"><pre><code>import { residences } from "./data/residences";
+
+function FeaturedResidences({ onSelect }: { onSelect: (id: string) =&gt; void }) {
+  return (
+    &lt;section className="featured"&gt;
+      &lt;header&gt;
+        &lt;span className="eyebrow"&gt;The Collection&lt;/span&gt;
+        &lt;h2&gt;Featured residences&lt;/h2&gt;
+      &lt;/header&gt;
+      &lt;div className="grid"&gt;
+        {residences.map((r) =&gt; (
+          &lt;ResidenceCard key={r.id} residence={r} onSelect={onSelect} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/section&gt;
+  );
+}</code></pre></div>
+<div class="js-only"><pre><code>import { residences } from "./data/residences";
+
+function FeaturedResidences({ onSelect }) {
+  return (
+    &lt;section className="featured"&gt;
+      &lt;header&gt;
+        &lt;span className="eyebrow"&gt;The Collection&lt;/span&gt;
+        &lt;h2&gt;Featured residences&lt;/h2&gt;
+      &lt;/header&gt;
+      &lt;div className="grid"&gt;
+        {residences.map((r) =&gt; (
+          &lt;ResidenceCard key={r.id} residence={r} onSelect={onSelect} /&gt;
+        ))}
+      &lt;/div&gt;
+    &lt;/section&gt;
   );
 }</code></pre></div>
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Using the array index as a key. It works until the order changes — then React mismatches state to the wrong item. Always use a stable id from the data itself.</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 9</div><h4>Filter Chips</h4><p>Add a row of style filter buttons (Modern / Classical / Industrial / All). Maintain a <code>filter</code> state. Use <code>properties.filter(...)</code> before mapping. Verify the list updates as you click chips.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 9</div><h4>Collection Filters</h4><p>Add a quiet row of filter chips above the grid (Sea · Park · Sky · All). Maintain a <code>collection</code> state. Use <code>residences.filter(...)</code> before mapping so the grid updates instantly. Keep the active chip understated — a thin underline is often more elegant than a filled pill.</p></div>
 
 <!-- WB Chapter 10 -->
-<h3>W10 · Composition</h3>
-<p>Components compose by nesting. The <code>children</code> prop is the slot inside.</p>
-<div class="ts-only"><pre><code>type CardProps = { children: React.ReactNode; title: string };
+<h3>W10 · Composition — Sections Inside Sections</h3>
+<p>Components compose by nesting. The <code>children</code> prop is the slot inside. For a launch site, composition is how you build a consistent editorial rhythm across the page — every section breathes the same way because they all share the same wrapper.</p>
+<div class="ts-only"><pre><code>type SectionProps = {
+  eyebrow: string;
+  title: string;
+  children: React.ReactNode;
+};
 
-function Panel({ title, children }: CardProps) {
+function Section({ eyebrow, title, children }: SectionProps) {
   return (
-    &lt;section className="panel"&gt;
-      &lt;header&gt;{title}&lt;/header&gt;
-      &lt;div className="panel-body"&gt;{children}&lt;/div&gt;
+    &lt;section className="editorial-section"&gt;
+      &lt;header&gt;
+        &lt;span className="eyebrow"&gt;{eyebrow}&lt;/span&gt;
+        &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;/header&gt;
+      &lt;div className="section-body"&gt;{children}&lt;/div&gt;
     &lt;/section&gt;
   );
 }
 
 // Usage:
-&lt;Panel title="Details"&gt;
-  &lt;p&gt;Anything you put here lands inside the panel.&lt;/p&gt;
-&lt;/Panel&gt;</code></pre></div>
-<div class="js-only"><pre><code>function Panel({ title, children }) {
+&lt;Section eyebrow="The Story" title="A quiet address by the sea"&gt;
+  &lt;p&gt;Seven residences arranged around a private garden…&lt;/p&gt;
+&lt;/Section&gt;</code></pre></div>
+<div class="js-only"><pre><code>function Section({ eyebrow, title, children }) {
   return (
-    &lt;section className="panel"&gt;
-      &lt;header&gt;{title}&lt;/header&gt;
-      &lt;div className="panel-body"&gt;{children}&lt;/div&gt;
+    &lt;section className="editorial-section"&gt;
+      &lt;header&gt;
+        &lt;span className="eyebrow"&gt;{eyebrow}&lt;/span&gt;
+        &lt;h2&gt;{title}&lt;/h2&gt;
+      &lt;/header&gt;
+      &lt;div className="section-body"&gt;{children}&lt;/div&gt;
     &lt;/section&gt;
   );
 }</code></pre></div>
 <p>"Lifting state up" is the second composition skill: when two siblings need the same state, move it to their nearest common parent and pass it down as props. The parent owns it; the children read it.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 10</div><h4>Panel Wrappers</h4><p>Create a generic <code>Panel</code> component and use it to wrap the filters, the list, and the detail view. The <code>selectedId</code> state stays in <code>App</code> and is lifted above all three children.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 10</div><h4>The Editorial Rhythm</h4><p>Create a reusable <code>&lt;Section&gt;</code> component and use it to wrap the hero story, the featured grid, and the amenities block. Every section should share the same eyebrow/title pattern so the site reads like an editorial spread, not a brochure. <code>selectedId</code> stays in <code>App</code> — lifted above all three children.</p></div>
 
 <!-- WB Chapter 11 -->
-<h3>W11 · useRef — The Imperative Escape Hatch</h3>
-<p>Sometimes you need to reach into the real DOM (focus an input, measure an element) or hold a value across renders without triggering re-renders. <code>useRef</code> gives you a mutable object whose <code>.current</code> you can read and write freely.</p>
+<h3>W11 · useRef — The Private Viewing Form Focus</h3>
+<p>Sometimes you need to reach into the real DOM (focus an input, measure an element, scroll to a section) or hold a value across renders without triggering re-renders. <code>useRef</code> gives you a mutable object whose <code>.current</code> you can read and write freely.</p>
 <div class="ts-only"><pre><code>import { useRef, useEffect } from "react";
 
-function SearchBox() {
-  const inputRef = useRef&lt;HTMLInputElement&gt;(null);
-  useEffect(() =&gt; { inputRef.current?.focus(); }, []);
-  return &lt;input ref={inputRef} placeholder="Search properties…" /&gt;;
+function PrivateViewingForm() {
+  const nameRef = useRef&lt;HTMLInputElement&gt;(null);
+  useEffect(() =&gt; { nameRef.current?.focus(); }, []);
+  return (
+    &lt;form className="inquiry-form"&gt;
+      &lt;label&gt;Your name
+        &lt;input ref={nameRef} placeholder="Full name" /&gt;
+      &lt;/label&gt;
+    &lt;/form&gt;
+  );
 }</code></pre></div>
 <div class="js-only"><pre><code>import { useRef, useEffect } from "react";
 
-function SearchBox() {
-  const inputRef = useRef(null);
-  useEffect(() =&gt; { inputRef.current &amp;&amp; inputRef.current.focus(); }, []);
-  return &lt;input ref={inputRef} placeholder="Search properties…" /&gt;;
+function PrivateViewingForm() {
+  const nameRef = useRef(null);
+  useEffect(() =&gt; { nameRef.current &amp;&amp; nameRef.current.focus(); }, []);
+  return (
+    &lt;form className="inquiry-form"&gt;
+      &lt;label&gt;Your name
+        &lt;input ref={nameRef} placeholder="Full name" /&gt;
+      &lt;/label&gt;
+    &lt;/form&gt;
+  );
 }</code></pre></div>
-<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>This is the hook you will use most in R3F. Every 3D mesh you want to rotate, animate, or measure gets a ref. Master it now and Book 2 will feel familiar.</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 11</div><h4>Auto-Focus Search</h4><p>Add a <code>SearchBox</code> above the property list. On mount, focus the input. Wire it to filter properties whose <code>title</code> matches the typed text.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>This is the hook you will use most in React Three Fiber. Every 3D mesh you want to rotate, animate, or inspect gets a ref. Master it on a luxury form today and Book Two will feel familiar tomorrow.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 11</div><h4>Request a Private Viewing</h4><p>Add a <code>PrivateViewingForm</code> section near the bottom of the site with fields for name, email, phone, preferred date, and a short note. On mount, focus the name field. The form does not need to actually submit anywhere yet — the mechanics arrive in the next step.</p></div>
 
 <!-- WB Chapter 12 -->
-<h3>W12 · useEffect — Talking to the World Outside React</h3>
-<p>Anything that is not "compute the JSX from state" is a side effect: fetching data, reading <code>localStorage</code>, attaching window listeners, starting a timer. Side effects belong inside <code>useEffect</code>.</p>
+<h3>W12 · useEffect — Persisting the Saved List</h3>
+<p>Anything that is not "compute the JSX from state" is a side effect: reading <code>localStorage</code>, attaching a scroll listener for a sticky CTA, sending an analytics ping when the hero enters view. Side effects belong inside <code>useEffect</code>.</p>
 <div class="ts-only"><pre><code>import { useState, useEffect } from "react";
 
-function FavoritesPersist() {
-  const [favs, setFavs] = useState&lt;string[]&gt;(() =&gt; {
-    const raw = localStorage.getItem("favs");
+function SavedList() {
+  const [saved, setSaved] = useState&lt;string[]&gt;(() =&gt; {
+    const raw = localStorage.getItem("aurelia:saved");
     return raw ? JSON.parse(raw) : [];
   });
 
   useEffect(() =&gt; {
-    localStorage.setItem("favs", JSON.stringify(favs));
-  }, [favs]); // run whenever favs changes
+    localStorage.setItem("aurelia:saved", JSON.stringify(saved));
+  }, [saved]); // run whenever `saved` changes
 
-  return &lt;p&gt;{favs.length} saved&lt;/p&gt;;
+  return &lt;p className="saved-count"&gt;{saved.length} residences on your list&lt;/p&gt;;
 }</code></pre></div>
 <div class="js-only"><pre><code>import { useState, useEffect } from "react";
 
-function FavoritesPersist() {
-  const [favs, setFavs] = useState(() =&gt; {
-    const raw = localStorage.getItem("favs");
+function SavedList() {
+  const [saved, setSaved] = useState(() =&gt; {
+    const raw = localStorage.getItem("aurelia:saved");
     return raw ? JSON.parse(raw) : [];
   });
   useEffect(() =&gt; {
-    localStorage.setItem("favs", JSON.stringify(favs));
-  }, [favs]);
-  return &lt;p&gt;{favs.length} saved&lt;/p&gt;;
+    localStorage.setItem("aurelia:saved", JSON.stringify(saved));
+  }, [saved]);
+  return &lt;p className="saved-count"&gt;{saved.length} residences on your list&lt;/p&gt;;
 }</code></pre></div>
-<p>The second argument is the <em>dependency array</em>. <code>[]</code> = run once after mount. <code>[favs]</code> = run after every render where <code>favs</code> changed. Omit it = run after every render (you almost never want this).</p>
+<p>The second argument is the <em>dependency array</em>. <code>[]</code> = run once after mount. <code>[saved]</code> = run after every render where <code>saved</code> changed. Omit it = run after every render (you almost never want this).</p>
 <p>Reference: <a href="https://react.dev/reference/react/useEffect" target="_blank" rel="noopener">useEffect</a> — and the page <a href="https://react.dev/learn/you-might-not-need-an-effect" target="_blank" rel="noopener">You Might Not Need an Effect</a> is required reading before you write your tenth one.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 12</div><h4>Persistent Favorites</h4><p>Add a favorites array to <code>App</code>. Toggle membership when the user clicks the star on a card. Persist the list to <code>localStorage</code> with the pattern above. Reload the page — the stars stay lit.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 12</div><h4>Saved Residences That Survive Refresh</h4><p>Lift a <code>saved: string[]</code> array into <code>App</code>. The <code>SaveButton</code> from Step 5 now toggles membership in that array. Persist the list to <code>localStorage</code> with the pattern above. Reload the page — the saved state remains. This is the moment the launch site starts to feel like a real product.</p></div>
 
 <!-- WB Chapter 13 -->
-<h3>W13 · useMemo — Skipping Work You Already Did</h3>
-<p><code>useMemo</code> remembers the result of an expensive calculation between renders, recomputing it only when its dependencies change.</p>
+<h3>W13 · useMemo — The Development Summary</h3>
+<p><code>useMemo</code> remembers the result of a calculation between renders, recomputing it only when its dependencies change. Premium sites often show a small editorial "development at a glance" strip (seven residences · from $3.9m · 2026 completion) — exactly the kind of derived data that benefits from memoisation.</p>
 <div class="ts-only"><pre><code>import { useMemo } from "react";
 
-function Stats({ properties }: { properties: Property[] }) {
-  const totalArea = useMemo(
-    () =&gt; properties.reduce((sum, p) =&gt; sum + p.area, 0),
-    [properties]
+function DevelopmentSummary({ residences }: { residences: Residence[] }) {
+  const { count, fromPrice, totalArea } = useMemo(() =&gt; ({
+    count: residences.length,
+    fromPrice: Math.min(...residences.map(r =&gt; r.priceFrom)),
+    totalArea: residences.reduce((s, r) =&gt; s + r.area, 0),
+  }), [residences]);
+
+  return (
+    &lt;aside className="summary-strip"&gt;
+      &lt;div&gt;&lt;strong&gt;{count}&lt;/strong&gt; residences&lt;/div&gt;
+      &lt;div&gt;From &lt;strong&gt;${fromPrice.toLocaleString()}&lt;/strong&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;strong&gt;{totalArea.toLocaleString()}&lt;/strong&gt; m² total&lt;/div&gt;
+    &lt;/aside&gt;
   );
-  return &lt;p&gt;Total area: {totalArea} m²&lt;/p&gt;;
 }</code></pre></div>
 <div class="js-only"><pre><code>import { useMemo } from "react";
 
-function Stats({ properties }) {
-  const totalArea = useMemo(
-    () =&gt; properties.reduce((sum, p) =&gt; sum + p.area, 0),
-    [properties]
+function DevelopmentSummary({ residences }) {
+  const { count, fromPrice, totalArea } = useMemo(() =&gt; ({
+    count: residences.length,
+    fromPrice: Math.min(...residences.map(r =&gt; r.priceFrom)),
+    totalArea: residences.reduce((s, r) =&gt; s + r.area, 0),
+  }), [residences]);
+  return (
+    &lt;aside className="summary-strip"&gt;
+      &lt;div&gt;&lt;strong&gt;{count}&lt;/strong&gt; residences&lt;/div&gt;
+      &lt;div&gt;From &lt;strong&gt;${fromPrice.toLocaleString()}&lt;/strong&gt;&lt;/div&gt;
+      &lt;div&gt;&lt;strong&gt;{totalArea.toLocaleString()}&lt;/strong&gt; m² total&lt;/div&gt;
+    &lt;/aside&gt;
   );
-  return &lt;p&gt;Total area: {totalArea} m²&lt;/p&gt;;
 }</code></pre></div>
-<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Wrapping <em>everything</em> in <code>useMemo</code>. It is not free — the comparison itself costs cycles. Reach for it only when a calculation is genuinely expensive or when a stable reference matters (often the case in R3F when passing arrays into geometries).</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 13</div><h4>Filtered Stats</h4><p>Compute the count, average price, and total area of the <em>currently filtered</em> properties using <code>useMemo</code>. Display them in a stats bar above the grid.</p></div>
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Wrapping <em>everything</em> in <code>useMemo</code>. It is not free — the comparison itself costs cycles. Reach for it only when a calculation is genuinely expensive or when a stable reference matters (often the case when the same object becomes a prop to a heavy child, such as a future R3F scene).</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 13</div><h4>Summary Strip</h4><p>Add a <code>DevelopmentSummary</code> strip beneath the hero. It should react to the active filter — memoise the count, the lowest "from" price, and the total buildable area of the currently visible residences. Style it as a thin editorial bar, not a dashboard.</p></div>
 
 <!-- WB Chapter 14 -->
 <h3>W14 · TypeScript for React — The Cheat Sheet You Will Actually Use</h3>
-<p>You have already been writing React in TypeScript through the whole workbook. Here is the consolidated reference of the patterns that come up daily.</p>
+<p>You have already been writing React in TypeScript through the whole workbook. Here is the consolidated reference of the patterns that come up daily on a real launch project.</p>
 <pre><code>// 1. Typing props with an inline type:
-function Hello({ name }: { name: string }) { return &lt;p&gt;Hi {name}&lt;/p&gt;; }
+function Eyebrow({ label }: { label: string }) { return &lt;span&gt;{label}&lt;/span&gt;; }
 
 // 2. Typing props with a separate alias (preferred for anything non-trivial):
-type ButtonProps = { label: string; onClick: () =&gt; void; disabled?: boolean };
-function Button({ label, onClick, disabled = false }: ButtonProps) { ... }
+type CTAProps = { label: string; onClick: () =&gt; void; variant?: "primary" | "ghost" };
+function CTA({ label, onClick, variant = "primary" }: CTAProps) { ... }
 
 // 3. Typing useState — usually inferred, occasionally explicit:
-const [count, setCount] = useState(0);                // inferred number
-const [user, setUser] = useState&lt;User | null&gt;(null);  // explicit when null
+const [count, setCount] = useState(0);                        // inferred number
+const [selected, setSelected] = useState&lt;Residence | null&gt;(null);
 
 // 4. Typing useRef:
-const divRef = useRef&lt;HTMLDivElement&gt;(null);
+const formRef = useRef&lt;HTMLFormElement&gt;(null);
 
-// 5. Typing event handlers:
+// 5. Typing event handlers on form inputs:
 function handleChange(e: React.ChangeEvent&lt;HTMLInputElement&gt;) {
   setName(e.target.value);
 }
 
-// 6. Children prop:
-type Props = { children: React.ReactNode };
+// 6. Children prop (used everywhere in your &lt;Section&gt; wrapper):
+type SectionProps = { eyebrow: string; title: string; children: React.ReactNode };
 
 // 7. Importing only the type (no runtime cost):
-import type { Property } from "./types";</code></pre>
+import type { Residence } from "./types";</code></pre>
 <p>That is genuinely 90% of the TypeScript you will write in React for the next year. Reference: <a href="https://react.dev/learn/typescript" target="_blank" rel="noopener">react.dev/learn/typescript</a>.</p>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 14</div><h4>Type Audit</h4><p>Open every file in <code>src/components/</code>. Make sure every component has an explicit <code>Props</code> type alias. Make sure every <code>useState</code> with a non-trivial type is annotated. Run <code>npm run build</code> — it must complete with zero TS errors.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 14</div><h4>A Clean Type Audit</h4><p>Open every file in <code>src/components/</code>. Make sure every component has an explicit <code>Props</code> type alias. Make sure every <code>useState</code> with a non-trivial type is annotated. Run <code>npm run build</code> — it must complete with zero TS errors. A clean build is the mark of a site you can hand to a client without embarrassment.</p></div>
 
 <!-- WB Chapter 15 -->
-<h3>W15 · Bridge to R3F — The Scene Placeholder</h3>
-<p>You have a working ArchViz Property Browser. Every component is typed. State is lifted. Effects persist favorites. The data file is the source of truth. Now we plant the seed for Book 2.</p>
-<div class="ts-only"><pre><code>// src/components/ScenePlaceholder.tsx
-import type { Property } from "../types";
+<h3>W15 · The Experience Placeholder — Planting the Seed for Book Two</h3>
+<p>You have a working launch site for Aurelia Residences. Every component is typed. State is lifted. Effects persist the saved list. The data file is the single source of truth. Now we plant the seed for Book Two.</p>
+<div class="ts-only"><pre><code>// src/components/ExperiencePlaceholder.tsx
+import type { Residence } from "../types";
 
-type Props = { property: Property | null };
+type Props = { residence: Residence | null };
 
-export default function ScenePlaceholder({ property }: Props) {
-  if (!property) return &lt;div className="scene empty"&gt;Select a property to preview&lt;/div&gt;;
+export default function ExperiencePlaceholder({ residence }: Props) {
+  if (!residence) {
+    return (
+      &lt;div className="experience empty"&gt;
+        &lt;span className="eyebrow"&gt;The Experience&lt;/span&gt;
+        &lt;p&gt;Select a residence to preview the immersive walk-through.&lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
   return (
-    &lt;div className="scene"&gt;
-      &lt;p&gt;3D preview of &lt;strong&gt;{property.title}&lt;/strong&gt; will live here.&lt;/p&gt;
-      &lt;small&gt;Book 2 replaces this div with a &amp;lt;Canvas&amp;gt; from @react-three/fiber.&lt;/small&gt;
+    &lt;div className="experience"&gt;
+      &lt;span className="eyebrow"&gt;The Experience&lt;/span&gt;
+      &lt;h3&gt;{residence.name}&lt;/h3&gt;
+      &lt;p&gt;An immersive 3D presentation of this residence will live here.&lt;/p&gt;
+      &lt;small&gt;Book Two replaces this block with a live &amp;lt;Canvas&amp;gt; from @react-three/fiber.&lt;/small&gt;
     &lt;/div&gt;
   );
 }</code></pre></div>
-<div class="js-only"><pre><code>export default function ScenePlaceholder({ property }) {
-  if (!property) return &lt;div className="scene empty"&gt;Select a property to preview&lt;/div&gt;;
+<div class="js-only"><pre><code>export default function ExperiencePlaceholder({ residence }) {
+  if (!residence) {
+    return (
+      &lt;div className="experience empty"&gt;
+        &lt;span className="eyebrow"&gt;The Experience&lt;/span&gt;
+        &lt;p&gt;Select a residence to preview the immersive walk-through.&lt;/p&gt;
+      &lt;/div&gt;
+    );
+  }
   return (
-    &lt;div className="scene"&gt;
-      &lt;p&gt;3D preview of &lt;strong&gt;{property.title}&lt;/strong&gt; will live here.&lt;/p&gt;
+    &lt;div className="experience"&gt;
+      &lt;span className="eyebrow"&gt;The Experience&lt;/span&gt;
+      &lt;h3&gt;{residence.name}&lt;/h3&gt;
+      &lt;p&gt;An immersive 3D presentation of this residence will live here.&lt;/p&gt;
     &lt;/div&gt;
   );
 }</code></pre></div>
-<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In Book 2, this exact component is renamed to <code>PropertyScene.tsx</code>, the outer <code>div</code> becomes a <code>&lt;Canvas&gt;</code>, and the placeholder text becomes a real 3D model loaded from <code>property.modelUrl</code>. Nothing else in your app changes. That is the entire promise of React's "describe what you want" model — your UI logic and your 3D logic share the same data and the same component tree.</p></div>
-<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 15 — Final</div><h4>Ship It</h4><p>Add <code>ScenePlaceholder</code> next to the detail panel. Run <code>npm run build</code>. Deploy the <code>dist/</code> folder to Vercel (drag-and-drop, or <code>vercel --prod</code>). The deployed URL is now the first link in your portfolio. You are ready for Book 2.</p></div>
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>In Book Two, this exact component is renamed to <code>ResidenceExperience.tsx</code>, the outer <code>div</code> becomes a <code>&lt;Canvas&gt;</code>, and the placeholder text becomes a real 3D model loaded from <code>residence.experienceUrl</code>. Nothing else in your launch site changes. That is the entire promise of React's "describe what you want" model — the same data, the same component tree, and one new section that turns a premium site into a cinematic property experience.</p></div>
+<div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 15 — Ship Aurelia</h4></div><h4>Deploy the Launch Site</h4><p>Add <code>ExperiencePlaceholder</code> beside the residence detail panel. Run <code>npm run build</code>. Deploy the <code>dist/</code> folder to Vercel (drag-and-drop, or <code>vercel --prod</code>). The live URL is now a real, shippable launch site — portfolio-worthy, client-presentable, and ready to become an immersive experience the moment you open Book Two.</p></div>
 
-<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — Bridge</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
+<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — The Bridge</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
 </section>
 
 <!-- ================ DEBUGGING ================ -->
@@ -2174,7 +2708,7 @@ export default function ScenePlaceholder({ property }: Props) {
   <li>Helpers from drei — the R3F utility library.</li>
   <li>GLTF model loading.</li>
   <li>Zustand for global scene state.</li>
-  <li>Building, chapter by chapter, your interactive 3D real estate portfolio.</li>
+  <li>Layering, chapter by chapter, the immersive 3D experience on top of your Aurelia Residences launch site.</li>
 </ul>
 
 <h3>How to Prepare in the Gap Between Books</h3>
