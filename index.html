@@ -720,7 +720,9 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p>Declarative code tells the computer what you want the result to look like and lets the computer figure out how to get there. If I asked you to make a sandwich declaratively, I would say: I want a peanut butter and jelly sandwich. Done.</p>
 <p>Here is the same button in React:</p>
 
-<pre><code><span class="kw">function</span> <span class="fn">Button</span>() {
+<pre><code><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">function</span> <span class="fn">Button</span>() {
   <span class="kw">const</span> [active, setActive] = <span class="fn">useState</span>(<span class="kw">false</span>);
   <span class="kw">return</span> (
     &lt;<span class="tag">button</span>
@@ -921,7 +923,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 3B — Practice</div>
-<p>Identify and fix the three mistakes in this JSX:</p>
+<p>Identify and fix the <strong>five</strong> mistakes in this JSX:</p>
 <pre><code><span class="kw">function</span> <span class="fn">broken</span>() {
   <span class="kw">return</span>
     &lt;<span class="tag">h1</span> class=<span class="str">"title"</span>&gt;Hi&lt;/<span class="tag">h1</span>&gt;
@@ -929,15 +931,23 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 }</code></pre>
 <div class="reveal">
 <button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
-<div class="reveal-content"><p>Three problems: lowercase component name, <code>class</code> instead of <code>className</code>, missing wrapping element, and the <code>p</code> tag is not closed. Fixed:</p>
+<div class="reveal-content"><p>Five problems:</p>
+<ol>
+  <li><strong>Lowercase component name</strong> — <code>broken</code> must be <code>Broken</code> (or any capitalized name). Lowercase names are treated as HTML tags.</li>
+  <li><strong><code>return</code> on its own line</strong> — JavaScript's Automatic Semicolon Insertion (ASI) silently inserts a semicolon after <code>return</code>, making the function return <code>undefined</code> and the JSX below it dead code. Always wrap multi-line JSX in parentheses: <code>return ( ... )</code>.</li>
+  <li><strong><code>class</code> instead of <code>className</code></strong> — <code>class</code> is a reserved word in JavaScript. JSX uses <code>className</code>.</li>
+  <li><strong>Two sibling elements without a wrapper</strong> — JSX must return a single root element. Wrap siblings in a <code>&lt;div&gt;</code> or a fragment <code>&lt;&gt;...&lt;/&gt;</code>.</li>
+  <li><strong>Unclosed <code>&lt;p&gt;</code> tag</strong> — All JSX tags must be explicitly closed.</li>
+</ol>
 <pre><code><span class="kw">function</span> <span class="fn">Fixed</span>() {
   <span class="kw">return</span> (
-    &lt;<span class="kw">div</span>&gt;
+    &lt;<span class="tag">div</span>&gt;
       &lt;<span class="tag">h1</span> <span class="typ">className</span>=<span class="str">"title"</span>&gt;Hi&lt;/<span class="tag">h1</span>&gt;
       &lt;<span class="tag">p</span>&gt;Paragraph&lt;/<span class="tag">p</span>&gt;
-    &lt;/<span class="kw">div</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
   );
-}</code></pre></div>
+}</code></pre>
+<p>The bare-<code>return</code> / ASI trap is problem #2 above and the one most beginners miss. You will hit it the first time you write a component with multi-line JSX — now you know why and how to fix it.</p></div>
 </div>
 </div>
 
@@ -1088,9 +1098,17 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <p><code>useState</code> is a hook — a special function React provides for giving components powers they would not otherwise have. It returns a pair: the current state value and a function to update it. You destructure them into local variables, conventionally named <code>[thing, setThing]</code>.</p>
 
 <h3>5.3 What Happens When You Call setCount</h3>
-<p>Calling <code>setCount</code> does two things. It updates the stored value, and it tells React: "this component should re-render." React then re-runs your component function, which produces a new description of the UI based on the new state value. React compares the new description to the old one and updates only what changed.</p>
+<p>Calling <code>setCount(count + 1)</code> schedules an update and signals React to re-render. It does <em>not</em> immediately change <code>count</code>. In the current render, <code>count</code> still holds its old value — the new value only appears in the <em>next</em> render, when React re-runs your component function from the top.</p>
+<p>This is why the following does not increment by 2:</p>
+<pre><code><span class="com">// Both calls read the same stale `count` from the current render</span>
+<span class="fn">setCount</span>(count + <span class="num">1</span>);
+<span class="fn">setCount</span>(count + <span class="num">1</span>); <span class="com">// still count + 1, not count + 2</span></code></pre>
+<p>When your next state depends on the current value, use the <strong>functional update form</strong> — pass a function instead of a value. React will call your function with the guaranteed latest state:</p>
+<pre><code><span class="com">// Correct: each call receives the most recent value</span>
+<span class="fn">setCount</span>(prev => prev + <span class="num">1</span>);
+<span class="fn">setCount</span>(prev => prev + <span class="num">1</span>); <span class="com">// correctly increments by 2</span></code></pre>
 
-<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Setting state is not assignment. It is a request to React to re-render the component with a new value. Your component function runs again, top to bottom, each time state changes.</p></div>
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Setting state is not assignment — it is a request to React to re-render with a new value. <code>count</code> does not change in the current render. When the new value depends on the old one, use <code>setCount(prev =&gt; prev + 1)</code> to guarantee you are reading the latest state.</p></div>
 
 <h3>5.4 State vs Props</h3>
 <table>
@@ -1106,10 +1124,39 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <h3>5.6 Lifting State Up</h3>
 <p>Sometimes two sibling components need to share the same piece of state. For example, a filter bar and a property grid both need to know the current search term. The solution is to move the state up to their nearest common parent and pass it down as props. This is called "lifting state up" and it is a recurring pattern.</p>
+<pre><code><span class="com">// State lives in the parent — both children read from it</span>
+<span class="kw">function</span> <span class="fn">App</span>() {
+  <span class="kw">const</span> [search, setSearch] = <span class="fn">useState</span>(<span class="str">''</span>);
+  <span class="kw">return</span> (
+    &lt;&gt;
+      <span class="com">// FilterBar writes the shared state via the setter passed as a prop</span>
+      &lt;<span class="tag">FilterBar</span> <span class="typ">search</span>={search} <span class="typ">onSearchChange</span>={setSearch} /&gt;
+      <span class="com">// PropertyGrid reads the shared state via a prop</span>
+      &lt;<span class="tag">PropertyGrid</span> <span class="typ">search</span>={search} /&gt;
+    &lt;/&gt;
+  );
+}
+
+<span class="kw">function</span> <span class="fn">FilterBar</span>({ search, onSearchChange }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">input</span>
+      <span class="typ">value</span>={search}
+      <span class="typ">onChange</span>={(e) =&gt; <span class="fn">onSearchChange</span>(e.target.value)}
+      <span class="typ">placeholder</span>=<span class="str">"Search residences..."</span>
+    /&gt;
+  );
+}
+
+<span class="kw">function</span> <span class="fn">PropertyGrid</span>({ search }) {
+  <span class="com">// Filters its list based on the search term from the parent</span>
+  <span class="kw">return</span> &lt;<span class="tag">p</span>&gt;Showing results for: {search}&lt;/<span class="tag">p</span>&gt;;
+}</code></pre>
+<p>The state owns <code>search</code>. <code>FilterBar</code> gets a setter passed as a prop and calls it on change. <code>PropertyGrid</code> receives the current value as a read-only prop. Neither sibling talks to the other — they both talk to the parent. This is the pattern you will use every time two components need to stay in sync.</p>
 
 <div class="callout c-model"><div class="callout-label"><span class="icon">🧠</span> Mental Model</div><p>State is a component's personal notebook. Nobody else can read it. When the component writes a new page, it asks React to redraw what it shows the world.</p></div>
 
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Mutating state directly instead of calling the setter. <code>count++</code> or <code>list.push(x)</code> will not cause React to re-render. You must call <code>setCount</code> or <code>setList([...list, x])</code>. Always use the setter; always produce a new value rather than mutating the old one.</p></div>
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea — Functional Updates</div><p>When the new state depends on the previous one, pass a function to the setter instead of a value: <code>setCount(prev =&gt; prev + 1)</code>. This guarantees you are reading the latest state, even if multiple updates are batched together by React. Use this form any time you write <code>setSomething(something + 1)</code> or <code>setSomething(!something)</code>.</p></div>
 
 <h3>5.7 TypeScript Tip — Typing State</h3>
 <p>Most of the time, TypeScript can infer the type of state from the initial value:</p>
@@ -1179,7 +1226,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
   <text x="75" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">click, hover</text>
   <rect x="160" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#F59E0B" stroke-width="2"/>
   <text x="215" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">2. Handler</text>
-  <text x="215" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">calls setState</text>
+  <text x="215" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">calls a setter</text>
   <rect x="300" y="60" width="110" height="60" rx="10" fill="#161824" stroke="#7B68EE" stroke-width="2"/>
   <text x="355" y="85" fill="#fff" font-family="Inter" font-size="12" text-anchor="middle" font-weight="600">3. Re-render</text>
   <text x="355" y="102" fill="#A5AABE" font-family="Inter" font-size="10" text-anchor="middle">React reruns</text>
@@ -1282,9 +1329,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <h1 class="chapter-title">Understanding Re-rendering</h1>
 <p class="chapter-sub">Most React courses bury this chapter. For R3F, it comes now.</p>
 
-<h3>7.1 The Render Cycle in Three Phases</h3>
-<p>When you call <code>setState</code>, React goes through three phases. First, the <em>render phase</em>: React calls your component function, and you return a new JSX description of the UI. Second, the <em>reconcile phase</em>: React compares the new description to the previous one and figures out what actually changed. Third, the <em>commit phase</em>: React applies those changes to the real DOM.</p>
-<p>The render phase is fast because it is just running functions and comparing JavaScript objects. The commit phase is slow because it touches the real DOM. React's design is intentional: do as much work as possible in the fast phase, and as little as possible in the slow one.</p>
+<h3>7.1 The Render Cycle in Two Phases</h3>
+<p>When a state setter is called, React goes through two phases. First, the <em>render phase</em>: React calls your component function, you return a new JSX description of the UI, and React compares the new description to the previous one (this comparison step is called reconciliation). Second, the <em>commit phase</em>: React applies only the differences to the real DOM.</p>
+<p>The render phase is fast because it is just running JavaScript functions and comparing objects. The commit phase is slower because it touches the real DOM. React's design keeps as much work as possible in the fast phase, and minimizes the slow one.</p>
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>React's official model has two phases: <strong>render</strong> (run functions, diff the result) and <strong>commit</strong> (update the DOM). You will see "reconciliation" mentioned in documentation — it refers to the diffing step inside the render phase, not a separate phase.</p></div>
 
 <h3>7.2 What Triggers a Re-render</h3>
 <p>A component re-renders when:</p>
@@ -1313,7 +1361,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 7A</div>
-<p>Given a parent that contains three children, and the parent calls <code>setState</code> on itself, how many components re-render? Does it depend on the children's props?</p>
+<p>Given a parent that contains three children, and the parent calls a state setter (e.g. <code>setCount</code>), how many components re-render? Does it depend on the children's props?</p>
 <div class="reveal">
 <button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
 <div class="reveal-content"><p>All four components re-render: the parent (because its state changed) and all three children (because when a parent re-renders, its children re-render by default). The DOM only updates where the output actually changed, but the functions all run.</p></div>
@@ -1385,7 +1433,13 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <h3>9.1 Rendering a List with .map()</h3>
 <p>To render a collection, you turn an array of data into an array of elements using JavaScript's <code>.map()</code>:</p>
 
-<pre><code><span class="kw">function</span> <span class="fn">PropertyList</span>({ properties }) {
+<pre><code><span class="kw">interface</span> <span class="typ">Property</span> {
+  id: <span class="typ">string</span>;
+  title: <span class="typ">string</span>;
+  price: <span class="typ">number</span>;
+}
+
+<span class="kw">function</span> <span class="fn">PropertyList</span>({ properties }: { properties: <span class="typ">Property</span>[] }) {
   <span class="kw">return</span> (
     &lt;<span class="tag">div</span>&gt;
       {properties.<span class="fn">map</span>(p =&gt; (
@@ -1407,6 +1461,32 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 9A</div>
 <p>Given an array of property objects with an <code>id</code> field, render a PropertyCard for each.</p>
+<div class="reveal">
+<button class="reveal-btn" onclick="toggleReveal(this)">Show Answer</button>
+<div class="reveal-content"><pre><code><span class="kw">interface</span> <span class="typ">Property</span> {
+  id: <span class="typ">string</span>;
+  title: <span class="typ">string</span>;
+  price: <span class="typ">number</span>;
+}
+
+<span class="kw">const</span> properties: <span class="typ">Property</span>[] = [
+  { id: <span class="str">'1'</span>, title: <span class="str">'Modern Loft'</span>, price: <span class="num">450000</span> },
+  { id: <span class="str">'2'</span>, title: <span class="str">'Coastal Villa'</span>, price: <span class="num">1200000</span> },
+  { id: <span class="str">'3'</span>, title: <span class="str">'Garden Suite'</span>, price: <span class="num">680000</span> },
+];
+
+<span class="kw">function</span> <span class="fn">PropertyList</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>&gt;
+      {properties.<span class="fn">map</span>(p =&gt; (
+        <span class="com">// key={p.id} — stable, unique, from the data itself</span>
+        &lt;<span class="tag">PropertyCard</span> <span class="typ">key</span>={p.id} <span class="typ">title</span>={p.title} <span class="typ">price</span>={p.price} /&gt;
+      ))}
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+<p>The <code>key</code> is <code>p.id</code>, not <code>index</code>. If this list is ever sorted or filtered, stable ids keep React's reconciler accurate. If no id exists in your data, generate one when you fetch it — never use the array index for lists that can change order.</p></div>
+</div>
 </div>
 
 <div class="callout c-task">
@@ -1492,13 +1572,23 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <h3>11.1 Why useRef Exists</h3>
 <p>React prefers you describe things declaratively. But some things cannot be fully described: focusing an input, measuring a DOM element's size, holding a value that should survive re-renders but not trigger them. For these, React gives you <code>useRef</code> — a controlled hole through the abstraction.</p>
 
-<pre><code><span class="kw">function</span> <span class="fn">AutoFocusInput</span>() {
+<pre><code><span class="kw">import</span> { useRef } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="com">// A ref lets us reach through React and touch the real DOM element</span>
+<span class="kw">function</span> <span class="fn">FocusOnDemand</span>() {
   <span class="kw">const</span> inputRef = <span class="fn">useRef</span>&lt;<span class="typ">HTMLInputElement</span>&gt;(<span class="kw">null</span>);
-  <span class="fn">useEffect</span>(() => {
-    inputRef.current?.<span class="fn">focus</span>();
-  }, []);
-  <span class="kw">return</span> &lt;<span class="tag">input</span> <span class="typ">ref</span>={inputRef} /&gt;;
+
+  <span class="kw">return</span> (
+    &lt;&gt;
+      &lt;<span class="tag">input</span> <span class="typ">ref</span>={inputRef} <span class="typ">placeholder</span>=<span class="str">"Type here..."</span> /&gt;
+      &lt;<span class="tag">button</span> <span class="typ">onClick</span>={() =&gt; inputRef.current?.<span class="fn">focus</span>()}&gt;
+        Focus the input
+      &lt;/<span class="tag">button</span>&gt;
+    &lt;/&gt;
+  );
 }</code></pre>
+<p>The <code>ref</code> prop on the input tells React: "give me direct access to this DOM node." After the component renders, <code>inputRef.current</code> holds the actual <code>&lt;input&gt;</code> element. We can call any native DOM method on it — here, <code>.focus()</code> — from inside a button's click handler.</p>
+<div class="callout c-key"><div class="callout-label"><span class="icon">🔑</span> Key Idea</div><p>Attach the ref with the <code>ref</code> prop. After render, <code>ref.current</code> holds the real DOM node. Call native DOM methods on it from event handlers or — once you have learned <code>useEffect</code> in Ch 12 — from effects.</p></div>
 
 <h3>11.2 The Ref Does Not Trigger a Re-render</h3>
 <p>This is the point of refs. You can update <code>ref.current</code> freely and React will not re-render the component. For values that should persist across renders but whose changes should not redraw the UI, refs are the right tool.</p>
@@ -1755,33 +1845,44 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <h3>15.3 Reading Your First R3F Component</h3>
 <p>Here is a real R3F component — a rotating box that changes color on hover. Read it slowly. Point at each piece and name what it is doing in Book 1 terms.</p>
 
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Before You Read</div><p>This component cannot run on its own. It needs two things provided by Book 2: (1) a <code>&lt;Canvas&gt;</code> wrapper — the R3F equivalent of mounting React to the DOM, and (2) at least one light in the scene. <code>meshBasicMaterial</code> below works without lights; in Book 2 you will switch to <code>meshStandardMaterial</code> once you know how to add lights. The React concepts are all ones you already know — the only new pieces are <code>useFrame</code> and the R3F-specific JSX tags.</p></div>
+
 <pre><code><span class="kw">import</span> { useRef, useState } <span class="kw">from</span> <span class="str">'react'</span>;
 <span class="kw">import</span> { useFrame } <span class="kw">from</span> <span class="str">'@react-three/fiber'</span>;
 <span class="kw">import</span> * <span class="kw">as</span> THREE <span class="kw">from</span> <span class="str">'three'</span>;
 
+<span class="com">// Must live inside a &lt;Canvas&gt; — Book 2 covers this setup</span>
 <span class="kw">function</span> <span class="fn">SpinningBox</span>() {
+  <span class="com">// useRef — Ch 11: holds the mesh without triggering re-renders</span>
   <span class="kw">const</span> meshRef = <span class="fn">useRef</span>&lt;<span class="typ">THREE.Mesh</span>&gt;(<span class="kw">null</span>);
+  <span class="com">// useState — Ch 5: hover state drives color</span>
   <span class="kw">const</span> [hovered, setHovered] = <span class="fn">useState</span>(<span class="kw">false</span>);
 
+  <span class="com">// useFrame: NEW in R3F — runs every animation frame (60×/sec)</span>
+  <span class="com">// We mutate the mesh directly via the ref — no state, no re-renders</span>
   <span class="fn">useFrame</span>((_, delta) => {
     <span class="kw">if</span> (meshRef.current) {
       meshRef.current.rotation.y += delta;
     }
   });
 
+  <span class="com">// Composition — Ch 10: geometry and material are children of mesh</span>
   <span class="kw">return</span> (
     &lt;<span class="tag">mesh</span>
       <span class="typ">ref</span>={meshRef}
+      <span class="com">// Events — Ch 6: same pattern as onClick on a button</span>
       <span class="typ">onPointerOver</span>={() => <span class="fn">setHovered</span>(<span class="kw">true</span>)}
       <span class="typ">onPointerOut</span>={() => <span class="fn">setHovered</span>(<span class="kw">false</span>)}
     &gt;
       &lt;<span class="tag">boxGeometry</span> <span class="typ">args</span>={[<span class="num">1</span>, <span class="num">1</span>, <span class="num">1</span>]} /&gt;
-      &lt;<span class="tag">meshStandardMaterial</span> <span class="typ">color</span>={hovered ? <span class="str">'tomato'</span> : <span class="str">'royalblue'</span>} /&gt;
+      <span class="com">// meshBasicMaterial works without lights — good for previews</span>
+      <span class="com">// Conditional rendering — Ch 8: ternary drives color from state</span>
+      &lt;<span class="tag">meshBasicMaterial</span> <span class="typ">color</span>={hovered ? <span class="str">'tomato'</span> : <span class="str">'royalblue'</span>} /&gt;
     &lt;/<span class="tag">mesh</span>&gt;
   );
 }</code></pre>
 
-<p>Look at everything you recognize. <code>useRef</code> holds the mesh. <code>useState</code> holds the hover boolean. The return is JSX. The mesh has event handlers for pointer events, just like buttons had onClick. Its color is determined by state via a ternary — conditional rendering. The geometry and material are nested children — composition. The only truly new part is <code>useFrame</code>, which runs every animation frame and directly mutates the mesh's rotation through the ref. And you already know why that works: refs do not trigger re-renders, so mutating them sixty times per second is fast and safe.</p>
+<p>Look at everything you recognize. <code>useRef</code> holds the mesh — Ch 11. <code>useState</code> holds the hover boolean — Ch 5. The return is JSX — Ch 3. The mesh has pointer event handlers, exactly like buttons had <code>onClick</code> — Ch 6. Its color is a ternary on state — Ch 8. The geometry and material are nested children — composition from Ch 10. The only truly new concept is <code>useFrame</code>, which runs every animation frame and directly mutates the mesh's rotation through the ref. You already know why this works: refs do not trigger re-renders, so mutating them sixty times per second is fast and safe — Ch 11.</p>
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Every concept in the component above is a concept from Book 1. Book 2 will formally introduce R3F, but you should close this book knowing you already understand the shape of R3F code. The rest is vocabulary and 3D math.</p></div>
 
