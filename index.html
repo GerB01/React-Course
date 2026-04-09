@@ -5,7 +5,7 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
 <title>Premium React for Real Estate Experiences — Book 1</title>
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="icon"  href="https://upload.wikimedia.org/wikipedia/commons/a/a7/React-icon.svg">
+<link rel="icon"  href="https://upload.wikimedia.org/wikipedia/commons/thumb/a/a7/React-icon.svg/960px-React-icon.svg.png">
 <!-- Making it Public -->
 <style>
 :root{
@@ -142,6 +142,11 @@ li{margin:0.4em 0}
 .c-re{border-color:var(--gold);background:linear-gradient(90deg,var(--gold-soft),transparent 60%);position:relative}
 .c-re .callout-label{color:var(--gold)}
 .c-re::before{content:"⌂";position:absolute;top:14px;right:18px;font-size:1.2rem;opacity:0.25;color:var(--gold)}
+
+/* Framer / Webflow translation callout */
+.c-fw{border-color:transparent;background:linear-gradient(135deg,#06B6D422,#8B5CF622);border:1px solid #06B6D466;position:relative}
+.c-fw .callout-label{background:linear-gradient(90deg,#22D3EE,#A78BFA);-webkit-background-clip:text;background-clip:text;color:transparent}
+.c-fw::before{content:"🔷";position:absolute;top:14px;right:18px;font-size:1.1rem;opacity:0.45}
 
 /* Skill map diagram */
 .skill-map{background:#070910;border:1px solid var(--border-soft);border-radius:14px;padding:28px 24px;margin:2.4em 0}
@@ -417,7 +422,14 @@ body.lang-ts .js-only{display:none}
     <li><a href="#ch12">12. useEffect</a></li>
     <li><a href="#ch13">13. useMemo</a></li>
     <li><a href="#ch14">14. TypeScript for React</a></li>
-    <li><a href="#ch15">15. Bridge to R3F</a></li>
+    <li><a href="#ch15">15. Bridge to R3F, Framer & Webflow</a></li>
+    <li><a href="#ch16">16. Accessibility</a></li>
+    <li><a href="#ch17">17. Forms & Validation</a></li>
+    <li><a href="#ch18">18. SEO & Performance</a></li>
+    <li><a href="#ch19">19. Analytics & Conversion</a></li>
+    <li><a href="#ch20">20. Responsive Layout</a></li>
+    <li><a href="#ch21">21. Aurelia in Framer</a></li>
+    <li><a href="#ch22">22. Aurelia in Webflow</a></li>
     <li><a class="section">Skill Maps</a></li>
     <li><a href="#skillmap-1">Movement 1 — Mindset</a></li>
     <li><a href="#skillmap-2">Movement 2 — Building</a></li>
@@ -457,12 +469,18 @@ body.lang-ts .js-only{display:none}
 <section id="intro">
 <h2>Introduction</h2>
 <p>The premium property world has changed. Buyers no longer arrive through a brochure — they arrive through a website that must look, move, and feel as considered as the residence it represents. A single misaligned card, a sluggish hover, an awkwardly placed call-to-action, and the prospect is gone. Building those experiences well is a craft. This book is about the foundation of that craft.</p>
-<p>These pages teach React, but through a single lens: the interfaces of high-end real estate. Every example is a component you would plausibly ship on a luxury residence site or a developer's launch microsite. Every exercise contributes to a real deliverable — a boutique launch platform called Aurelia Residences — that you can open in front of a client, a hiring manager, or your own portfolio page and defend line by line.</p>
-<p>You will not find Redux, React Router, server components, class components, or any of the other topics that dominate generic React courses. They are real, they are useful, and they are deliberately absent. The goal is to get you from "I know JavaScript" to "I can ship a premium real-estate React interface and understand everything in it" along the shortest honest path.</p>
+<p>These pages teach React — but not so that you must ship in Vite. They teach React because React's mental model is the architecture behind the best work done in <strong>Framer</strong>, in <strong>Webflow</strong>, and in custom code alike. Whether your final deliverable lives in a Framer CMS, a Webflow collection, or a production React codebase, the thinking is the same: components, props, state, composition, one-way data flow. This book makes that thinking explicit and makes it yours.</p>
+<p>Every example is a component you would plausibly ship on a luxury residence site or a developer's launch microsite. Every exercise contributes to a real deliverable — a boutique launch platform called <em>Aurelia Residences</em> — that you can open in front of a client, a hiring manager, or your own portfolio page and defend line by line. The capstone can be implemented in React/Vite, deployed to Framer, or structured in Webflow. This book teaches all three paths.</p>
+<p>You will not find Redux, React Router, server components, or class components. The goal is to get you from "I use Framer or Webflow professionally" to "I understand the component model behind them, and I can extend it with code" along the shortest honest path.</p>
+
+<div class="callout c-fw">
+  <div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Users — Start Here</div>
+  <p>If you already use Framer or Webflow to build premium sites, this book is written for you. You will find a recurring <strong>Framer/Webflow Translation</strong> callout in every chapter that maps what you just learned directly to the platform workflow you already know. Two dedicated chapters (Ch 21 and Ch 22) walk through building the full Aurelia Residences capstone — CMS modeling, components, interactions, and publishing — in Framer and Webflow respectively.</p>
+</div>
 
 <div class="callout c-why">
   <div class="callout-label"><span class="icon">✦</span> Why It Matters</div>
-  <p>Focused learning beats comprehensive learning when you have a specific destination. This book is shaped like a flight path toward a single, sellable deliverable. Book Two then layers React Three Fiber on top as the immersive enhancement that turns a polished real estate site into a cinematic digital property experience.</p>
+  <p>Focused learning beats comprehensive learning when you have a specific destination. This book is shaped like a flight path toward a single, sellable deliverable. The React mental model you build here transfers directly to Framer code components, Webflow CMS architecture, and — in Book Two — React Three Fiber's 3D scene system.</p>
 </div>
 </section>
 
@@ -479,6 +497,7 @@ body.lang-ts .js-only{display:none}
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>A pitfall that beginners walk into. Spot it early, save yourself hours.</p></div>
 <div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>Friendly TypeScript guidance, introduced gently.</p></div>
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>A glimpse of how this idea will reappear in React Three Fiber in Book 2.</p></div>
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div><p>How this React concept maps directly to the Framer or Webflow workflow. If you are already a Framer or Webflow user, these boxes are the most immediately useful sections in the chapter.</p></div>
 <div class="callout c-exercise"><div class="callout-label"><span class="icon">✏</span> Exercise</div><p>A small hands-on practice problem, usually 10 to 20 minutes long.</p></div>
 <div class="callout c-task">
   <div class="callout-label"><span class="icon">★</span> Chapter Task</div>
@@ -552,15 +571,27 @@ body.lang-ts .js-only{display:none}
   <div class="toc-card"><a href="#ch12">Chapter 12 — useEffect</a><span>Living with the world outside React.</span></div>
   <div class="toc-card"><a href="#ch13">Chapter 13 — useMemo</a><span>Making expensive work cheaper.</span></div>
   <div class="toc-card"><a href="#ch14">Chapter 14 — TypeScript for React</a><span>A friendly reference for everything you've been learning.</span></div>
-  <div class="toc-card"><a href="#ch15">Chapter 15 — The Bridge to React Three Fiber</a><span>Synthesis and handoff to Book 2.</span></div>
+  <div class="toc-card"><a href="#ch15">Chapter 15 — The Bridge: R3F, Framer & Webflow</a><span>Synthesis and handoff — three paths forward.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4"><a href="#ch16">Chapter 16 — Accessibility for Premium Sites</a><span>ARIA, keyboard navigation, focus management, WCAG for luxury UX.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4"><a href="#ch17">Chapter 17 — Forms, Validation & CRM Handoff</a><span>Inquiry forms, field validation, success states, and CRM integration.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4"><a href="#ch18">Chapter 18 — SEO & Performance</a><span>Meta tags, Open Graph, structured data, Core Web Vitals, image strategy.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4"><a href="#ch19">Chapter 19 — Analytics & Conversion Architecture</a><span>GA4 events, CTA tracking, inquiry funnel, scroll depth, saved items.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4"><a href="#ch20">Chapter 20 — Responsive Layout Systems</a><span>CSS Grid, Flexbox, breakpoint strategy, premium white-space principles.</span></div>
+  <div class="toc-card" style="border-color:#8B5CF6;background:linear-gradient(135deg,#8B5CF611,transparent)"><a href="#ch21">Chapter 21 — Building Aurelia in Framer</a><span>CMS modeling, components, interactions, code embeds, and publishing.</span></div>
+  <div class="toc-card" style="border-color:#06B6D4;background:linear-gradient(135deg,#06B6D411,transparent)"><a href="#ch22">Chapter 22 — Building Aurelia in Webflow</a><span>Collections, symbols, interactions, forms, and platform limitations.</span></div>
 </div>
 </section>
 
 <!-- ================ CAPSTONE OVERVIEW ================ -->
 <section id="capstone">
 <h2>The Capstone · Aurelia Residences</h2>
-<p>Every exercise in this book compounds into <strong>one</strong> deliverable: a boutique real-estate launch site for a fictional development called <em>Aurelia Residences</em>. You will build it as a polished, conversion-aware React application of the kind a luxury agency, property developer, or premium marketing studio would actually commission. By the end of Book One the entire experience runs on elegant, typed React components — editorial typography, cinematic imagery, refined micro-interactions, and a clean inquiry funnel. Book Two then replaces the static "scene placeholder" with a live React Three Fiber canvas, transforming the site into an immersive digital property experience.</p>
-<p>Why this project? Because it is the exact kind of deliverable premium developers, real-estate branding studios, and luxury marketing agencies are currently paying for. Finishing it gives you something you can put in front of a real client, a founder, or a hiring conversation and defend every line of.</p>
+<p>Every exercise in this book compounds into <strong>one</strong> deliverable: a boutique real-estate launch site for a fictional development called <em>Aurelia Residences</em>. You will learn to think about it — and build it — as a polished, conversion-aware experience of the kind a luxury agency, property developer, or premium marketing studio would actually commission. The capstone is intentionally platform-agnostic: the architecture, content model, and component design you develop here can be realised in React/Vite, Framer, or Webflow.</p>
+<p>Why this project? Because it is the exact kind of deliverable premium developers, real-estate branding studios, and luxury marketing agencies are currently paying for. Finishing it gives you something you can put in front of a real client, a founder, or a hiring conversation and defend every decision in.</p>
+
+<div class="callout c-fw">
+  <div class="callout-label"><span class="icon">🔷</span> Three Ways to Ship the Capstone</div>
+  <p><strong>React/Vite</strong> — Chapter tasks build directly to a typed, runnable application. Chapter 15 bridges to Book Two's R3F layer.<br><strong>Framer</strong> — Chapter 21 maps every component and data model to Framer's CMS and component system. The full site is built and published in Framer with a production URL.<br><strong>Webflow</strong> — Chapter 22 covers the same architecture in Webflow's collection-based CMS, symbols, and interactions system.</p>
+</div>
 <div class="capstone-box">
 <h4>What You Will Build</h4>
 <p>A single-page launch site for Aurelia Residences featuring: a cinematic <strong>hero</strong> with editorial copy and a sticky call-to-action; a <strong>featured residences</strong> grid driven by a typed data file; a <strong>residence detail</strong> panel with pricing, floor area, and status; an <strong>availability board</strong> for unit selection; an <strong>amenities</strong> highlight section; a <strong>gallery</strong> with interactive media; a <strong>neighborhood</strong> story block; a <strong>private viewing</strong> inquiry form with validation; <strong>conversion elements</strong> such as sticky CTAs and saved-favorites persistence; and a final <strong>Experience</strong> placeholder that Book Two turns into an immersive 3D walk-through of the development.</p>
@@ -574,6 +605,29 @@ body.lang-ts .js-only{display:none}
 <div class="chapter-num">Chapter 0</div>
 <h1 class="chapter-title">Setting Up Your Environment</h1>
 <p class="chapter-sub">Before the first line of React, the boring-but-essential five minutes of setup. Do this once and forget it.</p>
+
+<h3>0.0 JavaScript Readiness Checkpoint</h3>
+<p>This book assumes you know JavaScript at a working level. Not expert level — but the following concepts should feel familiar before Chapter 1. If any of them are new, spend thirty minutes on MDN first. It will save hours of confusion later.</p>
+
+<div class="callout c-key">
+<div class="callout-label"><span class="icon">🔑</span> Minimum JavaScript You Need</div>
+<p>Check each one honestly:</p>
+<ul>
+  <li><strong>Variables</strong> — <code>const</code> and <code>let</code>. You know why <code>var</code> is avoided.</li>
+  <li><strong>Functions</strong> — Regular functions and arrow functions: <code>() =&gt; {}</code>. You know the difference.</li>
+  <li><strong>Arrays</strong> — <code>.map()</code>, <code>.filter()</code>, <code>.find()</code>. You can use them without looking up the syntax.</li>
+  <li><strong>Objects</strong> — Creating and reading object properties. Destructuring: <code>const { title, price } = property</code>.</li>
+  <li><strong>Template literals</strong> — <code>`Hello, ${name}`</code></li>
+  <li><strong>Modules</strong> — <code>import</code> and <code>export</code>. You know the difference between default and named exports.</li>
+  <li><strong>Promises and async/await</strong> — You understand what asynchronous means, even if you are not fluent yet.</li>
+  <li><strong>Truthiness</strong> — You know that <code>0</code>, <code>''</code>, <code>null</code>, and <code>undefined</code> are falsy. You know why <code>{count &amp;&amp; &lt;Badge /&gt;}</code> can go wrong (Chapter 8 will explain it).</li>
+</ul>
+</div>
+
+<div class="callout c-fw">
+<div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Users — JavaScript Readiness</div>
+<p>If you are a Framer or Webflow professional who has never written much JavaScript, you need the list above — specifically <code>.map()</code>, destructuring, and arrow functions — before Chapter 3. These are the patterns that power Framer code components and Webflow CMS bindings. The Framer/Webflow Translation callouts throughout the book assume you are comfortable reading code even if you do not write it daily.</p>
+</div>
 
 <h3>0.1 What You Need Installed</h3>
 <p>React itself is a JavaScript library, but in 2026 nobody writes React by dropping a <code>&lt;script&gt;</code> tag into an HTML file. We use a build tool that handles JSX, TypeScript, hot reloading, and bundling. The build tool we will use throughout this book is <strong>Vite</strong> — it is fast, minimal, and the de facto choice for new React projects, including every React Three Fiber starter you will ever encounter.</p>
@@ -895,6 +949,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, your 3D scene is also a component tree. The root is the Canvas component. Inside it, you nest meshes, groups, lights, and cameras — all of them components. The tree you see in this chapter is the same idea you will see in a 3D scene in Book 2. The only difference is the names of the tags.</p></div>
 
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Every component you drag onto a Framer canvas is a React component under the hood. When you create a Framer component and use it multiple times on a page, you are literally reusing a JSX component. The "component" panel in Framer maps directly to what this chapter calls a reusable function. Code components in Framer let you write the exact JSX you are learning here — Framer compiles it identically to Vite.<br><br>
+<strong>Webflow:</strong> Webflow's equivalent of a React component is a <strong>Symbol</strong> (now called "Component" in newer Webflow). A Symbol is a reusable element you define once and place anywhere — the same concept as <code>function PropertyCard()</code>. The key limitation: Webflow components do not accept props. Every instance is identical unless you use Webflow CMS bindings to feed data in — which is how Webflow achieves the data-driven behaviour that props provide in React.</p></div>
+
 <h3>3.5 Chapter Recap</h3>
 <p>A React component is a function that returns a JSX description of some UI. JSX looks like HTML but is really JavaScript. Components can nest inside each other to form a tree. The component tree is the structural backbone of every React app — and every R3F scene.</p>
 
@@ -1033,6 +1091,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Every 3D object in R3F takes props. A mesh's position is a prop. A material's color is a prop. A light's intensity is a prop. The typed-props pattern you just learned is the exact same pattern you will use a hundred times in Book 2 when describing 3D objects.</p></div>
 
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Props in Framer are called <strong>component properties</strong>. When you select a Framer component and see "Title", "Price", "Is Featured" fields in the right panel — those are props. Framer's interface generates the prop declaration automatically from the component controls you define. In code components, you declare props exactly as this chapter shows — a TypeScript interface, then destructuring.<br><br>
+<strong>Webflow:</strong> Webflow does not have true props between components. Data reaches a component through the <strong>CMS collection binding</strong> — you connect a text element to a CMS field, and Webflow fills it dynamically at publish time. Think of it as props where the parent is always the CMS collection, never a component in code. This is why understanding props matters: it reveals why Webflow feels constrained for highly dynamic UI — the data flow is one-way from CMS to template, with no mechanism to pass data between elements dynamically.</p></div>
+
 <h3>Reflection Questions</h3>
 <ol>
   <li>Why are props read-only?</li>
@@ -1167,6 +1229,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, state drives almost every kind of interactivity. Hover state decides whether a building glows. Selected state decides whether a room shows its details. A toggled lights state decides whether a scene is illuminated. Everything you learn here applies directly: state triggers re-renders, re-renders update the description, and the 3D scene changes to match.</p></div>
 
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Framer's <strong>Variables</strong> and <strong>Component State</strong> features are direct equivalents of React's <code>useState</code>. In a Framer code component, you write <code>useState</code> exactly as this chapter shows — it is literally React. In visual components, Framer's Interactions panel lets you set variables on events (hover, click, tap) that behave identically to <code>setIsHovered(true)</code> in React. The mental model is the same; the syntax varies.<br><br>
+<strong>Webflow:</strong> Webflow has no native state system. The equivalent is an Interaction set to toggle a CSS class or visibility attribute. This works for simple show/hide, but it has no "memory" — if a user selects a residence and navigates away and back, the selection is gone. For persistent state (saved favourites, filter selections, inquiry flow progress), Webflow sites typically embed a code block or use a third-party tool like Memberstack or Outseta. This is precisely why understanding state is valuable even if you do not plan to write React by hand.</p></div>
+
 <h3>Reflection Questions</h3>
 <ol>
   <li>What is the difference between state and props in your own words?</li>
@@ -1248,6 +1314,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-ts"><div class="callout-label"><span class="icon">TS</span> TypeScript Tip</div><p>If you never use the event object inside a handler, you do not need to type it at all. Type it only when you use it.</p></div>
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>R3F attaches pointer events directly to 3D meshes: <code>onClick</code>, <code>onPointerOver</code>, <code>onPointerOut</code>. The pattern is identical to DOM events. You get a ThreeEvent object instead of a MouseEvent, but it plays the same role. If you can wire up a button click here, you can wire up a 3D mesh click in Book 2.</p></div>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Framer's Interactions panel is a visual interface for exactly what event handlers do in React. An "On Click → Navigate to" interaction is a click handler that calls a navigation function. In a Framer code component, you write <code>onClick={handleClick}</code> directly — standard React. The key insight from this chapter: always pass a function reference, not a call. This rule applies in Framer code components too — <code>onClick={handleClick}</code> not <code>onClick={handleClick()}</code>.<br><br>
+<strong>Webflow:</strong> Webflow Interactions are trigger-based animations and state toggles, not programmable event handlers. For simple hover and click interactions (show/hide, colour change, animation), Webflow's IX2 engine covers most needs. For anything requiring logic — "if the user has already submitted, show a thank-you state" — you need embedded JavaScript or a third-party tool. Understanding event handlers clarifies exactly where Webflow's boundary is.</p></div>
 
 <h3>Reflection Questions</h3>
 <ol>
@@ -1403,6 +1473,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, conditional rendering lets you show and hide 3D objects, swap materials, toggle labels, and manage visibility without touching Three.js directly. The same patterns you learn here work for 3D objects.</p></div>
 
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Conditional rendering in Framer is handled through <strong>Variants</strong> (visual states like Default, Hover, Selected) and <strong>Conditional visibility</strong> in code components. In a Framer code component, you write <code>{isSold &amp;&amp; &lt;SoldBadge /&gt;}</code> exactly as shown in this chapter. In visual Framer, you would create a "Sold" variant with the badge visible, and a "Default" variant without it.<br><br>
+<strong>Webflow:</strong> Conditional visibility in Webflow is either set by CMS field conditions (show this element if CMS field "isSold" is true — supported in Webflow CMS) or by JavaScript in a code embed. Webflow's CMS conditional visibility is a powerful native feature that covers most real-estate use cases: show "Sold" badge when the "Status" field is "sold", hide price when "Availability" field is "off-market". The logic is simpler than React but covers the same ground for data-driven sites.</p></div>
+
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 8A</div>
 <p>Write a component that shows "Sold" in red if <code>isSold</code> is true, otherwise shows "Available" in green. Use a ternary.</p>
@@ -1457,6 +1531,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Using <code>index</code> as a key in a list that can be sorted, filtered, or have items inserted at the start. The index belongs to the position in the array, not to the item, so React ends up matching the wrong items and strange state bugs appear.</p></div>
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>In the immersive version of Aurelia, you will map over the same residences array to render one 3D scene per residence. The key pattern applies identically. Good keys mean React Three Fiber can efficiently add, swap, and remove 3D residences as the data changes.</p></div>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Framer's <strong>CMS Collections</strong> are the platform's equivalent of a data array. When you create a "Residences" collection in Framer and bind it to a collection component, Framer maps over every item and renders one component instance per item — exactly like <code>properties.map(p =&gt; &lt;PropertyCard key={p.id} /&gt;)</code>. The key prop maps to Framer's internal item ID. Chapter 21 covers this in full for the Aurelia Residences CMS setup.<br><br>
+<strong>Webflow:</strong> Webflow's Collection Lists work identically: add a Collection List element, bind it to a CMS collection, and Webflow renders one item for each entry. Webflow handles the key internally — you do not write it yourself. The limitation is that Webflow Collection Lists are static after publish; real-time filtering requires JavaScript or a headless CMS approach. For a luxury launch site with fewer than 50 units, static CMS rendering is usually sufficient.</p></div>
 
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 9A</div>
@@ -1552,6 +1630,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 </div>
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>Everything you just learned about composition is the most important concept in this entire book for R3F preparation. A scene graph is a component tree. Nothing more. When you see nested R3F components in Book 2, remember: this is composition, and you already know composition.</p></div>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> Composition in Framer is literal — you nest components inside other components visually and in code. A <code>&lt;Panel&gt;</code> wrapping a <code>&lt;PropertyGrid&gt;</code> is exactly how you would structure a Framer page: a Section component that accepts child content. Framer's code components support the <code>children</code> prop natively, so wrapper components work identically to the React pattern in this chapter. Chapter 21 uses this to build the Aurelia page layout in Framer with composable section components.<br><br>
+<strong>Webflow:</strong> Composition in Webflow is done visually through the <strong>Navigator panel</strong> (the DOM tree). You nest divs inside sections, symbols inside containers, and CMS items inside collection lists. The concept of "small pieces nested inside bigger pieces" is the same mental model Webflow's visual builder uses — you just drag rather than type. The meaningful difference: Webflow's composition is static at design time. You cannot pass a "children" prop or dynamically inject components the way React does.</p></div>
 
 <div class="callout c-task">
 <div class="callout-label"><span class="icon">★</span> Chapter Task</div>
@@ -1656,6 +1738,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, useEffect is where you load textures, subscribe to keyboard events, initialize non-React Three.js systems, and — most importantly — clean up resources when a component unmounts. Three.js objects hold GPU memory, and forgetting to dispose them leaks memory. The cleanup pattern you learn here is how you keep R3F scenes well-behaved.</p></div>
 
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> <code>useEffect</code> is available in Framer code components exactly as in React. Common uses on a Framer site: fire an analytics event when a section mounts (<code>useEffect(() =&gt; { gtag('event', 'section_view') }, [])</code>), fetch live data from an API on load, or subscribe to a scroll event for custom parallax. The cleanup function matters in Framer too — Framer re-mounts code components during design mode previews, so lingering event listeners will stack up without cleanup.<br><br>
+<strong>Webflow:</strong> Webflow has no equivalent of <code>useEffect</code> in the visual editor. Side effects in Webflow are handled through <strong>custom code blocks</strong> (site-wide in Project Settings → Custom Code, or per-page in Page Settings). You can drop a <code>&lt;script&gt;</code> block that fires when the page loads — effectively a one-time effect with no dependency array. For component-scoped effects, you need a Webflow code embed inside the specific section. This is one of the most important limitations to understand: Webflow has no scoped side effects without custom JavaScript.</p></div>
+
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 12A</div>
 <p>Write a component that updates <code>document.title</code> whenever the <code>count</code> state changes.</p>
@@ -1694,6 +1780,10 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake</div><p>Memoizing everything. <code>useMemo</code> has a cost — React must track dependencies and compare them. For trivial calculations, it is slower than just recomputing. Memoize expensive work, not cheap work.</p></div>
 
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> R3F Connection</div><p>In R3F, useMemo is often used to memoize geometries and materials — both of which are expensive to construct and hold GPU memory. A pattern you will see constantly in Book 2: <code>const geometry = useMemo(() => new THREE.BoxGeometry(1, 1, 1), [])</code>. This keeps your scene efficient and predictable.</p></div>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer / Webflow Translation</div>
+<p><strong>Framer:</strong> <code>useMemo</code> is available in Framer code components. The primary use case on a Framer site: memoize a filtered or sorted list of CMS items when the filter state changes. Framer fetches CMS data as a JavaScript array, and you process it client-side — the same <code>useMemo(() =&gt; properties.filter(...), [properties, maxPrice])</code> pattern from this chapter applies directly. Without memoization, the filter recalculates on every render, including re-renders triggered by hover states or cursor position.<br><br>
+<strong>Webflow:</strong> Webflow has no equivalent of <code>useMemo</code>. All collection filtering in Webflow is done at publish time (static filtering rules) or through a third-party script like Finsweet Attributes or MixItUp. Understanding <code>useMemo</code> helps you evaluate these tools intelligently: Finsweet's filter scripts effectively memoize which items match the active filters and only re-render the DOM for changed items, which is why they are fast.</p></div>
 
 <div class="callout c-exercise">
 <div class="callout-label"><span class="icon">✏</span> Exercise 13A</div>
@@ -1821,25 +1911,34 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 <h1 class="chapter-title">The Bridge — Mental Models for React Three Fiber</h1>
 <p class="chapter-sub">Every concept from Book 1, mapped directly to how it reappears in Book 2.</p>
 
-<h3>15.1 You Already Know More Than You Think</h3>
-<p>Here is the secret about React Three Fiber that takes most learners too long to realize: it is not a new library you have to learn. It is React. The same React you have been using for fourteen chapters. The only things that are truly new are the names of the components — <code>mesh</code>, <code>boxGeometry</code>, <code>meshStandardMaterial</code> — and the fact that those components describe 3D objects instead of HTML elements. Everything else transfers without modification.</p>
+<h3>15.1 Three Paths Forward</h3>
+<p>You have spent fifteen chapters learning the mental model of React: components, props, state, composition, one-way data flow. That mental model does not belong to React alone. It is the architecture behind every serious tool for building interactive web experiences at this level — including the two you already know. Here is what happens next, depending on the path you choose.</p>
 
-<h3>15.2 The Full Concept Map</h3>
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Path A — Framer</div>
+<p>You already use Framer professionally. You now understand <em>why</em> Framer's component system works the way it does — because it is React. Everything you learned in Chapters 3–15 maps directly into Framer code components, which are standard React. Chapter 21 walks you through building the full Aurelia Residences site in Framer: CMS modeling, component architecture, interactions, code component integration, and publishing.</p></div>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Path B — Webflow</div>
+<p>You use Webflow for client sites. You now understand the principles behind Webflow's component and collection system — and, more usefully, you understand its limitations. When a client asks for something Webflow cannot do natively, you now know exactly which capability is missing (state, side effects, derived data) and how to fill the gap with a code embed or custom script. Chapter 22 walks through the full Aurelia build in Webflow.</p></div>
+
+<div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> Path C — React Three Fiber</div>
+<p>Here is the secret about R3F that takes most learners too long to realize: it is not a new library. It is React. The only things truly new are the component names — <code>mesh</code>, <code>boxGeometry</code>, <code>meshStandardMaterial</code> — and the fact that they describe 3D objects instead of HTML. Everything else transfers without modification. Book Two picks up exactly here.</p></div>
+
+<h3>15.2 The Full Concept Map — All Three Paths</h3>
 <table>
-<tr><th>What You Learned in Book 1</th><th>How It Reappears in Book 2</th></tr>
-<tr><td>Component tree</td><td>Scene graph — nested meshes, groups, lights</td></tr>
-<tr><td>JSX tags</td><td>R3F tags like <code>&lt;mesh&gt;</code> and <code>&lt;group&gt;</code></td></tr>
-<tr><td>Props</td><td>position, rotation, scale, color — all props</td></tr>
-<tr><td>useState</td><td>Hover state, selected state, UI interaction state</td></tr>
-<tr><td>Events</td><td>onClick and onPointerOver directly on meshes</td></tr>
-<tr><td>Re-render awareness</td><td>Avoiding state-driven animations</td></tr>
-<tr><td>Composition</td><td>Scene composition — buildings inside blocks inside worlds</td></tr>
-<tr><td>Conditional rendering</td><td>Showing and hiding 3D objects</td></tr>
-<tr><td>Lists and keys</td><td>Rendering many 3D objects from data arrays</td></tr>
-<tr><td>useRef</td><td>Direct mesh access for per-frame animation</td></tr>
-<tr><td>useEffect</td><td>Loading textures, cleaning up resources</td></tr>
-<tr><td>useMemo</td><td>Memoizing expensive geometries and materials</td></tr>
-<tr><td>TypeScript interfaces</td><td>Typed 3D component props</td></tr>
+<tr><th>Book 1 Concept</th><th>R3F (Book 2)</th><th>Framer (Ch 21)</th><th>Webflow (Ch 22)</th></tr>
+<tr><td>Component tree</td><td>Scene graph — nested meshes, groups, lights</td><td>Page structure — components nested inside layouts and frames</td><td>Navigator tree — divs inside sections inside the page body</td></tr>
+<tr><td>JSX tags</td><td>R3F tags like <code>&lt;mesh&gt;</code> and <code>&lt;group&gt;</code></td><td>Framer components: <code>&lt;Frame&gt;</code>, <code>&lt;Stack&gt;</code>, visual layers on the canvas</td><td>HTML elements in the Designer: <code>div</code>, <code>section</code>, <code>nav</code>, styled visually</td></tr>
+<tr><td>Props</td><td>position, rotation, scale, color — all props</td><td>Component properties panel — controls, variants, and overrides passed into code components</td><td>No real props system; Symbols share layout but not programmatic data</td></tr>
+<tr><td>useState</td><td>Hover state, selected state, UI interaction state</td><td>Variables panel — scoped state that drives variants and conditional visibility</td><td>No native state; use Interactions to toggle classes or show/hide elements visually</td></tr>
+<tr><td>Events</td><td>onClick and onPointerOver directly on meshes</td><td>Interaction triggers in the canvas — tap, hover, scroll, drag — wired to animations</td><td>Interactions panel — trigger-based animations; no programmable logic</td></tr>
+<tr><td>Re-render awareness</td><td>Avoiding state-driven animations in the render loop</td><td>Transition performance — prefer CSS transforms; avoid layout-triggering animations</td><td>IX2 animations run on GPU-composited properties by default; avoid animating layout</td></tr>
+<tr><td>Composition</td><td>Scene composition — buildings inside blocks inside worlds</td><td>Component nesting — smart components wrap presentational ones; overrides flow inward</td><td>Symbol reuse — place Symbols into Collection List wrappers for CMS-driven layouts</td></tr>
+<tr><td>Conditional rendering</td><td>Showing and hiding 3D objects</td><td>Variants + conditions — show/hide layers by switching variant states</td><td>Conditional visibility — hide elements based on CMS field values or Interaction state</td></tr>
+<tr><td>Lists and keys</td><td>Rendering many 3D objects from data arrays</td><td>CMS Collections — bind a component to a Collection; Framer maps items automatically</td><td>Collection Lists — CMS-bound repeating elements; items styled once, data varies per row</td></tr>
+<tr><td>useRef</td><td>Direct mesh access for per-frame animation</td><td>Code components use <code>useRef</code> exactly as in React; access DOM nodes for imperative control</td><td>No hook equivalent; use custom attributes or JS embeds for imperative DOM access</td></tr>
+<tr><td>useEffect</td><td>Loading textures, cleaning up resources</td><td>Code components support <code>useEffect</code> in full; use for data fetching and subscriptions</td><td>No hook equivalent; side effects handled via Webflow's JS embed blocks or custom code</td></tr>
+<tr><td>useMemo</td><td>Memoizing expensive geometries and materials</td><td>Code components support <code>useMemo</code>; memoize derived CMS data transformations</td><td>No equivalent; caching happens at the CMS or CDN layer, not in the visual builder</td></tr>
+<tr><td>TypeScript interfaces</td><td>Typed 3D component props</td><td>Framer's <code>addPropertyControls</code> — typed property definitions that appear in the properties panel</td><td>No TypeScript in the visual builder; types live only in external code embeds if used</td></tr>
 </table>
 
 <h3>15.3 Reading Your First R3F Component</h3>
@@ -1896,7 +1995,7 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
 </div>
 
 <div class="callout c-re"><div class="callout-label"><span class="icon">⌂</span> Premium Real Estate Context</div><p>The bridge to R3F matters commercially because the gap between "a premium real estate website" and "an immersive property experience" is exactly what studios are commissioning right now. Static sites show images. React Three Fiber sites let a prospect walk through a penthouse, pivot the building, see where the sun hits the terrace at 4pm. Book Two equips you to build that. Everything in Book One was the prerequisite.</p></div>
-<div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#mini-project"><span>Next</span><strong>Mini-Project: Property Hero</strong></a></div>
+<div class="chap-nav"><a href="#ch14"><span>Previous</span><strong>Ch 14 — TypeScript</strong></a><a class="next" href="#ch16"><span>Next</span><strong>Ch 16 — Accessibility</strong></a></div>
 </section>
 
 <!-- ── SKILL MAP: MOVEMENT 4 ── -->
@@ -1933,6 +2032,1033 @@ btn.<span class="fn">addEventListener</span>(<span class="str">'click'</span>, (
     <text x="627" y="152" fill="#C9A96E" font-family="'Cormorant Garamond',serif" font-size="12" text-anchor="middle" font-style="italic">Next → Book Two: Immersive Experiences</text>
   </svg>
 </div>
+
+<!-- ================ CH16 ================ -->
+<section class="chapter" id="ch16">
+<div class="chapter-num">Chapter 16</div>
+<h1 class="chapter-title">Accessibility for Premium Sites</h1>
+<p class="chapter-sub">Luxury digital experiences must be usable by every visitor — not just the ones who happen to use a mouse. Accessibility is not a checklist to satisfy. It is the difference between a site that feels refined and one that quietly excludes people.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will be able to write semantic HTML that assists screen readers, add ARIA attributes when semantics alone are not enough, manage focus programmatically for modals and drawers, and validate your work against WCAG 2.1 AA — the standard most luxury brands target.</p></div>
+
+<h3>16.1 Why Accessibility Matters for Premium Real Estate</h3>
+<p>A property priced at £4.5 million attracts buyers from around the world. Some use screen readers because of visual impairments. Some navigate by keyboard because of motor limitations. Some rely on high-contrast display modes. If your enquiry form is unreachable by keyboard, you have not built a premium site. You have built a site that excludes the very audience your client is paying to reach.</p>
+
+<p>WCAG 2.1 Level AA is the internationally recognised standard and the legal baseline in many markets, including the EU and the UK. Meeting it is not technically demanding — the barrier is mostly awareness of where the common failures occur.</p>
+
+<h3>16.2 Semantic HTML — The Foundation</h3>
+<p>The single highest-return accessibility investment is writing HTML that means what it says. A <code>&lt;button&gt;</code> is announced to screen readers as a button. A <code>&lt;div&gt;</code> with an <code>onClick</code> is announced as nothing. Use the correct element and you get keyboard interaction, ARIA role, focus behaviour, and screen reader announcements all for free.</p>
+
+<pre><code><span class="com">// ❌ Inaccessible: div with click — no keyboard support, no role</span>
+<span class="kw">function</span> <span class="fn">BadEnquire</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span> onClick={() =&gt; openModal()}&gt;Book a Viewing&lt;/<span class="tag">div</span>&gt;
+  );
+}
+
+<span class="com">// ✅ Accessible: button — keyboard focusable, Enter/Space activate it</span>
+<span class="kw">function</span> <span class="fn">GoodEnquire</span>() {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">button</span> onClick={() =&gt; openModal()} type=<span class="str">"button"</span>&gt;
+      Book a Viewing
+    &lt;/<span class="tag">button</span>&gt;
+  );
+}</code></pre>
+
+<p>The landmark elements to know by heart:</p>
+<ul>
+<li><code>&lt;header&gt;</code>, <code>&lt;nav&gt;</code>, <code>&lt;main&gt;</code>, <code>&lt;footer&gt;</code> — structural landmarks that screen reader users jump between with a single keystroke</li>
+<li><code>&lt;h1&gt;</code>–<code>&lt;h6&gt;</code> — heading hierarchy that must not skip levels (h1 → h2 → h3, never h1 → h3)</li>
+<li><code>&lt;ul&gt;</code> / <code>&lt;ol&gt;</code> — for lists; do not use divs with manual bullets</li>
+<li><code>&lt;figure&gt;</code> with <code>&lt;figcaption&gt;</code> — for property images with captions</li>
+<li><code>&lt;section&gt;</code> with <code>aria-labelledby</code> — for meaningful regions of a page</li>
+</ul>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> Framer uses real HTML under the hood. Set the element tag on any layer in the Properties panel (div → nav, div → main, etc.). For code components, write semantic elements as you would in any React project. <strong>Webflow:</strong> Every element in the Designer has a tag dropdown. Change it from <code>div</code> to <code>nav</code>, <code>main</code>, or <code>section</code> there. Webflow makes this easy — and it genuinely helps with SEO as well as accessibility.</p></div>
+
+<h3>16.3 ARIA — When Semantics Are Not Enough</h3>
+<p>ARIA (Accessible Rich Internet Applications) is a set of attributes that add meaning to elements that have none by default, or that change the meaning an element communicates. The cardinal rule: <em>do not use ARIA to fix bad HTML</em>. A button with <code>role="button"</code> is a sign you should have used a <code>&lt;button&gt;</code>.</p>
+
+<p>The attributes you will reach for most often in a luxury real estate context:</p>
+
+<pre><code><span class="com">// aria-label — names an element that has no visible text</span>
+&lt;<span class="tag">button</span> aria-label=<span class="str">"Close enquiry modal"</span>&gt;×&lt;/<span class="tag">button</span>&gt;
+
+<span class="com">// aria-labelledby — points to another element as the label</span>
+&lt;<span class="tag">section</span> aria-labelledby=<span class="str">"residences-heading"</span>&gt;
+  &lt;<span class="tag">h2</span> id=<span class="str">"residences-heading"</span>&gt;Available Residences&lt;/<span class="tag">h2</span>&gt;
+&lt;/<span class="tag">section</span>&gt;
+
+<span class="com">// aria-expanded — communicates whether a panel is open</span>
+&lt;<span class="tag">button</span> aria-expanded={isOpen} aria-controls=<span class="str">"filters-panel"</span>&gt;
+  Filter Residences
+&lt;/<span class="tag">button</span>&gt;
+&lt;<span class="tag">div</span> id=<span class="str">"filters-panel"</span> hidden={!isOpen}&gt;...&lt;/<span class="tag">div</span>&gt;
+
+<span class="com">// aria-live — announces dynamic updates without focus moving</span>
+&lt;<span class="tag">div</span> aria-live=<span class="str">"polite"</span> aria-atomic=<span class="str">"true"</span>&gt;
+  {resultCount} residences match your filters
+&lt;/<span class="tag">div</span>&gt;</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: aria-live Regions</div>
+<p>When your React component updates the DOM without moving focus — like updating a result count after a filter — screen reader users miss those updates entirely unless you use an <code>aria-live</code> region. Set it to <code>"polite"</code> so it waits for the user to finish what they are doing before announcing. Use <code>"assertive"</code> only for genuine errors that interrupt the current task.</p></div>
+
+<h3>16.4 Focus Management in Modals and Drawers</h3>
+<p>This is the most common failure point in luxury sites. A modal opens, but focus stays on the button that opened it. A keyboard user cannot reach the modal content. A screen reader user does not know it opened. The pattern to get right:</p>
+
+<ol>
+<li>When the modal opens: move focus to the first focusable element inside it (or the modal container itself, if it has a meaningful heading)</li>
+<li>While the modal is open: trap focus inside — Tab should cycle through modal elements only, not elements beneath the overlay</li>
+<li>When the modal closes: return focus to the element that opened it</li>
+</ol>
+
+<pre><code><span class="kw">import</span> { useRef, useEffect } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">interface</span> ModalProps {
+  isOpen: boolean;
+  onClose: () =&gt; <span class="kw">void</span>;
+  children: React.ReactNode;
+  triggerRef: React.RefObject&lt;HTMLButtonElement&gt;;
+}
+
+<span class="kw">function</span> <span class="fn">EnquiryModal</span>({ isOpen, onClose, children, triggerRef }: ModalProps) {
+  <span class="kw">const</span> firstFocusableRef = useRef&lt;HTMLButtonElement&gt;(<span class="kw">null</span>);
+
+  useEffect(() =&gt; {
+    <span class="kw">if</span> (isOpen) {
+      <span class="com">// Move focus inside when modal opens</span>
+      firstFocusableRef.current?.focus();
+    } <span class="kw">else</span> {
+      <span class="com">// Return focus to trigger when modal closes</span>
+      triggerRef.current?.focus();
+    }
+  }, [isOpen]);
+
+  <span class="kw">if</span> (!isOpen) <span class="kw">return null</span>;
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">div</span>
+      role=<span class="str">"dialog"</span>
+      aria-modal=<span class="str">"true"</span>
+      aria-labelledby=<span class="str">"modal-title"</span>
+      className=<span class="str">"modal-overlay"</span>
+    &gt;
+      &lt;<span class="tag">div</span> className=<span class="str">"modal-panel"</span>&gt;
+        &lt;<span class="tag">h2</span> id=<span class="str">"modal-title"</span>&gt;Book a Private Viewing&lt;/<span class="tag">h2</span>&gt;
+        &lt;<span class="tag">button</span>
+          ref={firstFocusableRef}
+          aria-label=<span class="str">"Close modal"</span>
+          onClick={onClose}
+          className=<span class="str">"modal-close"</span>
+        &gt;×&lt;/<span class="tag">button</span>&gt;
+        {children}
+      &lt;/<span class="tag">div</span>&gt;
+    &lt;/<span class="tag">div</span>&gt;
+  );
+}</code></pre>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Common Mistake: Forgetting the Escape Key</div>
+<p>Every modal must close when the user presses <kbd>Escape</kbd>. Add a <code>keydown</code> listener on the modal overlay or the document while the modal is open. It is the single most expected keyboard behaviour on the web, and failing it feels immediately broken to keyboard users.</p>
+<pre><code>useEffect(() =&gt; {
+  <span class="kw">if</span> (!isOpen) <span class="kw">return</span>;
+  <span class="kw">const</span> handleEscape = (e: KeyboardEvent) =&gt; {
+    <span class="kw">if</span> (e.key === <span class="str">'Escape'</span>) onClose();
+  };
+  document.addEventListener(<span class="str">'keydown'</span>, handleEscape);
+  <span class="kw">return</span> () =&gt; document.removeEventListener(<span class="str">'keydown'</span>, handleEscape);
+}, [isOpen, onClose]);</code></pre></div>
+
+<h3>16.5 Image Alt Text — More Than "Property Photo"</h3>
+<p>Every <code>&lt;img&gt;</code> needs an <code>alt</code> attribute. The value should describe what the image communicates, not just what it depicts. For a screen reader user touring Aurelia Residences, "property photo" tells them nothing. "Corner penthouse living room with floor-to-ceiling views of the Thames and bespoke marble fireplace" gives them the experience.</p>
+
+<pre><code><span class="com">// ❌ Useless alt</span>
+&lt;<span class="tag">img</span> src=<span class="str">"/residences/penthouse-living.jpg"</span> alt=<span class="str">"property photo"</span> /&gt;
+
+<span class="com">// ✅ Descriptive alt that conveys the experience</span>
+&lt;<span class="tag">img</span>
+  src=<span class="str">"/residences/penthouse-living.jpg"</span>
+  alt=<span class="str">"Corner penthouse living room with floor-to-ceiling views of the Thames, bespoke marble fireplace and statement chandelier"</span>
+/&gt;
+
+<span class="com">// Decorative images that add no information: use empty alt so screen readers skip them</span>
+&lt;<span class="tag">img</span> src=<span class="str">"/decorative-divider.svg"</span> alt=<span class="str">""</span> role=<span class="str">"presentation"</span> /&gt;</code></pre>
+
+<h3>16.6 Colour Contrast and Visible Focus</h3>
+<p>WCAG AA requires a contrast ratio of at least 4.5:1 for normal text and 3:1 for large text (18px+ or bold 14px+). The dark, dramatic palettes common in luxury real estate can fail this with very thin text on near-black backgrounds. Use the browser DevTools colour picker or the WebAIM Contrast Checker before finalising any text colour.</p>
+
+<p>Never remove the focus outline without replacing it. <code>outline: none</code> on <code>:focus</code> — seen in countless CSS resets — makes keyboard navigation invisible. Use <code>:focus-visible</code> instead, which shows the indicator only to keyboard users:</p>
+
+<pre><code><span class="com">/* In your CSS / styled-component / Tailwind @layer */</span>
+:focus-visible {
+  outline: 2px solid #7B68EE;  <span class="com">/* brand indigo — clearly visible */</span>
+  outline-offset: 3px;
+  border-radius: 4px;
+}
+
+<span class="com">/* Never do this: */</span>
+* { outline: none; }  <span class="com">/* breaks keyboard navigation for everyone */</span></code></pre>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> Add <code>alt</code> on image components in the properties panel. Contrast checking is manual — use the browser DevTools colour picker while previewing. Focus styles must be added in code component CSS or a global styles override. <strong>Webflow:</strong> Image settings panel has an "Alt text" field. For CMS images, add an alt text field to your Collection and bind it to the image's alt attribute. Contrast checking is done externally. Focus styles: add to your global CSS in the Custom Code panel under Project Settings.</p></div>
+
+<h3>16.7 Quick Audit Checklist</h3>
+<p>Before shipping any luxury property page, run through this:</p>
+<ul>
+<li>Tab through every interactive element on the page without touching the mouse. Can you reach everything? Is focus always visible?</li>
+<li>Open VoiceOver (Mac: <kbd>⌘ F5</kbd>) or NVDA (Windows, free download) and navigate the page by headings. Does the heading structure make sense?</li>
+<li>Check all images have meaningful alt text in the DOM (Inspect → Elements → search for <code>alt</code>)</li>
+<li>Run Lighthouse in DevTools → Accessibility → fix every red item</li>
+<li>Verify all interactive elements that open panels or modals return focus correctly when closed</li>
+<li>Confirm your filter count result area uses <code>aria-live="polite"</code></li>
+</ul>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 16A — Audit the Enquiry Button</div>
+<p>Your current Aurelia Residences site has an enquiry button that opens a drawer. Without writing any new code, audit it against the checklist above. Write down every failure you find. Then fix them one by one using the patterns from this chapter.</p>
+<p>When you are done, the button should: be a real <code>&lt;button&gt;</code> element, move focus to the first input inside the drawer when opened, return focus to the button when the drawer closes, and close on <kbd>Escape</kbd>.</p>
+<details><summary>Review answer</summary>
+<p>The most common failures found in enquiry buttons on luxury sites: (1) implemented as a styled <code>&lt;div&gt;</code> — fix: change to <code>&lt;button type="button"&gt;</code>; (2) no focus management on drawer open — fix: <code>useEffect</code> + <code>ref.current.focus()</code> targeting the first input; (3) no focus return on close — fix: store a <code>triggerRef</code> and focus it in <code>useEffect</code> when <code>isOpen</code> becomes false; (4) no Escape key handler — fix: add <code>keydown</code> listener as shown in section 16.4; (5) close button has only an × character with no accessible name — fix: add <code>aria-label="Close enquiry drawer"</code>.</p>
+</details>
+</div>
+
+<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — The Bridge</strong></a><a class="next" href="#ch17"><span>Next</span><strong>Ch 17 — Forms & Validation</strong></a></div>
+</section>
+
+<!-- ================ CH17 ================ -->
+<section class="chapter" id="ch17">
+<div class="chapter-num">Chapter 17</div>
+<h1 class="chapter-title">Forms, Validation & CRM Handoff</h1>
+<p class="chapter-sub">A property enquiry form is the moment your site converts. The experience around that form — how it validates, how it responds, how it confirms — is where luxury UX either earns trust or quietly loses it.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will be able to build controlled form components with proper validation, manage loading and success states that feel polished, and connect form submissions to real CRM endpoints including HubSpot and Netlify Forms.</p></div>
+
+<h3>17.1 Controlled vs Uncontrolled Forms</h3>
+<p>In React, a <em>controlled</em> form element is one whose value is driven by state. Every keystroke calls a setter, state updates, and the component re-renders with the new value. This is slightly more code than a plain HTML form, but it gives you the ability to validate on every keystroke, disable the submit button when fields are invalid, and clear the form programmatically after submission.</p>
+
+<pre><code><span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">interface</span> EnquiryFields {
+  name: string;
+  email: string;
+  phone: string;
+  message: string;
+}
+
+<span class="kw">function</span> <span class="fn">EnquiryForm</span>() {
+  <span class="kw">const</span> [fields, setFields] = useState&lt;EnquiryFields&gt;({
+    name: <span class="str">''</span>, email: <span class="str">''</span>, phone: <span class="str">''</span>, message: <span class="str">''</span>
+  });
+  <span class="kw">const</span> [errors, setErrors] = useState&lt;Partial&lt;EnquiryFields&gt;&gt;({});
+  <span class="kw">const</span> [status, setStatus] = useState&lt;<span class="str">'idle'</span> | <span class="str">'sending'</span> | <span class="str">'success'</span> | <span class="str">'error'</span>&gt;(<span class="str">'idle'</span>);
+
+  <span class="kw">function</span> <span class="fn">handleChange</span>(e: React.ChangeEvent&lt;HTMLInputElement | HTMLTextAreaElement&gt;) {
+    <span class="kw">const</span> { name, value } = e.target;
+    setFields(prev =&gt; ({ ...prev, [name]: value }));
+    <span class="com">// Clear the error for this field as the user corrects it</span>
+    setErrors(prev =&gt; ({ ...prev, [name]: undefined }));
+  }
+
+  <span class="kw">function</span> <span class="fn">validate</span>(): boolean {
+    <span class="kw">const</span> next: Partial&lt;EnquiryFields&gt; = {};
+    <span class="kw">if</span> (!fields.name.trim()) next.name = <span class="str">'Please enter your name'</span>;
+    <span class="kw">if</span> (!fields.email.includes(<span class="str">'@'</span>)) next.email = <span class="str">'Please enter a valid email address'</span>;
+    <span class="kw">if</span> (!fields.message.trim()) next.message = <span class="str">'Please tell us about your interest'</span>;
+    setErrors(next);
+    <span class="kw">return</span> Object.keys(next).length === <span class="num">0</span>;
+  }
+
+  <span class="kw">async function</span> <span class="fn">handleSubmit</span>(e: React.FormEvent) {
+    e.preventDefault();
+    <span class="kw">if</span> (!validate()) <span class="kw">return</span>;
+    setStatus(<span class="str">'sending'</span>);
+    <span class="kw">try</span> {
+      <span class="kw">await</span> sendEnquiry(fields);
+      setStatus(<span class="str">'success'</span>);
+      setFields({ name: <span class="str">''</span>, email: <span class="str">''</span>, phone: <span class="str">''</span>, message: <span class="str">''</span> });
+    } <span class="kw">catch</span> {
+      setStatus(<span class="str">'error'</span>);
+    }
+  }
+
+  <span class="kw">if</span> (status === <span class="str">'success'</span>) {
+    <span class="kw">return</span> &lt;<span class="tag">div</span> className=<span class="str">"form-success"</span>&gt;Thank you. Our team will be in touch within 24 hours.&lt;/<span class="tag">div</span>&gt;;
+  }
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">form</span> onSubmit={handleSubmit} noValidate&gt;
+      &lt;<span class="tag">label</span> htmlFor=<span class="str">"name"</span>&gt;Full Name&lt;/<span class="tag">label</span>&gt;
+      &lt;<span class="tag">input</span> id=<span class="str">"name"</span> name=<span class="str">"name"</span> value={fields.name} onChange={handleChange} aria-describedby={errors.name ? <span class="str">"name-error"</span> : undefined} /&gt;
+      {errors.name &amp;&amp; &lt;<span class="tag">span</span> id=<span class="str">"name-error"</span> role=<span class="str">"alert"</span>&gt;{errors.name}&lt;/<span class="tag">span</span>&gt;}
+
+      &lt;<span class="tag">label</span> htmlFor=<span class="str">"email"</span>&gt;Email Address&lt;/<span class="tag">label</span>&gt;
+      &lt;<span class="tag">input</span> id=<span class="str">"email"</span> name=<span class="str">"email"</span> type=<span class="str">"email"</span> value={fields.email} onChange={handleChange} aria-describedby={errors.email ? <span class="str">"email-error"</span> : undefined} /&gt;
+      {errors.email &amp;&amp; &lt;<span class="tag">span</span> id=<span class="str">"email-error"</span> role=<span class="str">"alert"</span>&gt;{errors.email}&lt;/<span class="tag">span</span>&gt;}
+
+      &lt;<span class="tag">button</span> type=<span class="str">"submit"</span> disabled={status === <span class="str">'sending'</span>&gt;}
+        {status === <span class="str">'sending'</span> ? <span class="str">'Sending...'</span> : <span class="str">'Request a Private Viewing'</span>}
+      &lt;/<span class="tag">button</span>&gt;
+      {status === <span class="str">'error'</span> &amp;&amp; &lt;<span class="tag">p</span> role=<span class="str">"alert"</span>&gt;Something went wrong. Please try again or call us directly.&lt;/<span class="tag">p</span>&gt;}
+    &lt;/<span class="tag">form</span>&gt;
+  );
+}</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: noValidate + role="alert"</div>
+<p>The <code>noValidate</code> attribute disables the browser's default validation popups, which are often styled poorly and impossible to brand. You take full ownership of validation UX. Error messages paired with <code>role="alert"</code> are automatically announced by screen readers the moment they appear in the DOM — no extra ARIA needed.</p></div>
+
+<h3>17.2 Sending to Netlify Forms</h3>
+<p>Netlify Forms is the fastest path to a working backend. Add a hidden <code>form-name</code> input, give your form a <code>name</code> attribute, and Netlify captures the submission automatically. No server required.</p>
+
+<pre><code><span class="com">// For Netlify: add name attribute and hidden form-name input</span>
+&lt;<span class="tag">form</span>
+  name=<span class="str">"enquiry"</span>
+  method=<span class="str">"POST"</span>
+  data-netlify=<span class="str">"true"</span>
+  onSubmit={handleSubmit}
+  noValidate
+&gt;
+  &lt;<span class="tag">input</span> type=<span class="str">"hidden"</span> name=<span class="str">"form-name"</span> value=<span class="str">"enquiry"</span> /&gt;
+  {<span class="com">/* ...rest of form fields... */</span>}
+&lt;/<span class="tag">form</span>&gt;
+
+<span class="com">// In handleSubmit, POST to "/" with form data encoded</span>
+<span class="kw">async function</span> <span class="fn">sendEnquiry</span>(fields: EnquiryFields) {
+  <span class="kw">const</span> body = <span class="kw">new</span> URLSearchParams({
+    <span class="str">'form-name'</span>: <span class="str">'enquiry'</span>,
+    ...fields
+  });
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(<span class="str">'/'</span>, {
+    method: <span class="str">'POST'</span>,
+    headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/x-www-form-urlencoded'</span> },
+    body: body.toString()
+  });
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="str">'Submission failed'</span>);
+}</code></pre>
+
+<h3>17.3 Sending to HubSpot</h3>
+<p>For clients who run their leads through HubSpot CRM, the HubSpot Forms API accepts POST requests from any frontend. You will need the Portal ID and Form ID from the HubSpot account.</p>
+
+<pre><code><span class="kw">async function</span> <span class="fn">sendToHubspot</span>(fields: EnquiryFields) {
+  <span class="kw">const</span> PORTAL_ID = <span class="str">'YOUR_PORTAL_ID'</span>;
+  <span class="kw">const</span> FORM_ID   = <span class="str">'YOUR_FORM_GUID'</span>;
+  <span class="kw">const</span> url = `https://api.hsforms.com/submissions/v3/integration/submit/${PORTAL_ID}/${FORM_ID}`;
+
+  <span class="kw">const</span> payload = {
+    fields: [
+      { name: <span class="str">'firstname'</span>, value: fields.name },
+      { name: <span class="str">'email'</span>,     value: fields.email },
+      { name: <span class="str">'phone'</span>,     value: fields.phone },
+      { name: <span class="str">'message'</span>,   value: fields.message }
+    ],
+    context: {
+      pageUri: window.location.href,
+      pageName: document.title
+    }
+  };
+
+  <span class="kw">const</span> res = <span class="kw">await</span> fetch(url, {
+    method: <span class="str">'POST'</span>,
+    headers: { <span class="str">'Content-Type'</span>: <span class="str">'application/json'</span> },
+    body: JSON.stringify(payload)
+  });
+
+  <span class="kw">if</span> (!res.ok) <span class="kw">throw new</span> Error(<span class="str">'HubSpot submission failed'</span>);
+}</code></pre>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> Use a code component for the form and call the HubSpot API directly from <code>handleSubmit</code> — the pattern above works identically. For Netlify, deploy your Framer site to Netlify and add the <code>data-netlify</code> attribute. <strong>Webflow:</strong> Webflow's built-in Form block submits to Webflow Forms by default and can trigger Zapier/Make webhooks from the Integrations panel — no code needed. For HubSpot, connect via the native HubSpot integration in Webflow's Integrations settings.</p></div>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 17A — Build a Controlled Viewing Request Form</div>
+<p>Build a controlled form component with: Name, Email, Phone (optional), Message, and a Preferred Viewing Date <code>&lt;input type="date"&gt;</code>. Requirements: (1) Validate Name, Email, and Message before submit. (2) Show inline error messages with <code>role="alert"</code>. (3) Disable the submit button while sending. (4) Show a styled success message after submission. (5) Log the submitted data to the console instead of a real API.</p>
+<details><summary>Review key points</summary>
+<p>The critical patterns: (1) Use a single <code>fields</code> state object with all field values — one <code>handleChange</code> handles all inputs via <code>e.target.name</code>. (2) Run validation before the async call — return early if invalid so you never hit the network with bad data. (3) The status machine (<code>'idle'</code> → <code>'sending'</code> → <code>'success'</code> or <code>'error'</code>) prevents double-submission and drives all UI states from a single source of truth. (4) Returning a completely different element tree on success (the confirmation message) is idiomatic React — no conditional hiding needed.</p>
+</details>
+</div>
+
+<div class="chap-nav"><a href="#ch16"><span>Previous</span><strong>Ch 16 — Accessibility</strong></a><a class="next" href="#ch18"><span>Next</span><strong>Ch 18 — SEO & Performance</strong></a></div>
+</section>
+
+<!-- ================ CH18 ================ -->
+<section class="chapter" id="ch18">
+<div class="chapter-num">Chapter 18</div>
+<h1 class="chapter-title">SEO & Performance for Premium Properties</h1>
+<p class="chapter-sub">A luxury property site that Google cannot read is invisible to the buyers your client is targeting. A site that loads slowly loses those buyers the moment it loads. SEO and performance are not afterthoughts — they are part of what you are selling.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will know how to add meta tags and Open Graph data in React, write JSON-LD structured data for properties, understand the Core Web Vitals that affect ranking, and apply image optimisation strategies that keep your pages fast.</p></div>
+
+<h3>18.1 Meta Tags and Open Graph</h3>
+<p>Meta tags live in the <code>&lt;head&gt;</code> and tell search engines and social platforms what a page is about. In a plain React app you can manage them with the <code>react-helmet-async</code> library. In Next.js or Remix (frameworks built on React), meta management is first-class and built in.</p>
+
+<pre><code><span class="com">// Using react-helmet-async in a plain React app</span>
+<span class="kw">import</span> { Helmet } <span class="kw">from</span> <span class="str">'react-helmet-async'</span>;
+
+<span class="kw">function</span> <span class="fn">ResidenceDetailPage</span>({ residence }: { residence: Residence }) {
+  <span class="kw">return</span> (
+    &lt;&gt;
+      &lt;<span class="tag">Helmet</span>&gt;
+        &lt;<span class="tag">title</span>&gt;{residence.name} — Aurelia Residences&lt;/<span class="tag">title</span>&gt;
+        &lt;<span class="tag">meta</span> name=<span class="str">"description"</span> content={residence.shortDescription} /&gt;
+
+        {<span class="com">/* Open Graph — controls how the page looks when shared on LinkedIn, WhatsApp, etc. */</span>}
+        &lt;<span class="tag">meta</span> property=<span class="str">"og:title"</span>       content={`${residence.name} — Aurelia Residences`} /&gt;
+        &lt;<span class="tag">meta</span> property=<span class="str">"og:description"</span>  content={residence.shortDescription} /&gt;
+        &lt;<span class="tag">meta</span> property=<span class="str">"og:image"</span>       content={residence.heroImageUrl} /&gt;
+        &lt;<span class="tag">meta</span> property=<span class="str">"og:url"</span>         content={`https://aureliaresidences.com/residences/${residence.slug}`} /&gt;
+        &lt;<span class="tag">meta</span> property=<span class="str">"og:type"</span>        content=<span class="str">"website"</span> /&gt;
+
+        {<span class="com">/* Twitter Card */</span>}
+        &lt;<span class="tag">meta</span> name=<span class="str">"twitter:card"</span>        content=<span class="str">"summary_large_image"</span> /&gt;
+        &lt;<span class="tag">meta</span> name=<span class="str">"twitter:title"</span>       content={`${residence.name} — Aurelia Residences`} /&gt;
+        &lt;<span class="tag">meta</span> name=<span class="str">"twitter:description"</span>  content={residence.shortDescription} /&gt;
+        &lt;<span class="tag">meta</span> name=<span class="str">"twitter:image"</span>       content={residence.heroImageUrl} /&gt;
+      &lt;/<span class="tag">Helmet</span>&gt;
+
+      {<span class="com">/* ...rest of page content... */</span>}
+    &lt;/&gt;
+  );
+}</code></pre>
+
+<h3>18.2 JSON-LD Structured Data for Properties</h3>
+<p>Structured data tells search engines not just what words are on your page, but what those words mean. Google uses this to generate rich results — like showing price and location directly in the search listing. The property type is <code>RealEstateListing</code> in the Schema.org vocabulary.</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">PropertyStructuredData</span>({ residence }: { residence: Residence }) {
+  <span class="kw">const</span> schema = {
+    <span class="str">"@context"</span>:  <span class="str">"https://schema.org"</span>,
+    <span class="str">"@type"</span>:     <span class="str">"RealEstateListing"</span>,
+    <span class="str">"name"</span>:      residence.name,
+    <span class="str">"description"</span>: residence.description,
+    <span class="str">"url"</span>:       `https://aureliaresidences.com/residences/${residence.slug}`,
+    <span class="str">"image"</span>:     residence.images,
+    <span class="str">"offers"</span>: {
+      <span class="str">"@type"</span>:         <span class="str">"Offer"</span>,
+      <span class="str">"price"</span>:         residence.price,
+      <span class="str">"priceCurrency"</span>: <span class="str">"GBP"</span>,
+      <span class="str">"availability"</span>:  <span class="str">"https://schema.org/InStock"</span>
+    },
+    <span class="str">"address"</span>: {
+      <span class="str">"@type"</span>:          <span class="str">"PostalAddress"</span>,
+      <span class="str">"streetAddress"</span>:  residence.address,
+      <span class="str">"addressLocality"</span>:<span class="str">"London"</span>,
+      <span class="str">"addressCountry"</span>: <span class="str">"GB"</span>
+    }
+  };
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">script</span>
+      type=<span class="str">"application/ld+json"</span>
+      dangerouslySetInnerHTML={{ __html: JSON.stringify(schema) }}
+    /&gt;
+  );
+}</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: dangerouslySetInnerHTML</div>
+<p>React escapes all string values to prevent XSS attacks, which would break your JSON-LD (the <code>&lt;</code> and <code>&gt;</code> characters would be escaped). The <code>dangerouslySetInnerHTML</code> prop bypasses this escaping. It is safe here because you are generating the JSON from your own data — not from user input. Never use <code>dangerouslySetInnerHTML</code> with content that comes from a user-submitted form.</p></div>
+
+<h3>18.3 Core Web Vitals</h3>
+<p>Google's Core Web Vitals are the three performance metrics that directly affect search ranking. They measure how fast users perceive your page to be, not just how fast it loads technically.</p>
+
+<ul>
+<li><strong>LCP (Largest Contentful Paint):</strong> How long until the main content (usually your hero image) is fully visible. Target: under 2.5 seconds. Biggest lever: preload your hero image and avoid lazy-loading it.</li>
+<li><strong>INP (Interaction to Next Paint):</strong> How quickly the page responds when a user clicks, taps, or types. Target: under 200ms. Biggest lever: keep event handlers fast; defer expensive work.</li>
+<li><strong>CLS (Cumulative Layout Shift):</strong> How much the page jumps around as content loads. Target: under 0.1. Biggest lever: always reserve space for images with explicit <code>width</code> and <code>height</code> attributes.</li>
+</ul>
+
+<h3>18.4 Image Optimisation</h3>
+<p>Property photography is the heaviest content on any real estate site. Serving a 5MB JPEG when a 180KB WebP would look identical is the single most common cause of slow luxury sites.</p>
+
+<pre><code><span class="com">// Always specify width and height to prevent CLS</span>
+&lt;<span class="tag">img</span>
+  src=<span class="str">"/residences/penthouse-main.webp"</span>
+  alt=<span class="str">"Penthouse living room"</span>
+  width=<span class="num">1200</span>
+  height=<span class="num">800</span>
+  loading=<span class="str">"lazy"</span>       <span class="com">// defer off-screen images</span>
+  decoding=<span class="str">"async"</span>     <span class="com">// don't block rendering while decoding</span>
+/&gt;
+
+<span class="com">// For the hero image: do NOT lazy-load — it is the LCP element</span>
+&lt;<span class="tag">img</span>
+  src=<span class="str">"/hero/aurelia-exterior.webp"</span>
+  alt=<span class="str">"Aurelia Residences exterior at dusk"</span>
+  width=<span class="num">1920</span>
+  height=<span class="num">1080</span>
+  fetchpriority=<span class="str">"high"</span>  <span class="com">// browser prioritises this fetch</span>
+/&gt;
+
+<span class="com">// Responsive images: serve the right size for the device</span>
+&lt;<span class="tag">img</span>
+  src=<span class="str">"/residences/terrace-1200.webp"</span>
+  srcSet=<span class="str">"
+    /residences/terrace-400.webp 400w,
+    /residences/terrace-800.webp 800w,
+    /residences/terrace-1200.webp 1200w
+  "</span>
+  sizes=<span class="str">"(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 600px"</span>
+  alt=<span class="str">"Private roof terrace with city view"</span>
+  width=<span class="num">1200</span>
+  height=<span class="num">800</span>
+/&gt;</code></pre>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> Use Framer's native CMS image fields — they auto-generate WebP variants and serve them via their CDN. Add page metadata per-page in the Page Settings panel (SEO tab). Structured data requires a code component or a custom script embed. <strong>Webflow:</strong> CMS image fields automatically serve WebP and resize via Webflow's Imgix-powered CDN. Add meta tags in the Page Settings → SEO tab. JSON-LD structured data goes in the Page Settings → Custom Code → <code>&lt;head&gt;</code> area, or in a global embed for site-wide types.</p></div>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 18A — Add Structured Data to a Residence Page</div>
+<p>Take the <code>ResidenceCard</code> component you built in earlier chapters and create a companion <code>PropertyStructuredData</code> component that renders the correct JSON-LD schema. Test your output by pasting the generated JSON into Google's Rich Results Test tool. Fix any validation warnings.</p>
+<details><summary>Review key points</summary>
+<p>The three most common validation issues: (1) <code>offers.price</code> must be a number, not a formatted string like <code>"£4,500,000"</code> — store prices as plain integers; (2) <code>image</code> must be an array of fully-qualified URLs including the protocol (<code>https://...</code>), not relative paths; (3) <code>availability</code> must be one of the schema.org enumerated values, not a free-text string like <code>"available"</code>.</p>
+</details>
+</div>
+
+<div class="chap-nav"><a href="#ch17"><span>Previous</span><strong>Ch 17 — Forms & Validation</strong></a><a class="next" href="#ch19"><span>Next</span><strong>Ch 19 — Analytics & Conversion</strong></a></div>
+</section>
+
+<!-- ================ CH19 ================ -->
+<section class="chapter" id="ch19">
+<div class="chapter-num">Chapter 19</div>
+<h1 class="chapter-title">Analytics & Conversion Architecture</h1>
+<p class="chapter-sub">Premium real estate buyers do not convert through impulse. They research, they compare, they return. Your analytics layer tells you where they are in that journey — and your conversion architecture gives them exactly the right nudge at exactly the right moment.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will know how to implement GA4 custom events in React, track the enquiry funnel from first interaction to form submission, monitor scroll depth on long property pages, and instrument saved-items behaviour.</p></div>
+
+<h3>19.1 GA4 Custom Events in React</h3>
+<p>Google Analytics 4 tracks user actions as <em>events</em>. Pageviews happen automatically once you install the GA4 script. Everything else — button clicks, form interactions, video plays — you track explicitly. In React, you fire events at the same places you fire side effects: event handlers and <code>useEffect</code> calls.</p>
+
+<pre><code><span class="com">// Utility wrapper around gtag — keeps tracking calls typesafe</span>
+<span class="kw">function</span> <span class="fn">trackEvent</span>(
+  eventName: string,
+  params: Record&lt;string, string | number | boolean&gt; = {}
+) {
+  <span class="kw">if</span> (<span class="kw">typeof</span> window === <span class="str">'undefined'</span> || !window.gtag) <span class="kw">return</span>;
+  window.gtag(<span class="str">'event'</span>, eventName, params);
+}
+
+<span class="com">// Usage — fire when a residence card is clicked</span>
+<span class="kw">function</span> <span class="fn">ResidenceCard</span>({ residence }: { residence: Residence }) {
+  <span class="kw">function</span> <span class="fn">handleCardClick</span>() {
+    trackEvent(<span class="str">'residence_view'</span>, {
+      residence_id:   residence.id,
+      residence_name: residence.name,
+      price_band:     getPriceBand(residence.price),
+      bedrooms:       residence.bedrooms
+    });
+  }
+
+  <span class="kw">return</span> &lt;<span class="tag">div</span> onClick={handleCardClick}&gt;...&lt;/<span class="tag">div</span>&gt;;
+}</code></pre>
+
+<h3>19.2 The Enquiry Funnel</h3>
+<p>An enquiry funnel has multiple steps, each representing a buyer moving deeper into intent. Track each step as a separate event so you can see exactly where people drop off.</p>
+
+<pre><code><span class="com">// Step 1: Buyer clicks "Book a Viewing" button</span>
+trackEvent(<span class="str">'enquiry_start'</span>, { residence_id: residence.id, source: <span class="str">'detail_page'</span> });
+
+<span class="com">// Step 2: Buyer starts typing in the form (first field interaction)</span>
+<span class="kw">function</span> <span class="fn">handleFirstInteraction</span>() {
+  <span class="kw">if</span> (!hasTrackedStart) {
+    trackEvent(<span class="str">'enquiry_form_start'</span>, { residence_id: residence.id });
+    setHasTrackedStart(<span class="kw">true</span>);
+  }
+}
+
+<span class="com">// Step 3: Form submitted successfully</span>
+trackEvent(<span class="str">'enquiry_submit'</span>, {
+  residence_id:   residence.id,
+  residence_name: residence.name,
+  value:          residence.price,
+  currency:       <span class="str">'GBP'</span>
+});
+
+<span class="com">// Step 4: Confirmation shown</span>
+trackEvent(<span class="str">'enquiry_confirmed'</span>, { residence_id: residence.id });</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: Funnel Drop-off Analysis</div>
+<p>The difference between <code>enquiry_start</code> and <code>enquiry_submit</code> events tells you your form abandonment rate. If 200 buyers open the enquiry drawer but only 30 submit, something in the form is creating friction. Track the intermediate <code>enquiry_form_start</code> to see if they even begin filling it in, or if the drawer itself is the problem.</p></div>
+
+<h3>19.3 Scroll Depth Tracking</h3>
+<p>Long-form property detail pages are common in luxury real estate — photography galleries, floorplans, neighbourhood guides. Scroll depth tells you how much of that content buyers actually consume.</p>
+
+<pre><code><span class="kw">import</span> { useEffect, useRef } <span class="kw">from</span> <span class="str">'react'</span>;
+
+<span class="kw">function</span> <span class="fn">useScrollDepth</span>(residenceId: string) {
+  <span class="kw">const</span> milestones = useRef(<span class="kw">new</span> Set&lt;number&gt;());
+
+  useEffect(() =&gt; {
+    <span class="kw">function</span> <span class="fn">handleScroll</span>() {
+      <span class="kw">const</span> scrolled = window.scrollY;
+      <span class="kw">const</span> total = document.body.scrollHeight - window.innerHeight;
+      <span class="kw">const</span> pct = Math.round((scrolled / total) * <span class="num">100</span>);
+
+      [<span class="num">25</span>, <span class="num">50</span>, <span class="num">75</span>, <span class="num">90</span>].forEach(milestone =&gt; {
+        <span class="kw">if</span> (pct &gt;= milestone &amp;&amp; !milestones.current.has(milestone)) {
+          milestones.current.add(milestone);
+          trackEvent(<span class="str">'scroll_depth'</span>, { residence_id: residenceId, percent: milestone });
+        }
+      });
+    }
+
+    window.addEventListener(<span class="str">'scroll'</span>, handleScroll, { passive: <span class="kw">true</span> });
+    <span class="kw">return</span> () =&gt; window.removeEventListener(<span class="str">'scroll'</span>, handleScroll);
+  }, [residenceId]);
+}
+
+<span class="com">// Use inside your page component:</span>
+<span class="kw">function</span> <span class="fn">ResidenceDetailPage</span>({ residence }: { residence: Residence }) {
+  useScrollDepth(residence.id);
+  <span class="kw">return</span> &lt;<span class="tag">div</span>&gt;...&lt;/<span class="tag">div</span>&gt;;
+}</code></pre>
+
+<h3>19.4 Saved Items Tracking</h3>
+<p>A saved-items feature (a shortlist or wishlist) is a strong intent signal. Buyers who save a property are far more likely to enquire than those who only view it. Track saves and their reversal:</p>
+
+<pre><code><span class="kw">function</span> <span class="fn">SaveButton</span>({ residence }: { residence: Residence }) {
+  <span class="kw">const</span> [saved, setSaved] = useState(isSaved(residence.id));
+
+  <span class="kw">function</span> <span class="fn">handleToggle</span>() {
+    <span class="kw">const</span> nextSaved = !saved;
+    setSaved(nextSaved);
+    toggleSavedItem(residence.id);
+
+    trackEvent(nextSaved ? <span class="str">'residence_saved'</span> : <span class="str">'residence_unsaved'</span>, {
+      residence_id:   residence.id,
+      residence_name: residence.name,
+      price_band:     getPriceBand(residence.price)
+    });
+  }
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">button</span>
+      onClick={handleToggle}
+      aria-label={saved ? <span class="str">`Remove ${residence.name} from shortlist`</span> : <span class="str">`Save ${residence.name} to shortlist`</span>}
+      aria-pressed={saved}
+    &gt;
+      {saved ? <span class="str">'Saved ✓'</span> : <span class="str">'Save'</span>}
+    &lt;/<span class="tag">button</span>&gt;
+  );
+}</code></pre>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> Add the GA4 script in the Site Settings → Custom Code → <code>&lt;head&gt;</code> section. Track custom events from code components using the <code>trackEvent</code> utility above — it works identically. <strong>Webflow:</strong> Add the GA4 gtag script in Project Settings → Custom Code → <code>&lt;head&gt;</code>. For event tracking on CMS-driven elements, add custom attributes and a small script in Site Footer code, or use GTM (Google Tag Manager) triggers — the preferred approach for Webflow since it requires no code deploys when tracking requirements change.</p></div>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 19A — Instrument the Enquiry Funnel</div>
+<p>In your Aurelia Residences project, instrument the full four-step enquiry funnel: (1) button click opens drawer, (2) first field interaction, (3) successful form submission, (4) confirmation visible. Log events to the console using <code>console.log('GA4 event:', eventName, params)</code> instead of real <code>gtag</code> calls. Open the browser DevTools Console and walk through the enquiry flow — verify all four events fire in order with the expected parameter shapes.</p>
+<details><summary>Review key points</summary>
+<p>Key integration point: steps 1 and 4 fire in the parent component (where the drawer open/close state lives). Steps 2 and 3 fire inside the form component. The <code>residence_id</code> must be threaded as a prop into the form so it can include it in the submit event — this is exactly the "lifting state" pattern from Chapter 6, applied to analytics data instead of UI state.</p>
+</details>
+</div>
+
+<div class="chap-nav"><a href="#ch18"><span>Previous</span><strong>Ch 18 — SEO & Performance</strong></a><a class="next" href="#ch20"><span>Next</span><strong>Ch 20 — Responsive Layout</strong></a></div>
+</section>
+
+<!-- ================ CH20 ================ -->
+<section class="chapter" id="ch20">
+<div class="chapter-num">Chapter 20</div>
+<h1 class="chapter-title">Responsive Layout Systems</h1>
+<p class="chapter-sub">Premium real estate is browsed on phones by buyers standing in a street, on tablets in waiting rooms, and on large monitors in offices. A layout system that looks deliberate and considered at every size is not a technical nice-to-have. It is part of the experience you are being paid to deliver.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will be able to build fluid CSS Grid and Flexbox layouts in React, apply a breakpoint strategy using CSS custom properties, and apply the luxury-white-space principles that separate premium sites from ordinary ones.</p></div>
+
+<h3>20.1 CSS Grid in React</h3>
+<p>CSS Grid is the right tool for two-dimensional layouts — property card grids, floor plan layouts, image galleries. In React, apply it through <code>className</code> with your CSS file, or inline with the <code>style</code> prop for dynamic values.</p>
+
+<pre><code><span class="com">/* In your CSS file */</span>
+.residences-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
+  gap: 2.5rem;
+  padding: 3rem 0;
+}
+
+<span class="com">/* Result: as many columns as fit, each at least 340px wide */</span>
+<span class="com">/* On mobile: 1 column. On tablet: 2. On desktop: 3 or 4. */</span></code></pre>
+
+<pre><code><span class="com">// In your React component</span>
+<span class="kw">function</span> <span class="fn">ResidenceGrid</span>({ residences }: { residences: Residence[] }) {
+  <span class="kw">return</span> (
+    &lt;<span class="tag">ul</span> className=<span class="str">"residences-grid"</span>&gt;
+      {residences.map(r =&gt; (
+        &lt;<span class="tag">li</span> key={r.id}&gt;
+          &lt;<span class="tag">ResidenceCard</span> residence={r} /&gt;
+        &lt;/<span class="tag">li</span>&gt;
+      ))}
+    &lt;/<span class="tag">ul</span>&gt;
+  );
+}</code></pre>
+
+<h3>20.2 Flexbox for Component-Level Layout</h3>
+<p>While Grid handles page-level structure, Flexbox handles component-level alignment — the inside of a card, a header with logo and navigation, a button row. The two tools are complementary.</p>
+
+<pre><code><span class="com">/* Property card — internal layout with Flexbox */</span>
+.residence-card {
+  display: flex;
+  flex-direction: column;  <span class="com">/* stack vertically */</span>
+  gap: 1rem;
+}
+
+.residence-card__footer {
+  display: flex;
+  justify-content: space-between;  <span class="com">/* price left, CTA right */</span>
+  align-items: center;
+  margin-top: auto;  <span class="com">/* push footer to bottom of variable-height card */</span>
+}
+
+<span class="com">/* Navigation bar */</span>
+.site-nav {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1.5rem 3rem;
+}
+
+@media (max-width: 768px) {
+  .site-nav {
+    flex-direction: column;
+    gap: 1rem;
+    padding: 1rem;
+  }
+}</code></pre>
+
+<h3>20.3 A Breakpoint Strategy for Luxury Sites</h3>
+<p>Rather than hard-coding pixel values everywhere, define your breakpoints as CSS custom properties and reference them consistently. This makes breakpoint adjustments a single-line change instead of a global find-and-replace.</p>
+
+<pre><code><span class="com">/* In your global CSS */</span>
+:root {
+  --bp-mobile:  640px;
+  --bp-tablet:  1024px;
+  --bp-desktop: 1280px;
+  --bp-wide:    1600px;
+
+  <span class="com">/* Spacing scale — increases with viewport */</span>
+  --space-section: clamp(4rem, 8vw, 10rem);
+  --space-content: clamp(1.5rem, 3vw, 3rem);
+
+  <span class="com">/* Typography scale — fluid between smallest and largest */</span>
+  --text-hero:    clamp(2.5rem, 6vw, 5rem);
+  --text-heading: clamp(1.5rem, 3vw, 2.5rem);
+  --text-body:    clamp(1rem, 1.2vw, 1.15rem);
+}
+
+<span class="com">/* Usage */</span>
+.hero {
+  padding: var(--space-section) var(--space-content);
+}
+
+.hero__title {
+  font-size: var(--text-hero);
+}</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: clamp() for Fluid Typography</div>
+<p><code>clamp(min, preferred, max)</code> creates values that scale fluidly between a minimum and maximum as the viewport changes. This eliminates breakpoint-by-breakpoint typography rules and produces smoother scaling. The preferred value uses <code>vw</code> units to tie the size to the viewport. <code>clamp(2.5rem, 6vw, 5rem)</code> reads as: no smaller than 2.5rem, no larger than 5rem, scale at 6% of viewport width in between.</p></div>
+
+<h3>20.4 Luxury White Space</h3>
+<p>The defining visual characteristic of premium digital real estate is deliberate, generous white space. Tightly packed content signals discount. Space signals confidence and exclusivity.</p>
+
+<p>Principles that separate premium layouts from ordinary ones:</p>
+
+<ul>
+<li><strong>Section breathing room:</strong> Vertical section padding of 8–12rem on desktop. Never less than 4rem on mobile.</li>
+<li><strong>Content max-width:</strong> Body text should not exceed 65–70 characters per line (<code>max-width: 65ch</code>). Wide grids cap at 1400–1600px.</li>
+<li><strong>Card-to-card spacing:</strong> The gap between property cards should be at least equal to the card's internal padding.</li>
+<li><strong>Type scale contrast:</strong> A hero heading should be 3–4× the size of body text. Reducing this contrast makes hierarchy disappear.</li>
+<li><strong>Image breathing room:</strong> Never clip images to the edge of the viewport on desktop. Allow a margin of at least 6–8% on each side, or deliberately full-bleed with intent.</li>
+</ul>
+
+<div class="callout c-fw"><div class="callout-label"><span class="icon">🔷</span> Framer & Webflow Translation</div>
+<p><strong>Framer:</strong> The layout canvas is Flexbox and Grid-based. Set <code>display: grid</code> or <code>display: flex</code> on any frame in the Styles panel. Use the Breakpoints bar at the top to switch viewport sizes and adjust layouts. <code>clamp()</code> values can be typed directly into style fields. <strong>Webflow:</strong> The Designer uses Flexbox and Grid layout natively. Right-click any element → Layout to access Grid and Flexbox controls visually. Switch breakpoints using the icons at the top of the Designer canvas. Min/max width, gap, and alignment are all first-class controls — no CSS writing required for standard layouts.</p></div>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 20A — Build a Fluid Property Grid</div>
+<p>Implement a <code>ResidenceGrid</code> component with these requirements: (1) Uses CSS Grid with <code>auto-fill</code> and <code>minmax</code> so it responds to viewport width without explicit breakpoints. (2) Cards have a minimum width of 300px. (3) Gap between cards uses your <code>--space-content</code> custom property. (4) The grid has a maximum width of 1400px and is centred. (5) On a viewport narrower than 400px, cards stretch to full width (hint: the <code>minmax</code> min value should change).</p>
+<details><summary>Review key points</summary>
+<p>The key insight: <code>repeat(auto-fill, minmax(300px, 1fr))</code> creates as many 300px+ columns as fit. To force single-column below 400px, either wrap in a media query that changes to <code>grid-template-columns: 1fr</code>, or use <code>minmax(min(300px, 100%), 1fr)</code> — the <code>min()</code> function makes the minimum value the smaller of 300px or 100% of the container, so on very narrow viewports it collapses to one column without a media query.</p>
+</details>
+</div>
+
+<div class="chap-nav"><a href="#ch19"><span>Previous</span><strong>Ch 19 — Analytics</strong></a><a class="next" href="#ch21"><span>Next</span><strong>Ch 21 — Aurelia in Framer</strong></a></div>
+</section>
+
+<!-- ================ CH21 ================ -->
+<section class="chapter" id="ch21">
+<div class="chapter-num">Chapter 21</div>
+<h1 class="chapter-title">Building Aurelia Residences in Framer</h1>
+<p class="chapter-sub">Framer is where every concept from this book becomes visible at the speed of thought. You write React components — or compose them visually — and see the result immediately on a production-ready canvas. This chapter builds the complete Aurelia Residences site in Framer, step by step.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will have a published Aurelia Residences site in Framer with a CMS-driven residences collection, a custom code component for the property card, interactive filtering, an enquiry form connected to an email backend, and a polished mobile layout.</p></div>
+
+<h3>21.1 How Framer Uses React</h3>
+<p>Every component you place on the Framer canvas is a React component. The visual interface is a layer over React — when you drag in a Frame and set its layout to Flexbox, Framer generates <code>display: flex</code>. When you create a code component, you write a standard React functional component and Framer imports it into the canvas.</p>
+
+<p>This is why the concepts from this book translate directly. <code>useState</code>, <code>useEffect</code>, <code>useRef</code>, props, TypeScript interfaces — all of it works the same way in a Framer code component as it does in any other React project. The difference is you also have access to the Framer canvas for the parts that do not require custom logic.</p>
+
+<h3>21.2 CMS Setup — Modeling Your Content</h3>
+<p>Start with your data. In Framer, CMS Collections are the equivalent of a database table. Create the following collections for Aurelia Residences:</p>
+
+<p><strong>Residences Collection</strong> — one row per property:</p>
+<ul>
+<li>Name (Text)</li>
+<li>Slug (Text — used for the URL)</li>
+<li>Short Description (Text)</li>
+<li>Price (Number)</li>
+<li>Bedrooms (Number)</li>
+<li>Bathrooms (Number)</li>
+<li>Floor Area (Number, in sq ft)</li>
+<li>Floor (Number — which floor of the building)</li>
+<li>Status (Option: Available / Reserved / Sold)</li>
+<li>Hero Image (Image)</li>
+<li>Gallery (Multi-Image)</li>
+<li>Floorplan (Image)</li>
+<li>Highlights (Rich Text — bullet points of key features)</li>
+</ul>
+
+<p><strong>Amenities Collection</strong> — one row per building amenity:</p>
+<ul>
+<li>Name (Text)</li>
+<li>Description (Text)</li>
+<li>Icon (Image — SVG preferred)</li>
+<li>Category (Option: Wellness / Lifestyle / Concierge / Security)</li>
+</ul>
+
+<h3>21.3 Building the Residences Page Layout</h3>
+<p>The residences listing page has three zones: a sticky filter bar at the top, the property grid below, and a fixed enquiry sidebar that appears when a card is clicked. In Framer, build each zone as a separate Frame and compose them.</p>
+
+<p><strong>Page structure on the canvas:</strong></p>
+<ol>
+<li>A full-width Frame set to Flex column, min-height 100vh</li>
+<li>Inside: the Navigation Frame (fixed position, Flex row, spread alignment)</li>
+<li>Below nav: Hero Frame with background image, title, and subtitle text layers</li>
+<li>Filters Frame — Flex row, wraps on mobile, with filter button components inside</li>
+<li>Grid Frame — Grid layout, auto-fill columns, gap 2rem</li>
+<li>Card component repeated from CMS — bind to Residences collection</li>
+</ol>
+
+<h3>21.4 Writing the ResidenceCard Code Component</h3>
+<p>The property card needs behaviour that the visual canvas cannot provide: hover state that drives a detail reveal, a save button that persists to localStorage, and a click handler that opens the enquiry sidebar. This is a code component.</p>
+
+<pre><code><span class="com">// File: ResidenceCard.tsx — save this in your Framer project's code folder</span>
+<span class="kw">import</span> { useState } <span class="kw">from</span> <span class="str">'react'</span>;
+<span class="kw">import</span> { addPropertyControls, ControlType } <span class="kw">from</span> <span class="str">'framer'</span>;
+
+<span class="kw">interface</span> Props {
+  name:        string;
+  price:       number;
+  bedrooms:    number;
+  floorArea:   number;
+  heroImage:   string;
+  status:      <span class="str">'Available'</span> | <span class="str">'Reserved'</span> | <span class="str">'Sold'</span>;
+  onEnquire:   () =&gt; <span class="kw">void</span>;
+}
+
+<span class="kw">export default function</span> <span class="fn">ResidenceCard</span>({ name, price, bedrooms, floorArea, heroImage, status, onEnquire }: Props) {
+  <span class="kw">const</span> [hovered, setHovered] = useState(<span class="kw">false</span>);
+  <span class="kw">const</span> [saved,   setSaved]   = useState(<span class="kw">false</span>);
+
+  <span class="kw">const</span> formattedPrice = <span class="kw">new</span> Intl.NumberFormat(<span class="str">'en-GB'</span>, {
+    style:    <span class="str">'currency'</span>,
+    currency: <span class="str">'GBP'</span>,
+    maximumFractionDigits: <span class="num">0</span>
+  }).format(price);
+
+  <span class="kw">return</span> (
+    &lt;<span class="tag">article</span>
+      onMouseEnter={() =&gt; setHovered(<span class="kw">true</span>)}
+      onMouseLeave={() =&gt; setHovered(<span class="kw">false</span>)}
+      style={{ opacity: status === <span class="str">'Sold'</span> ? <span class="num">0.6</span> : <span class="num">1</span>, cursor: <span class="str">'pointer'</span>, borderRadius: <span class="num">12</span>, overflow: <span class="str">'hidden'</span>, background: <span class="str">'#161824'</span>, border: <span class="str">'1px solid #2A2D3E'</span> }}
+    &gt;
+      &lt;<span class="tag">div</span> style={{ position: <span class="str">'relative'</span>, aspectRatio: <span class="str">'4/3'</span>, overflow: <span class="str">'hidden'</span> }}&gt;
+        &lt;<span class="tag">img</span> src={heroImage} alt={name} style={{ width: <span class="str">'100%'</span>, height: <span class="str">'100%'</span>, objectFit: <span class="str">'cover'</span>, transform: hovered ? <span class="str">'scale(1.04)'</span> : <span class="str">'scale(1)'</span>, transition: <span class="str">'transform 0.5s ease'</span> }} /&gt;
+        &lt;<span class="tag">span</span> style={{ position: <span class="str">'absolute'</span>, top: <span class="num">12</span>, left: <span class="num">12</span>, padding: <span class="str">'4px 10px'</span>, borderRadius: <span class="num">4</span>, background: status === <span class="str">'Available'</span> ? <span class="str">'#34D399'</span> : <span class="str">'#F59E0B'</span>, color: <span class="str">'#000'</span>, fontSize: <span class="num">12</span>, fontWeight: <span class="num">600</span> }}&gt;{status}&lt;/<span class="tag">span</span>&gt;
+        &lt;<span class="tag">button</span>
+          onClick={(e) =&gt; { e.stopPropagation(); setSaved(s =&gt; !s); }}
+          aria-label={saved ? <span class="str">`Remove ${name} from shortlist`</span> : <span class="str">`Save ${name} to shortlist`</span>}
+          aria-pressed={saved}
+          style={{ position: <span class="str">'absolute'</span>, top: <span class="num">12</span>, right: <span class="num">12</span>, background: <span class="str">'rgba(0,0,0,0.5)'</span>, border: <span class="str">'none'</span>, borderRadius: <span class="str">'50%'</span>, width: <span class="num">36</span>, height: <span class="num">36</span>, cursor: <span class="str">'pointer'</span>, color: saved ? <span class="str">'#F59E0B'</span> : <span class="str">'#fff'</span>, fontSize: <span class="num">18</span> }}
+        &gt;{saved ? <span class="str">'♥'</span> : <span class="str">'♡'</span>}&lt;/<span class="tag">button</span>&gt;
+      &lt;/<span class="tag">div</span>&gt;
+      &lt;<span class="tag">div</span> style={{ padding: <span class="num">24</span> }}&gt;
+        &lt;<span class="tag">h3</span> style={{ margin: 0, fontSize: <span class="num">18</span>, fontWeight: <span class="num">600</span> }}&gt;{name}&lt;/<span class="tag">h3</span>&gt;
+        &lt;<span class="tag">p</span> style={{ margin: <span class="str">'4px 0 16px'</span>, color: <span class="str">'#A5AABE'</span>, fontSize: <span class="num">14</span> }}&gt;{bedrooms} bed · {floorArea} sq ft&lt;/<span class="tag">p</span>&gt;
+        &lt;<span class="tag">div</span> style={{ display: <span class="str">'flex'</span>, justifyContent: <span class="str">'space-between'</span>, alignItems: <span class="str">'center'</span> }}&gt;
+          &lt;<span class="tag">span</span> style={{ fontSize: <span class="num">20</span>, fontWeight: <span class="num">700</span>, color: <span class="str">'#E8EAF6'</span> }}&gt;{formattedPrice}&lt;/<span class="tag">span</span>&gt;
+          &lt;<span class="tag">button</span> onClick={onEnquire} style={{ padding: <span class="str">'8px 16px'</span>, background: <span class="str">'#7B68EE'</span>, color: <span class="str">'#fff'</span>, border: <span class="str">'none'</span>, borderRadius: <span class="num">6</span>, cursor: <span class="str">'pointer'</span>, fontWeight: <span class="num">600</span> }}&gt;
+            Enquire
+          &lt;/<span class="tag">button</span>&gt;
+        &lt;/<span class="tag">div</span>&gt;
+      &lt;/<span class="tag">div</span>&gt;
+    &lt;/<span class="tag">article</span>&gt;
+  );
+}
+
+<span class="com">// addPropertyControls wires the component's props to Framer's properties panel</span>
+addPropertyControls(ResidenceCard, {
+  name:      { type: ControlType.String,  title: <span class="str">'Name'</span> },
+  price:     { type: ControlType.Number,  title: <span class="str">'Price'</span> },
+  bedrooms:  { type: ControlType.Number,  title: <span class="str">'Bedrooms'</span> },
+  floorArea: { type: ControlType.Number,  title: <span class="str">'Floor Area (sq ft)'</span> },
+  heroImage: { type: ControlType.Image,   title: <span class="str">'Hero Image'</span> },
+  status:    {
+    type: ControlType.Enum,
+    title: <span class="str">'Status'</span>,
+    options: [<span class="str">'Available'</span>, <span class="str">'Reserved'</span>, <span class="str">'Sold'</span>],
+    optionTitles: [<span class="str">'Available'</span>, <span class="str">'Reserved'</span>, <span class="str">'Sold'</span>]
+  }
+});</code></pre>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: addPropertyControls</div>
+<p><code>addPropertyControls</code> is the Framer-specific equivalent of TypeScript prop types. It tells Framer's visual interface what controls to display in the properties panel when a code component is selected on the canvas. A <code>ControlType.Image</code> shows a Framer image picker. A <code>ControlType.Enum</code> shows a dropdown. When you bind the component to a CMS Collection, each control's property name must match the CMS field name.</p></div>
+
+<h3>21.5 CMS Binding and Filtering</h3>
+<p>Once your ResidenceCard code component is on the canvas, connect it to the Residences Collection:</p>
+<ol>
+<li>Select a ResidenceCard instance on the canvas</li>
+<li>In the Properties panel → connect each prop to its CMS field (Name → name, Price → price, etc.)</li>
+<li>Wrap the card in a CMS Collection component set to your Residences collection</li>
+<li>Framer renders one card per CMS row automatically</li>
+</ol>
+
+<p>For client-side filtering by bedroom count or price range, add a code component <code>FilterBar</code> that manages filter state and passes the active filter values down to a wrapper that filters the residences array before rendering cards. This is the lifting-state-up pattern from Chapter 6 applied directly.</p>
+
+<h3>21.6 The Enquiry Form Component</h3>
+<p>The EnquiryForm from Chapter 17 works directly in Framer with no changes to the React logic. The only Framer-specific addition is connecting it to Framer's form submission endpoint, or keeping the HubSpot API call from Chapter 17.</p>
+
+<p>To present it as a slide-in drawer: on the canvas, position the drawer Frame off-screen to the right (<code>x: 100%</code>). Use a Framer <code>motion</code> animation or a CSS transition to slide it in when <code>isEnquiryOpen</code> state is true. The state itself lives in a parent code component that wraps both the grid and the drawer.</p>
+
+<h3>21.7 Publishing</h3>
+<p>In Framer, publishing is a single click: <strong>Publish</strong> button → choose your domain (Framer's free subdomain or a custom domain from your domain registrar). Framer generates a statically optimised site and deploys it to their CDN. CMS content updates publish instantly without a code deploy. This is the workflow luxury clients love — the developer is not in the loop for content updates.</p>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 21A — Publish the Residences Grid</div>
+<p>In your Framer project: (1) Create the Residences CMS Collection with at least four properties, including real images and prices. (2) Implement the ResidenceCard code component from section 21.4, binding each prop to its CMS field. (3) Build a basic filter that hides sold properties. (4) Publish the site to a Framer subdomain. Share the URL with someone who has never seen your work and ask them to find a 3-bedroom residence and click Enquire. Watch where they hesitate — that is your UX feedback.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch20"><span>Previous</span><strong>Ch 20 — Responsive Layout</strong></a><a class="next" href="#ch22"><span>Next</span><strong>Ch 22 — Aurelia in Webflow</strong></a></div>
+</section>
+
+<!-- ================ CH22 ================ -->
+<section class="chapter" id="ch22">
+<div class="chapter-num">Chapter 22</div>
+<h1 class="chapter-title">Building Aurelia Residences in Webflow</h1>
+<p class="chapter-sub">Webflow is the platform of choice for clients who need a content team to manage properties without touching a codebase. Its visual CMS, no-code Interactions, and stable hosting make it a serious production tool for luxury real estate. React thinking still applies — just expressed through a different interface.</p>
+
+<div class="callout c-goal"><div class="callout-label"><span class="icon">🎯</span> Chapter Goals</div>
+<p>By the end of this chapter you will know how to model Aurelia Residences in Webflow CMS, build a Collection List layout, create reusable Symbols, set up Interactions for hover and open/close states, connect the enquiry form, and understand where Webflow's limits require custom code embeds.</p></div>
+
+<h3>22.1 How Webflow Differs from React</h3>
+<p>In React, state drives the UI. In Webflow, Interactions drive the UI. There is no <code>useState</code> — instead you define triggers (click, hover, scroll into view) and animations (move, scale, fade, show/hide) that Webflow compiles into CSS animations and lightweight JavaScript. This covers the vast majority of luxury real estate interactions beautifully.</p>
+
+<p>What Webflow cannot do without custom code: programmatic filtering of CMS items, client-side state that persists across pages (like a shortlist), or anything that requires reading user input and conditionally altering the DOM beyond what Interactions support. For these, you embed custom JavaScript in the page or use a Webflow-compatible library like <code>Finsweet CMS Filter</code>.</p>
+
+<h3>22.2 CMS Setup in Webflow</h3>
+<p>In Webflow, go to the CMS panel and create a new Collection: <strong>Residences</strong>. Add these fields:</p>
+<ul>
+<li>Name (Plain Text — auto-created as the title field)</li>
+<li>Short Description (Plain Text)</li>
+<li>Price (Number)</li>
+<li>Bedrooms (Number)</li>
+<li>Bathrooms (Number)</li>
+<li>Floor Area (Number)</li>
+<li>Status (Option — add values: Available, Reserved, Sold)</li>
+<li>Hero Image (Image)</li>
+<li>Gallery (Multi-Image — requires CMS plan or above)</li>
+<li>Highlights (Rich Text)</li>
+</ul>
+
+<p>Add at least four test residences now. You cannot build and preview the Collection List without real data. Webflow shows placeholder data in the Designer but it is not the same as seeing real content at realistic text lengths.</p>
+
+<h3>22.3 Building the Residence Card with a Collection List</h3>
+<p>The Collection List is Webflow's equivalent of <code>residences.map(r =&gt; &lt;ResidenceCard key={r.id} residence={r} /&gt;)</code>. It renders one instance of its template for each CMS item, with CMS fields bound to elements inside it.</p>
+
+<ol>
+<li>Add a <strong>Collection List</strong> element to your page and bind it to the Residences collection</li>
+<li>Inside the list item template, add: Image (bind to Hero Image), Heading (bind to Name), a Text block (bind to Price with a prefix "£"), two more Text blocks for Bedrooms and Floor Area</li>
+<li>Add an "Enquire" Link Button at the bottom of the card — we will wire this later</li>
+<li>Style the card using Webflow's Style panel — set padding, border radius, background colour, and gap</li>
+<li>Set the Collection List wrapper to Grid layout with 3 columns on desktop, 2 on tablet, 1 on mobile</li>
+</ol>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Key Concept: CMS Field Binding</div>
+<p>Every element inside a Collection List can be bound to a CMS field. Select an image element → in the Settings panel → Source → choose a CMS field. The field value replaces the placeholder on publish. This is the Webflow equivalent of <code>src={residence.heroImage}</code> in React. Unlike React, you cannot transform the value before binding — a Price field displaying <code>4500000</code> requires a separate "Formatted Price" text field in your CMS if you want <code>£4,500,000</code>, or you use a custom code embed to format it on the client.</p></div>
+
+<h3>22.4 Symbols — Reusable Elements</h3>
+<p>Symbols in Webflow are reusable layout blocks. The navigation bar, the site footer, and the enquiry form are all good Symbol candidates. Unlike React components, Symbols do not accept props — every instance shows identical content. When you update a Symbol, all instances update.</p>
+
+<p>To create a Symbol: design your navigation bar → select all its elements → right-click → Create Symbol. Place it on every page by dragging it from the Symbols panel. If you need per-page variations (a different CTA in the nav on the residences page), use custom attributes and a small script, or use a Webflow Interaction to show/hide the variation based on page URL.</p>
+
+<h3>22.5 Interactions — The Webflow State System</h3>
+<p>Interactions are Webflow's answer to <code>useState</code> + conditional rendering. They are visual, timeline-based, and powerful for animation — though they cannot execute arbitrary logic.</p>
+
+<p><strong>Hover state on a residence card:</strong></p>
+<ol>
+<li>Select the card's image element</li>
+<li>Interactions panel → While Hovering → Mouse Over: Scale to 1.04, 0.5s ease</li>
+<li>Mouse Out: Scale back to 1.0, 0.5s ease</li>
+<li>This is the visual equivalent of the <code>hovered</code> state + CSS transform pattern from the React card</li>
+</ol>
+
+<p><strong>Enquiry drawer open/close:</strong></p>
+<ol>
+<li>Create the enquiry drawer as a fixed-position div, positioned off-screen to the right (<code>transform: translateX(100%)</code>)</li>
+<li>Create an Interaction on the Enquire button: Click → set the drawer's transform to <code>translateX(0)</code> over 0.4s ease</li>
+<li>Add a close button inside the drawer with the reverse Interaction</li>
+<li>Add an overlay div behind the drawer with opacity 0 by default; animate it to opacity 0.5 when the drawer opens</li>
+</ol>
+
+<div class="callout c-mistake"><div class="callout-label"><span class="icon">⚠</span> Webflow Interaction Limit</div>
+<p>Webflow Interactions control which residence the enquiry form refers to only if the enquiry button is inside the Collection List item — then you can use "Get text from" bindings to pre-fill a hidden field with the residence name. For a fully programmatic drawer that shows the clicked property's details dynamically, you need a JavaScript embed. This is not a Webflow failure — it is the intentional scope of the platform. The clean solution: link each residence card to its own CMS detail page, which has its own enquiry form pre-filled with that residence's data.</p></div>
+
+<h3>22.6 Enquiry Form</h3>
+<p>Webflow's built-in Form block handles submission, validation error states (Webflow shows/hides error elements for you), and success states out of the box. For basic lead capture, no code is needed.</p>
+
+<ol>
+<li>Add a Form block to the enquiry drawer Symbol</li>
+<li>Add fields: Name, Email, Phone, Message, a hidden field for Residence Name</li>
+<li>In Form Settings → connect to your Webflow notification email</li>
+<li>For HubSpot integration: Settings → Integrations → HubSpot → authenticate and map fields</li>
+<li>Style the success state by editing the Form's Success state directly in the canvas</li>
+</ol>
+
+<h3>22.7 Filtering with Finsweet CMS Filter</h3>
+<p>Webflow cannot filter Collection List items by user input natively (the Webflow filter is publish-time, not runtime). For client-side filtering by bedrooms or price, the industry-standard solution is Finsweet CMS Filter — a free JavaScript library that adds runtime filtering to any Webflow Collection List.</p>
+
+<pre><code><span class="com">&lt;!-- Add to Page Settings → Custom Code → Before &lt;/body&gt; --&gt;</span>
+&lt;<span class="tag">script</span>
+  defer
+  src=<span class="str">"https://cdn.finsweet.com/files/cms-attributes-1.js"</span>
+&gt;&lt;/<span class="tag">script</span>&gt;
+
+<span class="com">&lt;!-- Then add data attributes in the Webflow Designer --&gt;</span>
+<span class="com">&lt;!-- On the Collection List wrapper: --&gt;</span>
+<span class="com">fs-cmsfilter-element="list"</span>
+
+<span class="com">&lt;!-- On a hidden span inside each Collection item bound to Bedrooms CMS field: --&gt;</span>
+<span class="com">fs-cmsfilter-field="bedrooms"</span>
+
+<span class="com">&lt;!-- On a filter button: --&gt;</span>
+<span class="com">fs-cmsfilter-field="bedrooms"</span>
+<span class="com">fs-cmsfilter-value="3"</span></code></pre>
+
+<p>No JavaScript writing required. Finsweet reads these attributes and wires the filtering automatically. This is the pragmatic Webflow answer to the React filter state pattern from Chapter 6.</p>
+
+<h3>22.8 Publishing and Client Handoff</h3>
+<p>Publish in Webflow: Settings → Hosting → connect a custom domain or use the free <code>.webflow.io</code> subdomain → Publish. The content team can update CMS records directly from the Editor view (the live site with an editor overlay) without touching the Designer. This is the key selling point for clients with in-house marketing teams: the developer leaves, the content continues.</p>
+
+<div class="callout c-concept"><div class="callout-label"><span class="icon">💡</span> Webflow Editor Access</div>
+<p>Webflow Editor is a simplified interface that non-technical team members use to update text, images, and CMS entries on the live site. They cannot change layout or Interactions. You grant Editor access from the Webflow dashboard → Collaborators. For a luxury real estate client, set up the Editor and walk the sales team through it. They will be updating residences' status from Available to Sold on the day of exchange — you do not want that requiring a developer.</p></div>
+
+<div class="exercise-block">
+<div class="exercise-title">Exercise 22A — Build and Publish the Webflow Residences Page</div>
+<p>In your Webflow project: (1) Create the Residences CMS Collection with four properties. (2) Build the Collection List page with a card layout that shows name, price, bedrooms, and hero image. (3) Create a hover interaction on the image that scales to 1.04. (4) Add the Finsweet CMS Filter script and implement filtering by bedroom count with three buttons (All, 2 bed, 3 bed). (5) Add a Form block for the enquiry and connect it to your Webflow notification email. (6) Publish to a webflow.io subdomain and test the form submission end-to-end.</p>
+</div>
+
+<div class="chap-nav"><a href="#ch21"><span>Previous</span><strong>Ch 21 — Aurelia in Framer</strong></a><a class="next" href="#mini-project"><span>Next</span><strong>Mini-Project: Property Hero</strong></a></div>
+</section>
 
 <!-- ================ MINI-PROJECT ================ -->
 <section class="chapter" id="mini-project">
@@ -2229,7 +3355,7 @@ export default function App() {
 <p>When the hero looks portfolio-worthy, screenshot it. That is your first deliverable.</p>
 </div>
 
-<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — The Bridge</strong></a><a class="next" href="#workbook"><span>Next</span><strong>Aurelia Residences Workbook</strong></a></div>
+<div class="chap-nav"><a href="#ch22"><span>Previous</span><strong>Ch 22 — Aurelia in Webflow</strong></a><a class="next" href="#workbook"><span>Next</span><strong>Aurelia Residences Workbook</strong></a></div>
 </section>
 
 <!-- ================ PRACTICAL WORKBOOK ================ -->
@@ -2726,7 +3852,7 @@ export default function ExperiencePlaceholder({ residence }: Props) {
 <div class="callout c-r3f"><div class="callout-label"><span class="icon">⬡</span> The Book Two Layer</div><p>In Book Two, this exact component is renamed to <code>ResidenceExperience.tsx</code>, the outer <code>div</code> becomes a <code>&lt;Canvas&gt;</code>, and the placeholder text becomes a real 3D model loaded from <code>residence.experienceUrl</code>. Nothing else in your launch site changes. That is the entire promise of React's "describe what you want" model — the same data, the same component tree, and one new section that turns a premium site into a cinematic property experience.</p></div>
 <div class="callout c-task"><div class="callout-label"><span class="icon">★</span> Capstone Step 15 — Ship Aurelia</h4></div><h4>Deploy the Launch Site</h4><p>Add <code>ExperiencePlaceholder</code> beside the residence detail panel. Run <code>npm run build</code>. Deploy the <code>dist/</code> folder to Vercel (drag-and-drop, or <code>vercel --prod</code>). The live URL is now a real, shippable launch site — portfolio-worthy, client-presentable, and ready to become an immersive experience the moment you open Book Two.</p></div>
 
-<div class="chap-nav"><a href="#ch15"><span>Previous</span><strong>Ch 15 — The Bridge</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
+<div class="chap-nav"><a href="#ch22"><span>Previous</span><strong>Ch 22 — Aurelia in Webflow</strong></a><a class="next" href="#debugging"><span>Next</span><strong>Debugging Mindset</strong></a></div>
 </section>
 
 <!-- ================ DEBUGGING ================ -->
